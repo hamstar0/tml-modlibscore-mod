@@ -1,0 +1,5 @@
+displayName = Mod Libs - Core
+author = hamstar
+version = 1.0.0
+buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
+homepage = https://forums.terraria.org/index.php?threads/mod-helpers.63670/

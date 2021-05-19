@@ -1,0 +1,14 @@
+v1
+-	@Create 'Mod Libs - Context' (Classes\Context)
+-	Remove custom hook validators; silly added complexity
+-	Rename Helpers to Libraries
+-	Re-evaluate all non-web request uses of MyLock
+-	Revise SupportInfo
+	-	Add hook to SupportInfo to add items to list
+	-	Set "extend button" to apply only if items to list
+
+
+-	Revise load stuff
+-	Switch all singleton classes to ILoadable
+-	Re-import "basic privileged user" and session id
+-	Re-import SimplePacket
