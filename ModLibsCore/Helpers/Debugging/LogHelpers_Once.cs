@@ -18,20 +18,18 @@ namespace ModLibsCore.Helpers.Debug {
 
 			bool isShown = false;
 
-			lock( LogHelpers.MyLock ) {
-				if( !logHelpers.UniqueMessages.ContainsKey( msg ) ) {
-					logHelpers.UniqueMessages[msg] = 1;
-					formattedMsg = msg;
+			if( !logHelpers.UniqueMessages.ContainsKey( msg ) ) {
+				logHelpers.UniqueMessages[msg] = 1;
+				formattedMsg = msg;
+				isShown = true;
+			} else {
+				logHelpers.UniqueMessages[msg]++;
+
+				if( ( Math.Log10( logHelpers.UniqueMessages[msg] ) % 1d ) == 0 ) {
+					formattedMsg = "(" + logHelpers.UniqueMessages[msg] + "th) " + msg;
 					isShown = true;
 				} else {
-					logHelpers.UniqueMessages[msg]++;
-
-					if( ( Math.Log10( logHelpers.UniqueMessages[msg] ) % 1d ) == 0 ) {
-						formattedMsg = "(" + logHelpers.UniqueMessages[msg] + "th) " + msg;
-						isShown = true;
-					} else {
-						formattedMsg = msg;
-					}
+					formattedMsg = msg;
 				}
 			}
 
@@ -149,13 +147,11 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void ResetOnceMessage( string msg ) {
-			lock( LogHelpers.MyLock ) {
-				string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
-				var logHelpers = ModContent.GetInstance<LogHelpers>();
+			string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
+			var logHelpers = ModContent.GetInstance<LogHelpers>();
 
-				logHelpers.UniqueMessages.Remove( "~" + msg );
-				logHelpers.UniqueMessages.Remove( "~" + fmtMsg );
-			}
+			logHelpers.UniqueMessages.Remove( "~" + msg );
+			logHelpers.UniqueMessages.Remove( "~" + fmtMsg );
 		}
 	}
 }

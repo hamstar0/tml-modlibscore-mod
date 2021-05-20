@@ -33,15 +33,13 @@ namespace ModLibsCore.Services.Timers {
 //TICKSTART = DateTime.Now.Ticks;
 
 			LoadHooks.AddWorldUnloadEachHook( () => {
-				lock( Timers.MyLock ) {
-					foreach( (string timerName, (bool, Func<int>, int) timer) in this.Running ) {
-						LogHelpers.Log( "Aborted timer " + timerName );
-					}
-
-					this.Running.Clear();
-					this.Elapsed.Clear();
-					this.Expired.Clear();
+				foreach( (string timerName, (bool, Func<int>, int) timer) in this.Running ) {
+					LogHelpers.Log( "Aborted timer " + timerName );
 				}
+
+				this.Running.Clear();
+				this.Elapsed.Clear();
+				this.Expired.Clear();
 			} );
 		}
 
@@ -101,14 +99,12 @@ namespace ModLibsCore.Services.Timers {
 				}
 			}
 
-			lock( Timers.MyLock ) {
-				if( this.Expired.Count > 0 ) {
-					foreach( string name in this.Expired ) {
-						this.Running.Remove( name );
-						this.Elapsed.Remove( name );
-					}
-					this.Expired.Clear();
+			if( this.Expired.Count > 0 ) {
+				foreach( string name in this.Expired ) {
+					this.Running.Remove( name );
+					this.Elapsed.Remove( name );
 				}
+				this.Expired.Clear();
 			}
 		}
 	}

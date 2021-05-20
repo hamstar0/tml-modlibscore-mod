@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 using ModLibsCore.Helpers.Debug;
 using ModLibsCore.Helpers.TModLoader;
-using Terraria.ModLoader;
+
 
 namespace ModLibsCore.Services.Timers {
 	/// <summary>
@@ -11,12 +12,6 @@ namespace ModLibsCore.Services.Timers {
 	/// MainOnTickGet() provides a way to use Main.OnTick for running background tasks at 60FPS.
 	/// </summary>
 	public partial class Timers {
-		private readonly static object MyLock = new object();
-
-
-
-		////////////////
-
 		/// <summary>
 		/// Returns a delegate that returns true when at least 1/60th second (1 60FPS 'tick') has fully elapsed since
 		/// the last time the delegate returned true (seems necessary?).
@@ -138,11 +133,9 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 			
-			lock( Timers.MyLock ) {
-				timers.Running[name] = (RunsWhilePaused: runsWhilePaused, Callback: action, Duration: tickDuration );
-				timers.Elapsed[name] = 0;
-				timers.Expired.Remove( name );
-			}
+			timers.Running[name] = (RunsWhilePaused: runsWhilePaused, Callback: action, Duration: tickDuration );
+			timers.Elapsed[name] = 0;
+			timers.Expired.Remove( name );
 		}
 
 
@@ -157,10 +150,8 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return 0; }
 
-			lock( Timers.MyLock ) {
-				if( timers.Running.ContainsKey( name ) ) {
-					return timers.Running[name].Duration - timers.Elapsed[ name ];
-				}
+			if( timers.Running.ContainsKey( name ) ) {
+				return timers.Running[name].Duration - timers.Elapsed[ name ];
 			}
 
 			return 0;
@@ -175,12 +166,10 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 
-			lock( Timers.MyLock ) {
-				if( timers.Running.ContainsKey( name ) ) {
-					timers.Running.Remove( name );
-					timers.Elapsed.Remove( name );
-					timers.Expired.Remove( name );
-				}
+			if( timers.Running.ContainsKey( name ) ) {
+				timers.Running.Remove( name );
+				timers.Elapsed.Remove( name );
+				timers.Expired.Remove( name );
 			}
 		}
 
@@ -192,11 +181,9 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 
-			lock( Timers.MyLock ) {
-				timers.Running = new Dictionary<string, (bool, Func<int>, int)>();
-				timers.Elapsed = new Dictionary<string, int>();
-				timers.Expired = new HashSet<string>();
-			}
+			timers.Running = new Dictionary<string, (bool, Func<int>, int)>();
+			timers.Elapsed = new Dictionary<string, int>();
+			timers.Expired = new HashSet<string>();
 		}
 	}
 }

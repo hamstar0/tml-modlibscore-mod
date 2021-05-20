@@ -26,47 +26,43 @@ namespace ModLibsCore.Helpers.TModLoader {
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		public static T SafelyGetInstance<T>() where T : class {
-			lock( TmlHelpers.MyLock ) {
-				T instance = ModContent.GetInstance<T>();
-				if( instance != null ) {
-					return instance;
-				}
-
-				instance = (T)Activator.CreateInstance(
-					type: typeof( T ),
-					bindingAttr: BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-					binder: null,
-					args: new object[] { },
-					culture: null
-				);
-				if( instance == null ) {
-					throw new ModHelpersException( "Could not generate singleton for " + typeof( T ).Name );
-				}
-
-				ContentInstance.Register( instance );
-
+			T instance = ModContent.GetInstance<T>();
+			if( instance != null ) {
 				return instance;
 			}
+
+			instance = (T)Activator.CreateInstance(
+				type: typeof( T ),
+				bindingAttr: BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+				binder: null,
+				args: new object[] { },
+				culture: null
+			);
+			if( instance == null ) {
+				throw new ModHelpersException( "Could not generate singleton for " + typeof( T ).Name );
+			}
+
+			ContentInstance.Register( instance );
+
+			return instance;
 		}
 
 		/// <summary>
 		/// Gets the singleton instance of a given class type. If no such instance exists, one is created and registered.
-		/// Note: Avoid calling ContentInstance.Register(...) for this class after.
+		/// Note: Avoid calling ContentInstance.Register(...) for the given class after.
 		/// </summary>
 		/// <param name="classType"></param>
 		/// <returns></returns>
 		public static object SafelyGetInstanceForType( Type classType ) {
-			lock( TmlHelpers.MyLock ) {
-				MethodInfo method = typeof( TmlHelpers ).GetMethod( "SafelyGetInstance" );
-				MethodInfo genericMethod = method.MakeGenericMethod( classType );
+			MethodInfo method = typeof( TmlHelpers ).GetMethod( "SafelyGetInstance" );
+			MethodInfo genericMethod = method.MakeGenericMethod( classType );
 
-				object rawInstance = genericMethod.Invoke( null, new object[] { } );
-				if( rawInstance == null ) {
-					throw new ModHelpersException( "Could not get ModContent singleton of "+classType.Name );
-				}
-
-				return rawInstance;
+			object rawInstance = genericMethod.Invoke( null, new object[] { } );
+			if( rawInstance == null ) {
+				throw new ModHelpersException( "Could not get ModContent singleton of "+classType.Name );
 			}
+
+			return rawInstance;
 		}
 
 

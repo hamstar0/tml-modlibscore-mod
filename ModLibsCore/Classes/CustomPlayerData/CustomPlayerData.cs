@@ -23,9 +23,7 @@ namespace ModLibsCore.Classes.PlayerData {
 		internal static CustomPlayerData GetPlayerData( Type plrDataType, int playerWho ) {
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
 
-			lock( CustomPlayerData.MyLock ) {
-				return singleton.DataMap.Get2DOrDefault( playerWho, plrDataType );
-			}
+			return singleton.DataMap.Get2DOrDefault( playerWho, plrDataType );
 		}
 	}
 }

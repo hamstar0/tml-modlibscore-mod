@@ -10,12 +10,6 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 namespace ModLibsCore.Helpers.Debug {
 	/// @private
 	public partial class LogHelpers : ILoadable {
-		private static object MyLock { get; } = new object();
-
-
-
-		////////////////
-		
 		private DateTime StartTimeBase;
 		private double StartTime;
 
@@ -104,16 +98,14 @@ namespace ModLibsCore.Helpers.Debug {
 		////////////////
 
 		internal void OutputDirect( string fileName, string logEntry ) {
-			lock( LogHelpers.MyLock ) {
-				string path = this.GetLogPath();
+			string path = this.GetLogPath();
 
-				try {
-					using( StreamWriter writer = File.AppendText( path + fileName ) ) {
-						writer.WriteLine( logEntry );
-					}
-				} catch( Exception e ) {
-					ModLibsCoreMod.Instance.Logger.Info( "FALLBACK LOGGER (" + e.GetType().Name + "; " + fileName + ") - " + logEntry );
+			try {
+				using( StreamWriter writer = File.AppendText( path + fileName ) ) {
+					writer.WriteLine( logEntry );
 				}
+			} catch( Exception e ) {
+				ModLibsCoreMod.Instance.Logger.Info( "FALLBACK LOGGER (" + e.GetType().Name + "; " + fileName + ") - " + logEntry );
 			}
 		}
 	}

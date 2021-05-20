@@ -8,8 +8,6 @@ using ModLibsCore.Helpers.Debug;
 namespace ModLibsCore.Classes.Errors {
 	/// @private
 	class ModHelpersExceptionManager : ILoadable {
-		internal static readonly object MyLock = new object();
-
 		internal readonly IDictionary<string, int> MsgCount = new Dictionary<string, int>();
 
 
@@ -49,16 +47,14 @@ namespace ModLibsCore.Classes.Errors {
 			var msgCount = ModContent.GetInstance<ModHelpersExceptionManager>().MsgCount;
 			int count = 0;
 
-			lock( ModHelpersExceptionManager.MyLock ) {
-				if( msgCount.TryGetValue( msg, out count ) ) {
-					if( count > 10 && (Math.Log10( count ) % 1) != 0 ) {
-						return;
-					}
-				} else {
-					msgCount[msg] = 0;
+			if( msgCount.TryGetValue(msg, out count) ) {
+				if( count > 10 && (Math.Log10(count) % 1) != 0 ) {
+					return;
 				}
-				msgCount[msg]++;
+			} else {
+				msgCount[msg] = 0;
 			}
+			msgCount[msg]++;
 
 			if( this.InnerException != null ) {
 				LogHelpers.Log( "!"+context+" (E#" + count + ") - " + msg + " | " + this.InnerException.Message );

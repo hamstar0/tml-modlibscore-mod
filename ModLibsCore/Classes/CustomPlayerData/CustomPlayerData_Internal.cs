@@ -39,9 +39,7 @@ namespace ModLibsCore.Classes.PlayerData {
 					null );
 				plrData.PlayerWho = playerWho;
 
-				lock( CustomPlayerData.MyLock ) {
-					singleton.DataMap.Set2D( playerWho, plrDataType, plrData );
-				}
+				singleton.DataMap.Set2D( playerWho, plrDataType, plrData );
 
 				var typedParam = new TypedMethodParameter( typeof( object ), data );
 
@@ -75,10 +73,7 @@ namespace ModLibsCore.Classes.PlayerData {
 			}
 
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
-			IEnumerable<(Type, CustomPlayerData)> plrDataMap;
-			lock( CustomPlayerData.MyLock ) {
-				plrDataMap = singleton.DataMap[playerWho].Select( kv => (kv.Key, kv.Value) );
-			}
+			IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[playerWho].Select( kv => (kv.Key, kv.Value) );
 
 			foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
 				object data = plrData.OnExit();
@@ -88,9 +83,7 @@ namespace ModLibsCore.Classes.PlayerData {
 				}
 			}
 
-			lock( CustomPlayerData.MyLock ) {
-				singleton.DataMap.Remove( playerWho );
-			}
+			singleton.DataMap.Remove( playerWho );
 		}
 
 
@@ -110,10 +103,7 @@ namespace ModLibsCore.Classes.PlayerData {
 			for( int plrWho = 0; plrWho < Main.maxPlayers; plrWho++ ) {
 				player = Main.player[plrWho];
 
-				bool containsKey = false;
-				lock( CustomPlayerData.MyLock ) {
-					containsKey = singleton.DataMap.ContainsKey( plrWho );
-				}
+				bool containsKey = singleton.DataMap.ContainsKey( plrWho );
 
 				if( player?.active != true ) {
 					if( containsKey ) {
@@ -133,11 +123,8 @@ namespace ModLibsCore.Classes.PlayerData {
 					if( !containsKey ) {
 						CustomPlayerData.Enter( plrWho );
 					} else {
-						IEnumerable<(Type, CustomPlayerData)> plrDataMap;
-						lock( CustomPlayerData.MyLock ) {
-							plrDataMap = singleton.DataMap[plrWho]
+						IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[plrWho]
 								.Select( kv => (kv.Key, kv.Value) );
-						}
 
 						foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
 							plrData.Update();
@@ -151,9 +138,7 @@ namespace ModLibsCore.Classes.PlayerData {
 			}
 
 			if( Main.netMode != NetmodeID.Server && Main.gameMenu ) {
-				lock( CustomPlayerData.MyLock ) {
-					singleton.DataMap.Clear();
-				}
+				singleton.DataMap.Clear();
 			}
 		}
 	}

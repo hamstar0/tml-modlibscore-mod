@@ -15,7 +15,6 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 	/// Uses a dedicated folder at "ModLoader/Logs/Dumps". Primarily used for debugging.
 	/// </summary>
 	public static class DataDumper {
-		private static object MyLock = new object();
 		internal static object MyDataStorekey = new object();
 		private static int Dumps = 0;
 
@@ -43,11 +42,9 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 			IDictionary<string, Func<string>> dumpables;
 			bool success = DataStore.DataStore.Get( DataDumper.MyDataStorekey, out dumpables );
 
-			lock( DataDumper.MyLock ) {
-				if( !success ) {
-					dumpables = new Dictionary<string, Func<string>>();
-					DataStore.DataStore.Set( DataDumper.MyDataStorekey, dumpables );
-				}
+			if( !success ) {
+				dumpables = new Dictionary<string, Func<string>>();
+				DataStore.DataStore.Set( DataDumper.MyDataStorekey, dumpables );
 			}
 
 			return dumpables;
@@ -116,9 +113,7 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 		public static void SetDumpSource( string name, Func<string> dump ) {
 			var dumpables = DataDumper.GetDumpables();
 
-			lock( DataDumper.MyLock ) {
-				dumpables[ name ] = dump;
-			}
+			dumpables[ name ] = dump;
 		}
 
 
@@ -131,7 +126,6 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 		/// <param name="syncIf">Tells the server to dump, also (if from a client).</param>
 		/// <returns></returns>
 		public static bool DumpToFile( out string fileName, bool syncIf ) {
-			string data;
 			IDictionary<string, Func<string>> dumpables = DataDumper.GetDumpables();
 
 			Func<KeyValuePair<string, Func<string>>, string> getKey = kv => {
@@ -139,12 +133,10 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 				catch( Exception e ) { return "ERROR: "+e.Message; }
 			};
 
-			lock( DataDumper.MyLock ) {
-				data = string.Join( "\r\n", dumpables
-					.ToDictionary( kv => kv.Key, getKey )
-					.SafeSelect( kv=>kv.Key+":\r\n"+kv.Value )
-				);
-			}
+			string data = string.Join( "\r\n", dumpables
+				.ToDictionary( kv => kv.Key, getKey )
+				.SafeSelect( kv=>kv.Key+":\r\n"+kv.Value )
+			);
 			
 			bool success = DataDumper.DumpToLocalFile( data, out fileName );
 

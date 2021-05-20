@@ -119,11 +119,9 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void Log( string msg = "" ) {
-			lock( LogHelpers.MyLock ) {
-				try {
-					ModLibsCoreMod.Instance.Logger.Info( LogHelpers.FormatMessage( msg ) );
-				} catch { }
-			}
+			try {
+				ModLibsCoreMod.Instance.Logger.Info( LogHelpers.FormatMessage( msg ) );
+			} catch { }
 		}
 
 		/// <summary>
@@ -131,14 +129,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void Alert( string msg = "" ) {
-			lock( LogHelpers.MyLock ) {
-				try {
-					string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
+			try {
+				string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
 
-					ModLibsCoreMod.Instance.Logger.Warn( fmtMsg );   //was Error(...)
-				} catch { }
-				//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg : "") );
-			}
+				ModLibsCoreMod.Instance.Logger.Warn( fmtMsg );   //was Error(...)
+			} catch { }
+			//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg : "") );
 		}
 
 		/// <summary>
@@ -146,14 +142,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void Warn( string msg = "" ) {
-			lock( LogHelpers.MyLock ) {
-				try {
-					string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
+			try {
+				string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
 
-					ModLibsCoreMod.Instance.Logger.Error( fmtMsg );	//was Fatal(...)
-				} catch { }
-				//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg: "") );
-			}
+				ModLibsCoreMod.Instance.Logger.Error( fmtMsg );	//was Fatal(...)
+			} catch { }
+			//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg: "") );
 		}
 
 

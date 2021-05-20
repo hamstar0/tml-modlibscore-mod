@@ -11,16 +11,12 @@ namespace ModLibsCore.Helpers.Debug {
 			var mymod = ModLibsCoreMod.Instance;
 
 			try {
-				lock( LogHelpers.MyLock ) {
-					mymod.Logger.Info( msg );
-					//ErrorLogger.Log( logged + msg );
-				}
+				mymod.Logger.Info( msg );
+				//ErrorLogger.Log( logged + msg );
 			} catch( Exception e ) {
 				try {
-					lock( LogHelpers.MyLock ) {
-						mymod.Logger.Info( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );
-						//ErrorLogger.Log( "FALLBACK LOGGER 2 (" + e.GetType().Name + ") " + msg );
-					}
+					mymod.Logger.Info( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );
+					//ErrorLogger.Log( "FALLBACK LOGGER 2 (" + e.GetType().Name + ") " + msg );
 				} catch { }
 			}
 		}
@@ -29,14 +25,10 @@ namespace ModLibsCore.Helpers.Debug {
 			var mymod = ModLibsCoreMod.Instance;
 
 			try {
-				lock( LogHelpers.MyLock ) {
-					mymod.Logger.Warn( msg );	//was Error(...)
-				}
+				mymod.Logger.Warn( msg );	//was Error(...)
 			} catch( Exception e ) {
 				try {
-					lock( LogHelpers.MyLock ) {
-						mymod.Logger.Warn( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );   //was Error(...)
-					}
+					mymod.Logger.Warn( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );   //was Error(...)
 				} catch { }
 			}
 		}
@@ -45,14 +37,10 @@ namespace ModLibsCore.Helpers.Debug {
 			var mymod = ModLibsCoreMod.Instance;
 
 			try {
-				lock( LogHelpers.MyLock ) {
-					mymod.Logger.Error( msg );	//was Fatal(...)
-				}
+				mymod.Logger.Error( msg );	//was Fatal(...)
 			} catch( Exception e ) {
 				try {
-					lock( LogHelpers.MyLock ) {
-						mymod.Logger.Error( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );	//was Fatal(...)
-					}
+					mymod.Logger.Error( "FALLBACK LOGGER (" + e.GetType().Name + ") " + msg );	//was Fatal(...)
 				} catch { }
 			}
 		}
