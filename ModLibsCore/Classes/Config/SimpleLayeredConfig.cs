@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Terraria.ModLoader.Config;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
 namespace ModLibsCore.Classes.Config {
@@ -30,7 +30,7 @@ namespace ModLibsCore.Classes.Config {
 			}
 
 			if( val.GetType() != typeof( T ) ) {
-				throw new ModHelpersException( "Invalid type (" + typeof( T ).Name + ") of property " + propName + "." );
+				throw new ModLibsException( "Invalid type (" + typeof( T ).Name + ") of property " + propName + "." );
 			}
 
 			return (T)val;
@@ -50,7 +50,7 @@ namespace ModLibsCore.Classes.Config {
 			}
 
 			if( val.GetType() != typeof( T ) ) {
-				throw new ModHelpersException( "Invalid type (" + typeof( T ).Name + ") of property " + propName + "." );
+				throw new ModLibsException( "Invalid type (" + typeof( T ).Name + ") of property " + propName + "." );
 			}
 
 			isOverride = true;
@@ -60,8 +60,8 @@ namespace ModLibsCore.Classes.Config {
 		////
 
 		private T GetBase<T>( string propName ) {
-			if( !ReflectionHelpers.Get( this, propName, out T myval ) ) {
-				throw new ModHelpersException( "Invalid property " + propName + " of type " + typeof( T ).Name );
+			if( !ReflectionLibraries.Get( this, propName, out T myval ) ) {
+				throw new ModLibsException( "Invalid property " + propName + " of type " + typeof( T ).Name );
 			}
 
 			return myval;
@@ -78,8 +78,8 @@ namespace ModLibsCore.Classes.Config {
 		/// <param name="propName"></param>
 		/// <param name="value"></param>
 		public void SetLayered<T>( string propName, T value ) {
-			if( !ReflectionHelpers.Get( this, propName, out T _ ) ) {
-				throw new ModHelpersException( "Invalid property " + propName + " of type " + typeof( T ).Name );
+			if( !ReflectionLibraries.Get( this, propName, out T _ ) ) {
+				throw new ModLibsException( "Invalid property " + propName + " of type " + typeof( T ).Name );
 			}
 			this.Overrides[propName] = value;
 		}

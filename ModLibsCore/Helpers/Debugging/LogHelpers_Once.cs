@@ -4,29 +4,29 @@ using Terraria;
 using Terraria.ModLoader;
 
 
-namespace ModLibsCore.Helpers.Debug {
+namespace ModLibsCore.Libraries.Debug {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to log outputs.
 	/// </summary>
-	public partial class LogHelpers {
+	public partial class LogLibraries {
 		internal static bool CanOutputOnceMessage( string msg, out string formattedMsg ) {
-			var logHelpers = ModContent.GetInstance<LogHelpers>();
-			if( logHelpers == null ) {
+			var logLibs = ModContent.GetInstance<LogLibraries>();
+			if( logLibs == null ) {
 				formattedMsg = msg;
 				return false;
 			}
 
 			bool isShown = false;
 
-			if( !logHelpers.UniqueMessages.ContainsKey( msg ) ) {
-				logHelpers.UniqueMessages[msg] = 1;
+			if( !logLibs.UniqueMessages.ContainsKey( msg ) ) {
+				logLibs.UniqueMessages[msg] = 1;
 				formattedMsg = msg;
 				isShown = true;
 			} else {
-				logHelpers.UniqueMessages[msg]++;
+				logLibs.UniqueMessages[msg]++;
 
-				if( ( Math.Log10( logHelpers.UniqueMessages[msg] ) % 1d ) == 0 ) {
-					formattedMsg = "(" + logHelpers.UniqueMessages[msg] + "th) " + msg;
+				if( ( Math.Log10( logLibs.UniqueMessages[msg] ) % 1d ) == 0 ) {
+					formattedMsg = "(" + logLibs.UniqueMessages[msg] + "th) " + msg;
 					isShown = true;
 				} else {
 					formattedMsg = msg;
@@ -44,8 +44,8 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void LogOnce( string msg ) {
-			if( LogHelpers.CanOutputOnceMessage(msg, out msg) ) {
-				LogHelpers.Log( "~" + msg );
+			if( LogLibraries.CanOutputOnceMessage(msg, out msg) ) {
+				LogLibraries.Log( "~" + msg );
 			}
 		}
 
@@ -55,12 +55,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		public static void AlertOnce( string msg = "" ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
-			(string Context, string Info, string Full) fmtMsg = LogHelpers.FormatMessageFull( msg, 3 );
+			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
 
 			string outMsg;
-			LogHelpers.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
+			LogLibraries.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
 
-			if( !LogHelpers.CanOutputOnceMessage( fmtMsg.Context+" "+msg, out _ ) ) {
+			if( !LogLibraries.CanOutputOnceMessage( fmtMsg.Context+" "+msg, out _ ) ) {
 				return;
 			}
 
@@ -73,12 +73,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		public static void WarnOnce( string msg = "" ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
-			(string Context, string Info, string Full) fmtMsg = LogHelpers.FormatMessageFull( msg, 3 );
+			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
 
 			string outMsg;
-			LogHelpers.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
+			LogLibraries.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
 
-			if( !LogHelpers.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
+			if( !LogLibraries.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
 				return;
 			}
 
@@ -93,8 +93,8 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		/// <param name="color"></param>
 		public static void LogAndPrintOnce( string msg, Color? color=null ) {
-			if( LogHelpers.CanOutputOnceMessage( msg, out msg ) ) {
-				LogHelpers.Log( "~" + msg );
+			if( LogLibraries.CanOutputOnceMessage( msg, out msg ) ) {
+				LogLibraries.Log( "~" + msg );
 				Main.NewText( "~" + msg, (color.HasValue ? color.Value : Color.White) );
 			}
 		}
@@ -106,12 +106,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="color"></param>
 		public static void AlertAndPrintOnce( string msg = "", Color? color = null ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
-			(string Context, string Info, string Full) fmtMsg = LogHelpers.FormatMessageFull( msg, 3 );
+			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
 
 			string outMsg;
-			LogHelpers.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
+			LogLibraries.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
 
-			if( !LogHelpers.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
+			if( !LogLibraries.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
 				return;
 			}
 
@@ -126,12 +126,12 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="color"></param>
 		public static void WarnAndPrintOnce( string msg = "", Color? color = null ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
-			(string Context, string Info, string Full) fmtMsg = LogHelpers.FormatMessageFull( msg, 3 );
+			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
 
 			string outMsg;
-			LogHelpers.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
+			LogLibraries.CanOutputOnceMessage( fmtMsg.Full, out outMsg );
 
-			if( !LogHelpers.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
+			if( !LogLibraries.CanOutputOnceMessage( fmtMsg.Context + " " + msg, out _ ) ) {
 				return;
 			}
 
@@ -147,11 +147,11 @@ namespace ModLibsCore.Helpers.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void ResetOnceMessage( string msg ) {
-			string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
-			var logHelpers = ModContent.GetInstance<LogHelpers>();
+			string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
+			var logLibs = ModContent.GetInstance<LogLibraries>();
 
-			logHelpers.UniqueMessages.Remove( "~" + msg );
-			logHelpers.UniqueMessages.Remove( "~" + fmtMsg );
+			logLibs.UniqueMessages.Remove( "~" + msg );
+			logLibs.UniqueMessages.Remove( "~" + fmtMsg );
 		}
 	}
 }

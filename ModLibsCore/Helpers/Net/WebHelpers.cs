@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 
 
-namespace ModLibsCore.Helpers.Net {
+namespace ModLibsCore.Libraries.Net {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to the web.
 	/// </summary>
-	public class WebHelpers {
+	public class WebLibraries {
 		/// <summary>
 		/// List of known popular(?) URL shorteners.
 		/// </summary>

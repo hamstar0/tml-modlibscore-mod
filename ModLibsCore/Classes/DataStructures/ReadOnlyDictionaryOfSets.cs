@@ -1,4 +1,4 @@
-﻿using ModLibsCore.Helpers.DotNET;
+﻿using ModLibsCore.Libraries.DotNET;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

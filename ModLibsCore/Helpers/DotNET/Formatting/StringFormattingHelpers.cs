@@ -2,11 +2,11 @@
 using System;
 
 
-namespace ModLibsCore.Helpers.DotNET.Formatting {
+namespace ModLibsCore.Libraries.DotNET.Formatting {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to formatting string data.
 	/// </summary>
-	public class StringFormattingHelpers {
+	public class StringFormattingLibraries {
 		/// <summary>
 		/// Escapes common markdown formatting characters.
 		/// </summary>
@@ -39,7 +39,7 @@ namespace ModLibsCore.Helpers.DotNET.Formatting {
 			const string digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 			if( radix < 2 || radix > digits.Length ) {
-				throw new ModHelpersException( "The radix must be >= 2 and <= " + digits.Length.ToString() );
+				throw new ModLibsException( "The radix must be >= 2 and <= " + digits.Length.ToString() );
 			}
 
 			if( number == 0 ) {

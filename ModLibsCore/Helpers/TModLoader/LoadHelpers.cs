@@ -2,18 +2,18 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
 using ModLibsCore.Internals.Logic;
 
 
-namespace ModLibsCore.Helpers.TModLoader {
+namespace ModLibsCore.Libraries.TModLoader {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to the state of the game.
 	/// </summary>
-	public partial class LoadHelpers {
+	public partial class LoadLibraries {
 		/// <summary>
-		/// Indicates if mods Mod Helpers is fully loaded (recipes, content, etc.).
+		/// Indicates if mods Mod Libs is fully loaded (recipes, content, etc.).
 		/// </summary>
 		/// <returns></returns>
 		public static bool IsModLoaded() {
@@ -33,7 +33,7 @@ namespace ModLibsCore.Helpers.TModLoader {
 		/// <returns></returns>
 		public static bool IsCurrentPlayerInGame() {
 			bool isTimerActive;
-			ReflectionHelpers.Get( Main.ActivePlayerFileData, "_isTimerActive", out isTimerActive );
+			ReflectionLibraries.Get( Main.ActivePlayerFileData, "_isTimerActive", out isTimerActive );
 
 			return !Main.gameMenu && isTimerActive;
 		}
@@ -44,7 +44,7 @@ namespace ModLibsCore.Helpers.TModLoader {
 		/// </summary>
 		/// <returns></returns>
 		public static bool IsWorldLoaded() {
-			if( !LoadHelpers.IsModLoaded() ) {  return false; }
+			if( !LoadLibraries.IsModLoaded() ) {  return false; }
 
 			return WorldLogic.IsLoaded;
 		}
@@ -55,19 +55,19 @@ namespace ModLibsCore.Helpers.TModLoader {
 		/// </summary>
 		/// <returns></returns>
 		public static bool IsWorldBeingPlayed() {
-			var loadHelpers = ModContent.GetInstance<LoadHelpers>();
+			var loadLibs = ModContent.GetInstance<LoadLibraries>();
 
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
-				if( !loadHelpers.IsLocalPlayerInGame_Hackish ) {
+				if( !loadLibs.IsLocalPlayerInGame_Hackish ) {
 					return false;
 				}
 
 				return Main.LocalPlayer.active;
 			} else {
-				if( !LoadHelpers.IsWorldLoaded() ) {
+				if( !LoadLibraries.IsWorldLoaded() ) {
 					return false;
 				}
-				if( !loadHelpers.HasServerBegunHavingPlayers_Hackish ) {
+				if( !loadLibs.HasServerBegunHavingPlayers_Hackish ) {
 					return false;
 				}
 
@@ -83,25 +83,25 @@ namespace ModLibsCore.Helpers.TModLoader {
 		/// <returns></returns>
 		public static bool IsWorldSafelyBeingPlayed() {
 			var mymod = ModLibsCoreMod.Instance;
-			var loadHelpers = ModContent.GetInstance<LoadHelpers>();
-			if( loadHelpers == null ) {
+			var loadLibs = ModContent.GetInstance<LoadLibraries>();
+			if( loadLibs == null ) {
 				return false;
 			}
 
-			bool notSafelyPlayed = loadHelpers.WorldStartupDelay >= ( 60 * 2 );
+			bool notSafelyPlayed = loadLibs.WorldStartupDelay >= ( 60 * 2 );
 
-			if( ModLibsConfig.Instance.DebugModeHelpersInfo && !notSafelyPlayed ) {
+			if( ModLibsConfig.Instance.DebugModeMiscInfo && !notSafelyPlayed ) {
 				if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
-					LogHelpers.LogOnce( DebugHelpers.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
-						+ "StartupDelay: "+!(loadHelpers.WorldStartupDelay < (60 * 2))
-						+ ", IsLocalPlayerInGame_Hackish: " + loadHelpers.IsLocalPlayerInGame_Hackish+" (true?)"
+					LogLibraries.LogOnce( DebugLibraries.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
+						+ "StartupDelay: "+!(loadLibs.WorldStartupDelay < (60 * 2))
+						+ ", IsLocalPlayerInGame_Hackish: " + loadLibs.IsLocalPlayerInGame_Hackish+" (true?)"
 					);
 				} else {
 					var myworld = ModContent.GetInstance<ModLibsWorld>();
-					LogHelpers.LogOnce( DebugHelpers.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
-						+ "StartupDelay: "+!(loadHelpers.WorldStartupDelay < (60 * 2))
-						+ ", IsModLoaded(): "+LoadHelpers.IsModLoaded()+" (true?)"
-						+ ", HasServerBegunHavingPlayers_Hackish: " + loadHelpers.HasServerBegunHavingPlayers_Hackish+" (true?)"
+					LogLibraries.LogOnce( DebugLibraries.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
+						+ "StartupDelay: "+!(loadLibs.WorldStartupDelay < (60 * 2))
+						+ ", IsModLoaded(): "+LoadLibraries.IsModLoaded()+" (true?)"
+						+ ", HasServerBegunHavingPlayers_Hackish: " + loadLibs.HasServerBegunHavingPlayers_Hackish+" (true?)"
 						+ ", HasSetupContent: "+mymod.HasSetupContent+" (true?)"
 						+ ", HasAddedRecipeGroups: "+mymod.HasAddedRecipeGroups+" (true?)"
 						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes+" (true?)" );

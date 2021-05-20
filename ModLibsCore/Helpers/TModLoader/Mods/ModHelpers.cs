@@ -1,5 +1,5 @@
 ﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -7,11 +7,11 @@ using System.Text;
 using Terraria.ModLoader.Core;
 
 
-namespace ModLibsCore.Helpers.TModLoader.Mods {
+namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to mods.
 	/// </summary>
-	public partial class ModHelpers {
+	public partial class ModLibraries {
 		/// <summary>
 		/// Loads a file contained within a given mod file (.tmod).
 		/// </summary>
@@ -22,7 +22,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 			using( var fileStream = File.OpenRead( tmod.path ) ) {
 			using( var hReader = new BinaryReader( fileStream ) ) {
 				if( Encoding.UTF8.GetString( hReader.ReadBytes( 4 ) ) != "TMOD" ) {
-					throw new ModHelpersException( "Magic Header != \"TMOD\"" );
+					throw new ModLibsException( "Magic Header != \"TMOD\"" );
 				}
 
 				var _tmlVers = new Version( hReader.ReadString() );

@@ -6,11 +6,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Extensions;
-using ModLibsCore.Helpers.DotNET.Reflection;
-using ModLibsCore.Helpers.Players;
-using ModLibsCore.Helpers.TModLoader;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
+using ModLibsCore.Libraries.DotNET.Reflection;
+using ModLibsCore.Libraries.Players;
+using ModLibsCore.Libraries.TModLoader;
 
 
 namespace ModLibsCore.Classes.PlayerData {
@@ -22,11 +22,11 @@ namespace ModLibsCore.Classes.PlayerData {
 			Player player = Main.player[playerWho];
 
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
-			IEnumerable<Type> plrDataTypes = ReflectionHelpers.GetAllAvailableSubTypesFromMods( typeof( CustomPlayerData ) );
-			string uid = PlayerIdentityHelpers.GetUniqueId( player );
+			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof( CustomPlayerData ) );
+			string uid = PlayerIdentityLibraries.GetUniqueId( player );
 
-			if( ModLibsConfig.Instance.DebugModeHelpersInfo ) {
-				LogHelpers.Alert( "Player "+player.name+" ("+playerWho+"; "+uid+") entered the game." );
+			if( ModLibsConfig.Instance.DebugModeMiscInfo ) {
+				LogLibraries.Alert( "Player "+player.name+" ("+playerWho+"; "+uid+") entered the game." );
 			}
 
 			foreach( Type plrDataType in plrDataTypes ) {
@@ -43,13 +43,13 @@ namespace ModLibsCore.Classes.PlayerData {
 
 				var typedParam = new TypedMethodParameter( typeof( object ), data );
 
-				ReflectionHelpers.RunMethod(
+				ReflectionLibraries.RunMethod(
 					instance: plrData,
 					methodName: "OnEnter",
 					args: new object[] { typedParam },
 					returnVal: out object _
 				);
-				ReflectionHelpers.RunMethod(
+				ReflectionLibraries.RunMethod(
 					instance: plrData,
 					methodName: "OnEnter",
 					args: new object[] { Main.myPlayer == playerWho, typedParam },
@@ -61,15 +61,15 @@ namespace ModLibsCore.Classes.PlayerData {
 		}
 
 		private static void Exit( int playerWho ) {
-			if( ModLibsConfig.Instance.DebugModeHelpersInfo ) {
+			if( ModLibsConfig.Instance.DebugModeMiscInfo ) {
 				Player plr = Main.player[playerWho];
 				string uid = "";
 
 				if( plr != null ) {
-					uid = PlayerIdentityHelpers.GetUniqueId( Main.player[playerWho] );
+					uid = PlayerIdentityLibraries.GetUniqueId( Main.player[playerWho] );
 				}
 
-				LogHelpers.Alert( "Player "+(plr?.name ?? "null")+" ("+playerWho+", "+uid+") exited the game." );
+				LogLibraries.Alert( "Player "+(plr?.name ?? "null")+" ("+playerWho+", "+uid+") exited the game." );
 			}
 
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
@@ -79,7 +79,7 @@ namespace ModLibsCore.Classes.PlayerData {
 				object data = plrData.OnExit();
 
 				if( data != null ) {
-					CustomPlayerData.SaveFileData( plrData.GetType().Name, PlayerIdentityHelpers.GetUniqueId(), data );
+					CustomPlayerData.SaveFileData( plrData.GetType().Name, PlayerIdentityLibraries.GetUniqueId(), data );
 				}
 			}
 
@@ -90,7 +90,7 @@ namespace ModLibsCore.Classes.PlayerData {
 		////////////////
 
 		internal static void UpdateAll() {
-			var singleton = TmlHelpers.SafelyGetInstance<CustomPlayerData>();
+			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
 			if( singleton == null ) {
 				return;
 			}
@@ -116,9 +116,9 @@ namespace ModLibsCore.Classes.PlayerData {
 				//bool isInGame = Main.netMode == NetmodeID.Server
 				//	? true
 				//	: plrWho == Main.myPlayer
-				//		? LoadHelpers.IsCurrentPlayerInGame()
+				//		? LoadLibraries.IsCurrentPlayerInGame()
 				//		: false;
-				
+
 				if( isNotMenu ) {
 					if( !containsKey ) {
 						CustomPlayerData.Enter( plrWho );

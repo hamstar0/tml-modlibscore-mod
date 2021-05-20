@@ -3,10 +3,10 @@ using Terraria;
 using Terraria.IO;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.Items.Attributes;
-using ModLibsCore.Helpers.NPCs.Attributes;
-using ModLibsCore.Helpers.Projectiles.Attributes;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.Items.Attributes;
+using ModLibsCore.Libraries.NPCs.Attributes;
+using ModLibsCore.Libraries.Projectiles.Attributes;
 using ModLibsCore.Internals.Logic;
 
 
@@ -46,9 +46,9 @@ namespace ModLibsCore {
 		////////////////
 
 		private void PostAddRecipesFull() {
-			ModContent.GetInstance<ItemAttributeHelpers>().PopulateNames();
-			ModContent.GetInstance<NPCAttributeHelpers>().PopulateNames();
-			ModContent.GetInstance<ProjectileAttributeHelpers>().PopulateNames();
+			ModContent.GetInstance<ItemAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<NPCAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<ProjectileAttributeLibraries>().PopulateNames();
 		}
 
 
@@ -60,7 +60,7 @@ namespace ModLibsCore {
 			try {
 				this.Loadables.OnModsUnload();
 			} catch( Exception e ) {
-				this.Logger.Warn( "!ModHelpers.ModHelpersMod.UnloadFull - " + e.ToString() );	//was Error(...)
+				this.Logger.Warn( "!ModLibs.ModLibsMod.UnloadFull - " + e.ToString() );	//was Error(...)
 			}
 
 			try {

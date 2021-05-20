@@ -3,18 +3,18 @@ using Microsoft.Xna.Framework;
 using Terraria;
 
 
-namespace ModLibsCore.Helpers.Projectiles.Attributes {
+namespace ModLibsCore.Libraries.Projectiles.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to projectile attributes.
 	/// </summary>
-	public partial class ProjectileAttributeHelpers {
+	public partial class ProjectileAttributeLibraries {
 		/// <summary>
 		/// Gets the "qualified" (human readable) name of a given projectile.
 		/// </summary>
 		/// <param name="proj"></param>
 		/// <returns></returns>
 		public static string GetQualifiedName( Projectile proj ) {
-			return ProjectileAttributeHelpers.GetQualifiedName( proj.type );
+			return ProjectileAttributeLibraries.GetQualifiedName( proj.type );
 		}
 
 		/// <summary>

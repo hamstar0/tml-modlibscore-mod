@@ -2,8 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.User;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.User;
 using ModLibsCore.Services.Debug.DataDumper;
 using ModLibsCore.Services.Network.SimplePacket;
 
@@ -13,13 +13,13 @@ namespace ModLibsCore.Internals.Packets {
 	class DataDumpRequestPacket : SimplePacketPayload {	//NetIORequestPayloadFromClient<DataDumpProtocol>
 		public static bool QuickRequestIf() {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
-				throw new ModHelpersException( "Not server" );
+				throw new ModLibsException( "Not server" );
 			}
 
 			if( !ModLibsConfig.Instance.DebugModeDumpAlsoServer ) {
 				return false;
 			}
-			if( !UserHelpers.HasBasicServerPrivilege(Main.LocalPlayer) ) {
+			if( !UserLibraries.HasBasicServerPrivilege(Main.LocalPlayer) ) {
 				return false;
 			}
 
@@ -45,8 +45,8 @@ namespace ModLibsCore.Internals.Packets {
 				return;
 			}
 
-			if( !UserHelpers.HasBasicServerPrivilege(Main.player[fromWho]) ) {
-				LogHelpers.Alert( "Player "+Main.player[fromWho].ToString()+" lacks server privilege." );
+			if( !UserLibraries.HasBasicServerPrivilege(Main.player[fromWho]) ) {
+				LogLibraries.Alert( "Player "+Main.player[fromWho].ToString()+" lacks server privilege." );
 
 				return;
 			}
@@ -58,7 +58,7 @@ namespace ModLibsCore.Internals.Packets {
 
 
 		public override void ReceiveOnClient() {
-			throw new ModHelpersException( "Not implemented" );
+			throw new ModLibsException( "Not implemented" );
 		}
 	}
 }

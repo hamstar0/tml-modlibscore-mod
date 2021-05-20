@@ -12,7 +12,7 @@ namespace ModLibsCore.Services.ModCompatibilities.ExtensibleInventoryCompat {
 		public static void ApplyCompats() {
 			Mod eiMod = ModLoader.GetMod( "ExtensibleInventory" );
 			if( eiMod == null ) {
-				throw new ModHelpersException( "Missing Extensible Inventory mod." );
+				throw new ModLibsException( "Missing Extensible Inventory mod." );
 			}
 			
 			if( ModLoader.GetMod( "kRPG" ) != null ) {

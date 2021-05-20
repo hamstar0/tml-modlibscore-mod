@@ -5,15 +5,15 @@ using System.Reflection;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
-namespace ModLibsCore.Helpers.DotNET.Reflection {
+namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionHelpers : ILoadable {
-		internal static ReflectionHelpers Instance => ModContent.GetInstance<ReflectionHelpers>();
+	public partial class ReflectionLibraries : ILoadable {
+		internal static ReflectionLibraries Instance => ModContent.GetInstance<ReflectionLibraries>();
 
 
 
@@ -28,7 +28,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 
 		////////////////
 		
-		internal ReflectionHelpers() { }
+		internal ReflectionLibraries() { }
 
 		void ILoadable.OnModsLoad() { }
 
@@ -48,9 +48,9 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 			}
 
 			if( !this.FieldPropMap[className].ContainsKey( fieldOrPropName ) ) {
-				result = (MemberInfo)classType.GetField( fieldOrPropName, ReflectionHelpers.MostAccess );
+				result = (MemberInfo)classType.GetField( fieldOrPropName, ReflectionLibraries.MostAccess );
 				if( result == null ) {
-					result = (MemberInfo)classType.GetProperty( fieldOrPropName, ReflectionHelpers.MostAccess );
+					result = (MemberInfo)classType.GetProperty( fieldOrPropName, ReflectionLibraries.MostAccess );
 				}
 
 				this.FieldPropMap[className][fieldOrPropName] = result;

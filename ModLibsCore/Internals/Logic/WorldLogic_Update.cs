@@ -1,5 +1,5 @@
 ﻿using Terraria.ModLoader;
-using ModLibsCore.Helpers.TModLoader;
+using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -24,20 +24,20 @@ namespace ModLibsCore.Internals.Logic {
 		////////////////
 
 		private void PreUpdateShared() {
-			var loadHelpers = ModContent.GetInstance<LoadHelpers>();
+			var loadLibs = ModContent.GetInstance<LoadLibraries>();
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
 
-			if( LoadHelpers.IsWorldLoaded() ) {
+			if( LoadLibraries.IsWorldLoaded() ) {
 				loadHooks.FulfillWorldLoadHooks();
 			}
 
-			if( LoadHelpers.IsWorldBeingPlayed() ) {
+			if( LoadLibraries.IsWorldBeingPlayed() ) {
 				loadHooks.FulfillWorldInPlayHooks();
 
-				loadHelpers.UpdateUponWorldBeingPlayed();
+				loadLibs.UpdateUponWorldBeingPlayed();
 			}
 
-			if( LoadHelpers.IsWorldSafelyBeingPlayed() ) {
+			if( LoadLibraries.IsWorldSafelyBeingPlayed() ) {
 				loadHooks.FulfillSafeWorldLoadHook();
 			}
 		}

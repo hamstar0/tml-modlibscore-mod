@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Classes.UI.Elements {

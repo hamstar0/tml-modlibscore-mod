@@ -1,6 +1,6 @@
 ﻿using System;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {

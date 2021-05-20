@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Items.Attributes;
-using ModLibsCore.Helpers.TModLoader.Commands;
+using ModLibsCore.Libraries.Items.Attributes;
+using ModLibsCore.Libraries.TModLoader.Commands;
 
 
 namespace ModLibsCore.Commands {
@@ -30,12 +30,12 @@ namespace ModLibsCore.Commands {
 
 			int _;
 			string itemName;
-			if( CommandsHelpers.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
-				if( !ItemAttributeHelpers.DisplayNamesToIds.ContainsKey(itemName) ) {
+			if( CommandsLibraries.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
+				if( !ItemAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
 					throw new UsageException( "Invalid item type." );
 				}
 
-				caller.Reply( "Item ID for " + itemName + ": " + ItemAttributeHelpers.DisplayNamesToIds[itemName], Color.Lime );
+				caller.Reply( "Item ID for " + itemName + ": " + ItemAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
 			}
 		}
 	}

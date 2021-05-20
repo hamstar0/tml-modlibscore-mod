@@ -5,18 +5,18 @@ using ModLibsCore.Classes.DataStructures;
 using ModLibsCore.Classes.Loadable;
 
 
-namespace ModLibsCore.Helpers.Items.Attributes {
+namespace ModLibsCore.Libraries.Items.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of items.
 	/// </summary>
-	public partial class ItemAttributeHelpers : ILoadable {
+	public partial class ItemAttributeLibraries : ILoadable {
 		private ReadOnlyDictionaryOfSets<string, int> _DisplayNamesToIds = null;
 
 
 
 		////////////////
 
-		internal ItemAttributeHelpers() { }
+		internal ItemAttributeLibraries() { }
 
 		void ILoadable.OnModsLoad() { }
 

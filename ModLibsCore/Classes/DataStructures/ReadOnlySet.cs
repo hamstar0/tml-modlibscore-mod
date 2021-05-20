@@ -26,7 +26,7 @@ namespace ModLibsCore.Classes.DataStructures {
 		/// <param name="myset">Set to wrap.</param>
 		public ReadOnlySet( ISet<T> myset ) {
 			if( myset == null ) {
-				throw new ModHelpersException( "Base set not defined." );
+				throw new ModLibsException( "Base set not defined." );
 			}
 			this.MySet = myset;
 		}

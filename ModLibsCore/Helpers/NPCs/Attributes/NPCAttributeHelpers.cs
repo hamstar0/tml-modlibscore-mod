@@ -4,16 +4,16 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.DataStructures;
 
 
-namespace ModLibsCore.Helpers.NPCs.Attributes {
+namespace ModLibsCore.Libraries.NPCs.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of NPCs.
 	/// </summary>
-	public partial class NPCAttributeHelpers {
+	public partial class NPCAttributeLibraries {
 		/// <summary>
 		/// Table of NPC ids by qualified names.
 		/// </summary>
 		public static ReadOnlyDictionaryOfSets<string, int> DisplayNamesToIds =>
-			ModContent.GetInstance<NPCAttributeHelpers>()._DisplayNamesToIds;
+			ModContent.GetInstance<NPCAttributeLibraries>()._DisplayNamesToIds;
 
 
 

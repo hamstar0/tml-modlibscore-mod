@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Classes.Loadable;
 
 

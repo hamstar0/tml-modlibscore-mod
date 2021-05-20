@@ -4,9 +4,9 @@ using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.TModLoader;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.TModLoader;
 
 
 namespace ModLibsCore.Classes.Loadable {
@@ -37,7 +37,7 @@ namespace ModLibsCore.Classes.Loadable {
 							continue;
 						}
 
-						var loadable = TmlHelpers.SafelyGetInstanceForType(classType) as ILoadable;
+						var loadable = TmlLibraries.SafelyGetInstanceForType(classType) as ILoadable;
 						if( loadable == null ) {
 							continue;
 						}
@@ -50,8 +50,8 @@ namespace ModLibsCore.Classes.Loadable {
 			foreach( ILoadable loadable in this.Loadables ) {
 				loadable.OnModsLoad();
 				//object _;
-				//if( !ReflectionHelpers.RunMethod( loadable.GetType(), loadable, "OnModsLoad", new object[] { }, out _ ) ) {
-				//	throw new ModHelpersException( "Could not call OnModsLoad for "+loadable.GetType() );
+				//if( !ReflectionLibraries.RunMethod( loadable.GetType(), loadable, "OnModsLoad", new object[] { }, out _ ) ) {
+				//	throw new ModLibsException( "Could not call OnModsLoad for "+loadable.GetType() );
 				//}
 			}
 		}

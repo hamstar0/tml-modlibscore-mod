@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.Players;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.Players;
 using ModLibsCore.Services.Network.SimplePacket;
 
 
@@ -36,12 +36,12 @@ namespace ModLibsCore.Internals.Packets {
 		////////////////
 
 		public override void ReceiveOnServer( int fromWho ) {
-			throw new ModHelpersException( "Not implemented" );
+			throw new ModLibsException( "Not implemented" );
 		}
 
 		public override void ReceiveOnClient() {
 			var protocol = new PlayerNewIdPacket(
-				(Dictionary<int, string>)ModContent.GetInstance<PlayerIdentityHelpers>().PlayerIds
+				(Dictionary<int, string>)ModContent.GetInstance<PlayerIdentityLibraries>().PlayerIds
 			);
 
 			SimplePacket.SendToClient( protocol, this.PlayerWho );
@@ -55,9 +55,9 @@ namespace ModLibsCore.Internals.Packets {
 	class PlayerNewIdPacket : SimplePacketPayload {   //NetIOBidirectionalPayload
 		public static void QuickSendToServer() {
 			var protocol = new PlayerNewIdPacket(
-				(Dictionary<int, string>)ModContent.GetInstance<PlayerIdentityHelpers>().PlayerIds
+				(Dictionary<int, string>)ModContent.GetInstance<PlayerIdentityLibraries>().PlayerIds
 			);
-			protocol.PlayerIds[Main.myPlayer] = PlayerIdentityHelpers.GetUniqueId( Main.LocalPlayer );
+			protocol.PlayerIds[Main.myPlayer] = PlayerIdentityLibraries.GetUniqueId( Main.LocalPlayer );
 
 			SimplePacket.SendToServer( protocol );
 		}
@@ -80,7 +80,7 @@ namespace ModLibsCore.Internals.Packets {
 			if( playerIds == null ) {
 				this.PlayerIds = new Dictionary<int, string>();
 
-				LogHelpers.Warn( "Player ids not specified." );
+				LogLibraries.Warn( "Player ids not specified." );
 				return;
 			}
 			this.PlayerIds = playerIds;
@@ -92,13 +92,13 @@ namespace ModLibsCore.Internals.Packets {
 		public override void ReceiveOnServer( int fromWho ) {
 			try {
 				if( this.PlayerIds.TryGetValue( fromWho, out string uid ) ) {
-					ModContent.GetInstance<PlayerIdentityHelpers>().PlayerIds[fromWho] = uid;
+					ModContent.GetInstance<PlayerIdentityLibraries>().PlayerIds[fromWho] = uid;
 				} else {
-					LogHelpers.Warn( "No UID reported from player id'd " + fromWho );
+					LogLibraries.Warn( "No UID reported from player id'd " + fromWho );
 				}
 			} catch {
 				this.PlayerIds = new Dictionary<int, string>();
-				LogHelpers.Warn( "Deserialization error." );
+				LogLibraries.Warn( "Deserialization error." );
 			}
 		}
 
@@ -107,9 +107,9 @@ namespace ModLibsCore.Internals.Packets {
 				this.PlayerIds.TryGetValue( 0, out string _ );
 			} catch {
 				this.PlayerIds = new Dictionary<int, string>();
-				LogHelpers.Warn( "Deserialization error." );
+				LogLibraries.Warn( "Deserialization error." );
 			}
-			ModContent.GetInstance<PlayerIdentityHelpers>().PlayerIds = this.PlayerIds;
+			ModContent.GetInstance<PlayerIdentityLibraries>().PlayerIds = this.PlayerIds;
 		}
 	}
 }

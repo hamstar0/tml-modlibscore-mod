@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.TModLoader;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.TModLoader;
 
 
 namespace ModLibsCore.Services.Timers {
@@ -30,7 +30,7 @@ namespace ModLibsCore.Services.Timers {
 				subFrames = span % (10000000 / 90);
 
 				then = now - subFrames;
-//DebugHelpers.Print("blahh", "frames: "+FRAMES, 20);
+//DebugLibraries.Print("blahh", "frames: "+FRAMES, 20);
 				
 				if( frames > 0 ) {
 //FRAMES+=frames;
@@ -49,7 +49,7 @@ namespace ModLibsCore.Services.Timers {
 		/// </summary>
 		/// <param name="action"></param>
 		public static void RunNow( Action action ) {
-			string ctx = TmlHelpers.SafelyGetRand().NextDouble() + "_" + action.GetHashCode();
+			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + action.GetHashCode();
 			Timers.SetTimer( ctx, 0, true, () => {
 				action();
 				return false;
@@ -62,7 +62,7 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="func">Return `true` to repeat timer.</param>
 		/// <param name="runsWhilePaused"></param>
 		public static void RunUntil( Func<bool> func, bool runsWhilePaused ) {
-			string ctx = TmlHelpers.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
+			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
 			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
 				return func();
 			} );
@@ -75,7 +75,7 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="times"></param>
 		/// <param name="runsWhilePaused"></param>
 		public static void RunUntil( Func<bool> func, int times, bool runsWhilePaused ) {
-			string ctx = TmlHelpers.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
+			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
 			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
 				if( !func() ) {
 					return false;
@@ -96,7 +96,7 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="func">Action to run. Returns `true` to make the action repeat after another period of the
 		/// given tick duration.</param>
 		public static void SetTimer( int tickDuration, bool runsWhilePaused, Func<bool> func ) {
-			string ctx = TmlHelpers.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
+			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
 
 			Timers.SetTimer( ctx, tickDuration, runsWhilePaused, func );
 		}

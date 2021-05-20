@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Classes.PlayerData {
@@ -38,7 +38,7 @@ namespace ModLibsCore.Classes.PlayerData {
 		/// @private
 		void ILoadable.OnModsLoad() {
 			if( this.CalledOnModsLoad ) {
-				throw new ModHelpersException( "Attempted multiple calls." );
+				throw new ModLibsException( "Attempted multiple calls." );
 			}
 			this.CalledOnModsLoad = true;
 
@@ -48,7 +48,7 @@ namespace ModLibsCore.Classes.PlayerData {
 		/// @private
 		void ILoadable.OnModsUnload() {
 			if( this.CalledOnModsUnload ) {
-				throw new ModHelpersException( "Attempted multiple calls." );
+				throw new ModLibsException( "Attempted multiple calls." );
 			}
 			this.CalledOnModsUnload = true;
 

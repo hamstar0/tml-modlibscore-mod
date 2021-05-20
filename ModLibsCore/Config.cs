@@ -6,7 +6,7 @@ using Terraria.ModLoader.Config;
 
 namespace ModLibsCore {
 	/// <summary>
-	/// Defines Mod Helpers config settings.
+	/// Defines Mod Libs config settings.
 	/// </summary>
 	[Label( "Mod Libs Core - Settings" )]
 	public class ModLibsConfig : ModConfig {
@@ -19,8 +19,6 @@ namespace ModLibsCore {
 
 		////////////////
 
-		//public static string ConfigFileName => "Mod Helpers Config.json";
-
 		/// @private
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
@@ -29,11 +27,11 @@ namespace ModLibsCore {
 		////////////////
 
 		/// <summary>
-		/// Outputs (to log) debug information relevant to specific Helpers functions (where applicable). Developers only.
+		/// Outputs (to log) misc debug information. Developers only.
 		/// </summary>
-		[Label( "Debug Mode - Helpers Info" )]
-		[Tooltip( "Outputs (to log) debug information relevant to Helpers functions (where applicable). Developers only." )]
-		public bool DebugModeHelpersInfo { get; set; } = false;
+		[Label( "Debug Mode - Misc Info" )]
+		[Tooltip( "Outputs (to log) misc debug information. Developers only." )]
+		public bool DebugModeMiscInfo { get; set; } = false;
 
 		/// <summary>
 		/// Catches and logs unhandled exceptions (before crash).

@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
 using ModLibsCore.Internals.Packets;
 
 
@@ -33,7 +33,7 @@ namespace ModLibsCore.Services.Debug.DataDumper {
 			string fullPath = fullFolder + Path.DirectorySeparatorChar + fileNameWithExtension;
 
 			DataDumper.PrepareDir();
-			return FileHelpers.SaveTextFile( data, fullPath, false, false );
+			return FileLibraries.SaveTextFile( data, fullPath, false, false );
 		}
 
 		////////////////

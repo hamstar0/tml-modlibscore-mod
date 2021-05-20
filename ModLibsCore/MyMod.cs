@@ -1,7 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 using ModLibsCore.Classes.Loadable;
 
@@ -15,7 +15,7 @@ namespace ModLibsCore {
 		////////////////
 
 		private static void UnhandledLogger( object sender, UnhandledExceptionEventArgs e ) {
-			LogHelpers.Log( "UNHANDLED crash? " + e.IsTerminating
+			LogLibraries.Log( "UNHANDLED crash? " + e.IsTerminating
 				+ " \nSender: " + sender.ToString()
 				+ " \nMessage: " + e.ExceptionObject.ToString() );
 		}
@@ -52,10 +52,10 @@ namespace ModLibsCore {
 
 
 		public override void Load() {
-			//ErrorLogger.Log( "Loading Mod Helpers. Ensure you have .NET Framework v4.6+ installed, if you're having problems." );
+			//ErrorLogger.Log( "Loading Mod Libs. Ensure you have .NET Framework v4.6+ installed, if you're having problems." );
 			//if( Environment.Version < new Version( 4, 0, 30319, 42000 ) ) {
-			//	SystemHelpers.OpenUrl( "https://dotnet.microsoft.com/download/dotnet-framework-runtime" );
-			//	throw new FileNotFoundException( "Mod Helpers "+this.Version+" requires .NET Framework v4.6+ to work." );
+			//	SystemLibraries.OpenUrl( "https://dotnet.microsoft.com/download/dotnet-framework-runtime" );
+			//	throw new FileNotFoundException( "Mod Libs "+this.Version+" requires .NET Framework v4.6+ to work." );
 			//}
 
 			this.LoadFull();
@@ -65,7 +65,7 @@ namespace ModLibsCore {
 
 		public override void Unload() {
 			try {
-				LogHelpers.Alert( "Unloading mod..." );
+				LogLibraries.Alert( "Unloading mod..." );
 			} catch { }
 
 			this.UnloadFull();
@@ -105,7 +105,7 @@ namespace ModLibsCore {
 			if( !this.HasAddedRecipeGroups ) { return; }
 			if( !this.HasAddedRecipes ) { return; }
 			
-			Services.Timers.Timers.SetTimer( "ModHelpersLoadFinish", 1, true, () => {
+			Services.Timers.Timers.SetTimer( 1, true, () => {
 				ModContent.GetInstance<LoadHooks>().FulfillPostModLoadHooks();
 				return false;
 			} );
@@ -153,7 +153,7 @@ namespace ModLibsCore {
 		////////////////
 
 		//public override void UpdateMusic( ref int music ) { //, ref MusicPriority priority
-		//	this.MusicHelpers.UpdateMusic();
+		//	this.MusicLibraries.UpdateMusic();
 		//}
 	}
 }

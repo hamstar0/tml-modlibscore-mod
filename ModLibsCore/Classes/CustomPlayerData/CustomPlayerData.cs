@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.DotNET.Extensions;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace ModLibsCore.Classes.PlayerData {

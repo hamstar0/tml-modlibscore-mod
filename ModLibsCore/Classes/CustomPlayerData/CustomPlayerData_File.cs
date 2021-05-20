@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using Terraria;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.Misc;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.Misc;
 
 
 namespace ModLibsCore.Classes.PlayerData {
@@ -15,7 +15,7 @@ namespace ModLibsCore.Classes.PlayerData {
 	/// </summary>
 	public partial class CustomPlayerData : ILoadable {
 		/// <summary></summary>
-		public static string BaseFolder => "Player" + Path.DirectorySeparatorChar + "ModHelpers";
+		public static string BaseFolder => "Player" + Path.DirectorySeparatorChar + "ModLibs";
 
 
 
@@ -26,10 +26,10 @@ namespace ModLibsCore.Classes.PlayerData {
 
 			try {
 				Directory.CreateDirectory( Main.SavePath );
-				Directory.CreateDirectory( Main.SavePath + Path.DirectorySeparatorChar + ModCustomDataFileHelpers.BaseFolder );
+				Directory.CreateDirectory( Main.SavePath + Path.DirectorySeparatorChar + ModCustomDataFileLibraries.BaseFolder );
 				Directory.CreateDirectory( fullDir );
 			} catch( IOException e ) {
-				LogHelpers.Warn( "Failed to prepare directory: " + fullDir + " - " + e.ToString() );
+				LogLibraries.Warn( "Failed to prepare directory: " + fullDir + " - " + e.ToString() );
 				throw new IOException( "Failed to prepare directory: " + fullDir, e );
 			}
 		}
@@ -58,10 +58,10 @@ namespace ModLibsCore.Classes.PlayerData {
 			try {
 				if( ModLibsConfig.Instance.CustomPlayerDataAsText ) {
 					fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".json" );
-					dataStr = FileHelpers.LoadTextFile( fullPath, false );
+					dataStr = FileLibraries.LoadTextFile( fullPath, false );
 				} else {
 					fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".dat" );
-					byte[] dataBytes = FileHelpers.LoadBinaryFile( fullPath, false, out _ );
+					byte[] dataBytes = FileLibraries.LoadBinaryFile( fullPath, false, out _ );
 					if( dataBytes == null ) {
 						return null;
 					}
@@ -76,10 +76,10 @@ namespace ModLibsCore.Classes.PlayerData {
 				}
 			} catch( IOException e ) {
 				string fullDir = CustomPlayerData.GetFullDirectoryPath( className );
-				LogHelpers.Warn( "Failed to load file " + playerUid + " at " + fullDir + " - " + e.ToString() );
+				LogLibraries.Warn( "Failed to load file " + playerUid + " at " + fullDir + " - " + e.ToString() );
 				throw new IOException( "Failed to load file " + playerUid + " at " + fullDir, e );
 			} catch( Exception e ) {
-				throw new ModHelpersException( "Failed to load file " + playerUid, e );
+				throw new ModLibsException( "Failed to load file " + playerUid, e );
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace ModLibsCore.Classes.PlayerData {
 
 		private static bool SaveFileData( string className, string playerUid, object data ) {
 			if( data == null ) {
-				LogHelpers.Warn( "Failed to save file " + playerUid + " - Data is null." );
+				LogLibraries.Warn( "Failed to save file " + playerUid + " - Data is null." );
 				return false;
 			}
 
@@ -97,7 +97,7 @@ namespace ModLibsCore.Classes.PlayerData {
 			string relDir = CustomPlayerData.GetRelativeDirectoryPath( className );
 
 			if( data == null ) {
-				LogHelpers.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - Data is null." );
+				LogLibraries.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - Data is null." );
 				return false;
 			}
 
@@ -106,19 +106,19 @@ namespace ModLibsCore.Classes.PlayerData {
 					string fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".json" );
 					string dataJson = JsonConvert.SerializeObject( data, new JsonSerializerSettings() );
 					
-					return FileHelpers.SaveTextFile( dataJson, fullPath, false, true );
+					return FileLibraries.SaveTextFile( dataJson, fullPath, false, true );
 				} else {
 					string _;
 					string fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".dat" );
 					string dataJson = JsonConvert.SerializeObject( data, new JsonSerializerSettings() );
-//LogHelpers.Log( "SAVE FILE DATA: "+dataJson);
+//LogLibraries.Log( "SAVE FILE DATA: "+dataJson);
 
 					byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes( dataJson );
 
-					return FileHelpers.SaveBinaryFile( dataBytes, fullPath, false, true, out _ );
+					return FileLibraries.SaveBinaryFile( dataBytes, fullPath, false, true, out _ );
 				}
 			} catch( IOException e ) {
-				LogHelpers.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - " + e.ToString() );
+				LogLibraries.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - " + e.ToString() );
 				throw new IOException( "Failed to save json file " + playerUid + " at " + relDir, e );
 			}
 		}

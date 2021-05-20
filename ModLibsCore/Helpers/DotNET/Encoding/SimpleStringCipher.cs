@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 
-namespace ModLibsCore.Helpers.DotNET.Encoding {
+namespace ModLibsCore.Libraries.DotNET.Encoding {
 	/// <summary>
 	/// Simple string cipher encrypting and decrypting.
 	/// 

@@ -3,11 +3,11 @@ using Terraria.Social;
 using Terraria.Utilities;
 
 
-namespace ModLibsCore.Helpers.DotNET {
+namespace ModLibsCore.Libraries.DotNET {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to basic file IO.
 	/// </summary>
-	public partial class FileHelpers {
+	public partial class FileLibraries {
 		/// <summary>
 		/// Saves string data to a text file.
 		/// </summary>

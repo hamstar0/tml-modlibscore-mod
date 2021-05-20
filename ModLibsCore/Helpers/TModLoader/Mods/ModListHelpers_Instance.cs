@@ -5,14 +5,14 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Extensions;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
-namespace ModLibsCore.Helpers.TModLoader.Mods {
+namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// @private
-	public partial class ModListHelpers : ILoadable {
+	public partial class ModListLibraries : ILoadable {
 		private IDictionary<Services.TML.BuildPropertiesViewer, Mod> ModsByBuildProps = new Dictionary<Services.TML.BuildPropertiesViewer, Mod>();
 		private IDictionary<string, ISet<Mod>> ModsByAuthor = new Dictionary<string, ISet<Mod>>();
 		private IDictionary<string, Services.TML.BuildPropertiesViewer> BuildPropsByModNames = new Dictionary<string, Services.TML.BuildPropertiesViewer>();
@@ -37,8 +37,8 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 				if( mod.Name == "tModLoader" ) { continue; }
 				
 				TmodFile tmod;
-				if( !ReflectionHelpers.Get( mod, "modFile", out tmod ) || tmod == null ) {
-					LogHelpers.Warn( "Mod " + mod.DisplayName + " has no file data." );
+				if( !ReflectionLibraries.Get( mod, "modFile", out tmod ) || tmod == null ) {
+					LogLibraries.Warn( "Mod " + mod.DisplayName + " has no file data." );
 					continue;
 				}
 
@@ -55,7 +55,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		private IDictionary<string, ISet<Mod>> GetModsByAuthor() {
 			var mods = new Dictionary<string, ISet<Mod>>();
 
-			foreach( var kv in ModListHelpers.GetLoadedModsAndBuildInfo() ) {
+			foreach( var kv in ModListLibraries.GetLoadedModsAndBuildInfo() ) {
 				Services.TML.BuildPropertiesViewer editor = kv.Key;
 				Mod mod = kv.Value;
 
@@ -68,7 +68,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		}
 
 		private IDictionary<string, Services.TML.BuildPropertiesViewer> GetBuildPropsByModName() {
-			return ModListHelpers.GetLoadedModsAndBuildInfo()
+			return ModListLibraries.GetLoadedModsAndBuildInfo()
 				.ToDictionary( kv=>kv.Value.Name, kv=>kv.Key );
 		}
 	}

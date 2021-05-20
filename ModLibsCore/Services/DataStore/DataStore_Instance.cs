@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.DataStore {

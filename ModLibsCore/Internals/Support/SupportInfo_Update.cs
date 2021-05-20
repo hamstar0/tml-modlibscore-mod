@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using ModLibsCore.Classes.UI.Elements;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Internals.Menus.Support {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {

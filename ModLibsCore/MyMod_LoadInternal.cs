@@ -2,9 +2,9 @@
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Players;
-using ModLibsCore.Helpers.World;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Players;
+using ModLibsCore.Libraries.World;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Debug.DataDumper;
 
 
@@ -13,7 +13,7 @@ namespace ModLibsCore {
 	partial class ModLibsCoreMod : Mod {
 		private void LoadExceptionBehavior() {
 			if( ModLibsConfig.Instance.DebugModeDisableSilentLogging ) {
-				var flags = Helpers.DotNET.Reflection.ReflectionHelpers.MostAccess;
+				var flags = Libraries.DotNET.Reflection.ReflectionLibraries.MostAccess;
 				FieldInfo fceField = typeof( AppDomain ).GetField( "FirstChanceException", flags );
 				if( fceField == null ) {
 					fceField = typeof( AppDomain ).GetField( "_firstChanceException", flags );
@@ -39,7 +39,7 @@ namespace ModLibsCore {
 
 		private void LoadDataSources() {
 			DataDumper.SetDumpSource( "WorldUidWithSeed", () => {
-				return "  " + WorldHelpers.GetUniqueIdForCurrentWorld(true) + " (net mode: " + Main.netMode + ")";
+				return "  " + WorldLibraries.GetUniqueIdForCurrentWorld(true) + " (net mode: " + Main.netMode + ")";
 			} );
 
 			DataDumper.SetDumpSource( "PlayerUid", () => {
@@ -47,7 +47,7 @@ namespace ModLibsCore {
 					return "  Unobtainable";
 				}
 
-				return "  " + PlayerIdentityHelpers.GetUniqueId();
+				return "  " + PlayerIdentityLibraries.GetUniqueId();
 			} );
 		}
 	}

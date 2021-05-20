@@ -2,11 +2,11 @@
 using Terraria;
 
 
-namespace ModLibsCore.Helpers.Debug {
+namespace ModLibsCore.Libraries.Debug {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to log outputs.
 	/// </summary>
-	public partial class LogHelpers {
+	public partial class LogLibraries {
 		private static void DirectInfo( string msg ) {
 			var mymod = ModLibsCoreMod.Instance;
 

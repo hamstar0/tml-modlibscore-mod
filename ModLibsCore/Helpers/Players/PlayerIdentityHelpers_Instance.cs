@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
-namespace ModLibsCore.Helpers.Players {
+namespace ModLibsCore.Libraries.Players {
 	/// @private
-	public partial class PlayerIdentityHelpers : ILoadable {
+	public partial class PlayerIdentityLibraries : ILoadable {
 		internal IDictionary<int, string> PlayerIds = new Dictionary<int, string>();
 
 

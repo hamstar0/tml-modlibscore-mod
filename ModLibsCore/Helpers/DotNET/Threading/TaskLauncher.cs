@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
 
 
-namespace ModLibsCore.Helpers.DotNET.Threading {
+namespace ModLibsCore.Libraries.DotNET.Threading {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to threading.
 	/// </summary>
@@ -51,7 +51,7 @@ namespace ModLibsCore.Helpers.DotNET.Threading {
 		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnPostModsLoad() {
-			Timers.SetTimer( "ModHelpersTasksPrune", 1, false, () => {
+			Timers.SetTimer( 1, false, () => {
 				foreach( Task task in this.Tasks.ToArray() ) {
 					if( task == null || task.IsCompleted || task.IsCanceled ) {
 						this.Tasks.Remove( task );
@@ -67,7 +67,7 @@ namespace ModLibsCore.Helpers.DotNET.Threading {
 
 			Task[] tasks = this.Tasks.Where(t=>t!=null).ToArray();
 			if( !Task.WaitAll( tasks, new TimeSpan( 0, 0, 10 ) ) ) {
-				LogHelpers.Alert( "Not all tasks successfully cancelled." );
+				LogLibraries.Alert( "Not all tasks successfully cancelled." );
 			}
 
 			this.CancelTokenSrc.Dispose();

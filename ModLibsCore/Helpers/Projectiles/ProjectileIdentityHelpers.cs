@@ -4,14 +4,13 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 
-namespace ModLibsCore.Helpers.Projectiles {
+namespace ModLibsCore.Libraries.Projectiles {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to players relative to projectile identification
 	/// </summary>
-	public partial class ProjectileIdentityHelpers {
+	public partial class ProjectileIdentityLibraries {
 		/// <summary>
 		/// Gets a (human readable) unique key (as segments) from a given projectile type.
 		/// </summary>

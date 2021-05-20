@@ -2,7 +2,7 @@
 using Terraria.ModLoader.Config;
 
 
-namespace HamstarHelpers.Classes.UI.Config {
+namespace ModLibsCore.Classes.UI.Config {
 	/// <summary>
 	/// Implements a ModConfig wrapper for a bool to allow nullable behavior.
 	/// </summary>

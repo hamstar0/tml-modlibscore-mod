@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.TML;
 
 
-namespace ModLibsCore.Helpers.TModLoader.Mods {
+namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to mod list building.
 	/// </summary>
-	public partial class ModListHelpers {
+	public partial class ModListLibraries {
 		/// <summary>
 		/// Gets a map of loaded mods with their build information.
 		/// </summary>
 		/// <returns></returns>
 		public static IDictionary<BuildPropertiesViewer, Mod> GetLoadedModsAndBuildInfo() {
-			var mlHelpers = ModContent.GetInstance<ModListHelpers>();
+			var mlLibs = ModContent.GetInstance<ModListLibraries>();
 
-			if( mlHelpers.ModsByBuildProps != null ) {
-				return mlHelpers.ModsByBuildProps;
+			if( mlLibs.ModsByBuildProps != null ) {
+				return mlLibs.ModsByBuildProps;
 			}
 
-			mlHelpers.ModsByBuildProps = mlHelpers.GetModsByBuildProps();
-			return mlHelpers.ModsByBuildProps;
+			mlLibs.ModsByBuildProps = mlLibs.GetModsByBuildProps();
+			return mlLibs.ModsByBuildProps;
 		}
 
 		////////////////
@@ -33,13 +33,13 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		/// </summary>
 		/// <returns></returns>
 		public static IDictionary<string, BuildPropertiesViewer> GetLoadedModNamesWithBuildProps() {
-			var mlHelpers = ModContent.GetInstance<ModListHelpers>();
-			if( mlHelpers.BuildPropsByModNames != null ) {
-				return mlHelpers.BuildPropsByModNames;
+			var mlLibs = ModContent.GetInstance<ModListLibraries>();
+			if( mlLibs.BuildPropsByModNames != null ) {
+				return mlLibs.BuildPropsByModNames;
 			}
 
-			mlHelpers.BuildPropsByModNames = mlHelpers.GetBuildPropsByModName();
-			return mlHelpers.BuildPropsByModNames;
+			mlLibs.BuildPropsByModNames = mlLibs.GetBuildPropsByModName();
+			return mlLibs.BuildPropsByModNames;
 		}
 
 		/// <summary>
@@ -47,13 +47,13 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		/// </summary>
 		/// <returns></returns>
 		public static IDictionary<string, ISet<Mod>> GetLoadedModsByAuthor() {
-			var mlHelpers = ModContent.GetInstance<ModListHelpers>();
-			if( mlHelpers.ModsByBuildProps != null ) {
-				return mlHelpers.ModsByAuthor;
+			var mlLibs = ModContent.GetInstance<ModListLibraries>();
+			if( mlLibs.ModsByBuildProps != null ) {
+				return mlLibs.ModsByAuthor;
 			}
 
-			mlHelpers.ModsByAuthor = mlHelpers.GetModsByAuthor();
-			return mlHelpers.ModsByAuthor;
+			mlLibs.ModsByAuthor = mlLibs.GetModsByAuthor();
+			return mlLibs.ModsByAuthor;
 		}
 	}
 }

@@ -4,11 +4,11 @@ using Terraria;
 using Terraria.ModLoader;
 
 
-namespace ModLibsCore.Helpers.Debug {
+namespace ModLibsCore.Libraries.Debug {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to log outputs.
 	/// </summary>
-	public partial class LogHelpers {
+	public partial class LogLibraries {
 		/// <summary>
 		/// Formats a given message as it would appear in the log output.
 		/// </summary>
@@ -17,7 +17,7 @@ namespace ModLibsCore.Helpers.Debug {
 		/// No output if -1 is set.</param>
 		/// <returns></returns>
 		public static string FormatMessage( string msg, int contextDepth = -1 ) {
-			return LogHelpers.FormatMessageFull( msg, contextDepth ).Full;
+			return LogLibraries.FormatMessageFull( msg, contextDepth ).Full;
 		}
 
 		/// <summary>
@@ -33,12 +33,12 @@ namespace ModLibsCore.Helpers.Debug {
 
 			if( mymod == null ) {
 				contextDepth = contextDepth == -1 ? 2 : contextDepth;
-				context = DebugHelpers.GetCurrentContext( contextDepth );
+				context = DebugLibraries.GetCurrentContext( contextDepth );
 
-				return ( context, "", "!Mod Helpers unloaded. Message called from: "+context );
+				return ( context, "", "!Mod Libs unloaded. Message called from: "+context );
 			}
 
-			var logHelpers = ModContent.GetInstance<LogHelpers>();
+			var logLibs = ModContent.GetInstance<LogLibraries>();
 			string output;
 			double nowSeconds;
 
@@ -46,7 +46,7 @@ namespace ModLibsCore.Helpers.Debug {
 			try {
 				var beginning = new DateTime( 1970, 1, 1, 0, 0, 0 );
 				TimeSpan nowTotalSpan = DateTime.UtcNow.Subtract( beginning );
-				nowSeconds = nowTotalSpan.TotalSeconds - logHelpers.StartTime;
+				nowSeconds = nowTotalSpan.TotalSeconds - logLibs.StartTime;
 
 				output = "";
 			} catch( Exception e ) {
@@ -77,7 +77,7 @@ namespace ModLibsCore.Helpers.Debug {
 			// Generate calling context output
 			if( contextDepth >= 0 ) {
 				try {
-					context = DebugHelpers.GetCurrentContext( contextDepth );
+					context = DebugLibraries.GetCurrentContext( contextDepth );
 				} catch {
 					context = "";
 				}
@@ -120,7 +120,7 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		public static void Log( string msg = "" ) {
 			try {
-				ModLibsCoreMod.Instance.Logger.Info( LogHelpers.FormatMessage( msg ) );
+				ModLibsCoreMod.Instance.Logger.Info( LogLibraries.FormatMessage( msg ) );
 			} catch { }
 		}
 
@@ -130,11 +130,11 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		public static void Alert( string msg = "" ) {
 			try {
-				string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
+				string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
 
 				ModLibsCoreMod.Instance.Logger.Warn( fmtMsg );   //was Error(...)
 			} catch { }
-			//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg : "") );
+			//LogLibraries.Log( DebugLibraries.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg : "") );
 		}
 
 		/// <summary>
@@ -143,11 +143,11 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="msg"></param>
 		public static void Warn( string msg = "" ) {
 			try {
-				string fmtMsg = LogHelpers.FormatMessage( msg, 3 );
+				string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
 
 				ModLibsCoreMod.Instance.Logger.Error( fmtMsg );	//was Fatal(...)
 			} catch { }
-			//LogHelpers.Log( DebugHelpers.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg: "") );
+			//LogLibraries.Log( DebugLibraries.GetCurrentContext( 2 ) + ((msg != "") ? " - " + msg: "") );
 		}
 
 
@@ -162,10 +162,10 @@ namespace ModLibsCore.Helpers.Debug {
 		/// <param name="separator"></param>
 		/// <param name="spacer"></param>
 		public static void LogContext( string msg, bool omitNamespace=true, int max=-1, string separator="\n", string spacer="  " ) {
-			IList<string> contextSlice = DebugHelpers.GetContextSlice( 3, omitNamespace, max );
+			IList<string> contextSlice = DebugLibraries.GetContextSlice( 3, omitNamespace, max );
 			string context = string.Join( separator+spacer, contextSlice );
 
-			LogHelpers.Log( msg + " at " + context );
+			LogLibraries.Log( msg + " at " + context );
 		}
 	}
 }

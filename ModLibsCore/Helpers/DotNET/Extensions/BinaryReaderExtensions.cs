@@ -2,7 +2,7 @@
 using System.IO;
 
 
-namespace ModLibsCore.Helpers.DotNET.Extensions {
+namespace ModLibsCore.Libraries.DotNET.Extensions {
 	/// <summary>
 	/// Extension methods for BinaryReader.
 	/// </summary>

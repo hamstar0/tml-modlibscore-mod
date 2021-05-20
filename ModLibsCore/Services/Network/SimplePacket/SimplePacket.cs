@@ -6,9 +6,9 @@ using NetSerializer;
 using Terraria;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
-using ModLibsCore.Helpers.DotNET.Serialization;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
+using ModLibsCore.Libraries.DotNET.Serialization;
 
 
 namespace ModLibsCore.Services.Network.SimplePacket {
@@ -25,7 +25,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 		////////////////
 
 		void ILoadable.OnModsLoad() {
-			IList<Type> payloadTypes = ReflectionHelpers
+			IList<Type> payloadTypes = ReflectionLibraries
 				.GetAllAvailableSubTypesFromMods( typeof(SimplePacketPayload) )
 				.OrderBy( t => t.Namespace + "." + t.Name )
 				.ToList();
@@ -37,14 +37,14 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 			foreach( Type payloadType in payloadTypes.ToArray() ) {
 				if( !payloadType.IsSerializable ) {
 					payloadTypes.Remove( payloadType );
-					LogHelpers.Warn( "Invalid payload type "+payloadType.Name+" "
+					LogLibraries.Warn( "Invalid payload type "+payloadType.Name+" "
 						+"(in "+payloadType.Assembly.GetName().Name+")" );
 					continue;
 				}
 				foreach( FieldInfo field in payloadType.GetFields() ) {
 					if( !field.FieldType.IsSerializable && !field.IsNotSerialized ) {
 						payloadTypes.Remove( payloadType );
-						LogHelpers.Warn( "Invalid payload type "+payloadType.Name+"; field "+field.Name+" not serializeable "
+						LogLibraries.Warn( "Invalid payload type "+payloadType.Name+"; field "+field.Name+" not serializeable "
 							+"(in "+payloadType.Assembly.GetName().Name+")" );
 					}
 				}

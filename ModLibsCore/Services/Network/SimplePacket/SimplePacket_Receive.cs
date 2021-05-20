@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Network.SimplePacket {
@@ -18,7 +18,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 					.IsDefined( typeof( IsNoisyAttribute ), false );
 
 				if( !isNoisy ) {
-					LogHelpers.Log( "<" + dataType.Name );
+					LogLibraries.Log( "<" + dataType.Name );
 				}
 			}
 
@@ -27,7 +27,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 			} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				data.ReceiveOnClient();
 			} else {
-				throw new ModHelpersException( "Not MP" );
+				throw new ModLibsException( "Not MP" );
 			}
 		}
 	}

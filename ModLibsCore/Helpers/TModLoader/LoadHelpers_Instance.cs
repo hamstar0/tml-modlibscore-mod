@@ -1,12 +1,12 @@
 ﻿using System;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
-namespace ModLibsCore.Helpers.TModLoader {
+namespace ModLibsCore.Libraries.TModLoader {
 	/// @private
-	public partial class LoadHelpers : ILoadable {
+	public partial class LoadLibraries : ILoadable {
 		internal uint WorldStartupDelay = 0;
 
 		internal bool IsLocalPlayerInGame_Hackish = false;
@@ -16,7 +16,7 @@ namespace ModLibsCore.Helpers.TModLoader {
 
 		////////////////
 
-		internal LoadHelpers() {
+		internal LoadLibraries() {
 			LoadHooks.AddWorldLoadEachHook( () => {
 				this.WorldStartupDelay = 0;
 			} );

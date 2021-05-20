@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
-namespace ModLibsCore.Helpers.XNA {
+namespace ModLibsCore.Libraries.XNA {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to XNA. 
 	/// </summary>
-	public partial class XNASpritebatchHelpers {
+	public partial class XNASpritebatchLibraries {
 		/// <summary>
 		/// Reports if the given SpriteBatch has begun drawing.
 		/// </summary>
@@ -18,7 +18,7 @@ namespace ModLibsCore.Helpers.XNA {
 		/// <param name="isBegun"></param>
 		/// <returns>If `false`, could not determine one way or the other.</returns>
 		public static bool IsSpriteBatchBegun( SpriteBatch sb, out bool isBegun ) {
-			var xna = ModContent.GetInstance<XNASpritebatchHelpers>();
+			var xna = ModContent.GetInstance<XNASpritebatchLibraries>();
 			object isBegunRaw = xna?.SpriteBatchBegunField?.GetValue( sb );
 
 			if( isBegunRaw != null ) {
@@ -36,7 +36,7 @@ namespace ModLibsCore.Helpers.XNA {
 		/// <param name="isBegun"></param>
 		/// <returns>If `false`, could not determine one way or the other.</returns>
 		public static bool IsMainSpriteBatchBegun( out bool isBegun ) {
-			return XNASpritebatchHelpers.IsSpriteBatchBegun( Main.spriteBatch, out isBegun );
+			return XNASpritebatchLibraries.IsSpriteBatchBegun( Main.spriteBatch, out isBegun );
 		}
 
 
@@ -51,7 +51,7 @@ namespace ModLibsCore.Helpers.XNA {
 		/// <param name="forceDraw">Forces drawing even when the SpriteBatch is already `Begun()`.</param>
 		/// <returns>`true` if no issues occurred with the drawing.</returns>
 		public static bool DrawBatch( Action<SpriteBatch> draw, out bool isBegun, bool forceDraw=true ) {
-			if( !XNASpritebatchHelpers.IsMainSpriteBatchBegun( out isBegun ) ) {
+			if( !XNASpritebatchLibraries.IsMainSpriteBatchBegun( out isBegun ) ) {
 				return false; // take no chances
 			}
 
@@ -61,17 +61,17 @@ namespace ModLibsCore.Helpers.XNA {
 				try {
 					draw( Main.spriteBatch );
 				} catch( Exception e ) {
-					LogHelpers.WarnOnce( e.ToString() );
+					LogLibraries.WarnOnce( e.ToString() );
 				}
 				
 				Main.spriteBatch.End();
 			} else {
 				if( forceDraw ) {
-					LogHelpers.WarnOnce( DebugHelpers.GetCurrentContext( 2 ) + " - SpriteBatch already begun. Drawing anyway..." );
+					LogLibraries.WarnOnce( DebugLibraries.GetCurrentContext( 2 ) + " - SpriteBatch already begun. Drawing anyway..." );
 					try {
 						draw( Main.spriteBatch );
 					} catch( Exception e ) {
-						LogHelpers.WarnOnce( e.ToString() );
+						LogLibraries.WarnOnce( e.ToString() );
 					}
 				}
 			}
@@ -107,7 +107,7 @@ namespace ModLibsCore.Helpers.XNA {
 				out bool isBegun,
 				bool forceBeginAnew = false,
 				bool forceDraw = true ) {
-			if( !XNASpritebatchHelpers.IsMainSpriteBatchBegun( out isBegun ) ) {
+			if( !XNASpritebatchLibraries.IsMainSpriteBatchBegun( out isBegun ) ) {
 				return false; // take no chances
 			}
 
@@ -122,17 +122,17 @@ namespace ModLibsCore.Helpers.XNA {
 				try {
 					draw( Main.spriteBatch );
 				} catch( Exception e ) {
-					LogHelpers.WarnOnce( e.ToString() );
+					LogLibraries.WarnOnce( e.ToString() );
 				}
 
 				Main.spriteBatch.End();
 			} else {
 				if( forceDraw ) {
-					LogHelpers.WarnOnce( DebugHelpers.GetCurrentContext( 2 ) + " - SpriteBatch already begun. Drawing anyway..." );
+					LogLibraries.WarnOnce( DebugLibraries.GetCurrentContext( 2 ) + " - SpriteBatch already begun. Drawing anyway..." );
 					try {
 						draw( Main.spriteBatch );
 					} catch( Exception e ) {
-						LogHelpers.WarnOnce( e.ToString() );
+						LogLibraries.WarnOnce( e.ToString() );
 					}
 				}
 			}

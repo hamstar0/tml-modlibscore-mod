@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using ModLibsCore.Helpers.User;
+using ModLibsCore.Libraries.User;
 using ModLibsCore.Services.Timers;
 
 
@@ -12,7 +12,7 @@ namespace ModLibsCore {
 	/// <summary>
 	/// Defines config settings for a specific "privileged user" entry (used by assorted APIs).
 	/// </summary>
-	[Label( "Mod Helpers \"Privileged User\" (used by some APIs)" )]
+	[Label( "Mod Libs \"Privileged User\" (used by some APIs)" )]
 	public class ModLibsCorePrivilegedUserConfig : ModConfig {
 		/// <summary>
 		/// Gets the singleton instance of this config file.
@@ -30,7 +30,7 @@ namespace ModLibsCore {
 		/// User ID of a designated privileged (admin) player. Refers to the internal player UID used by Mod Libs Core.
 		/// </summary>
 		[Label( "Privileged User IDs (internal ID)" )]
-		[Tooltip( "User IDs of a designated privileged (admin) player. Use " )]
+		[Tooltip( "Basic concept of a user ID of a privileged (admin) player. Used for assorted features." )]
 		//[ReloadRequired]
 		public string PrivilegedUserId = "";
 
@@ -47,7 +47,7 @@ namespace ModLibsCore {
 			string oldVal = this.PrivilegedUserId;
 			this.PrivilegedUserId = "";
 
-			Timers.SetTimer( "ModHelpersConfigSyncPrevention", 1, true, () => {
+			Timers.SetTimer( 1, true, () => {
 				this.PrivilegedUserId = oldVal;
 				return false;
 			} );
@@ -55,7 +55,7 @@ namespace ModLibsCore {
 
 		/// @private
 		public override bool AcceptClientChanges( ModConfig pendingConfig, int whoAmI, ref string message ) {
-			if( !UserHelpers.HasBasicServerPrivilege( Main.player[whoAmI] ) ) {
+			if( !UserLibraries.HasBasicServerPrivilege( Main.player[whoAmI] ) ) {
 				message = "Not authorized.";
 
 				var newConfig = pendingConfig as ModLibsCorePrivilegedUserConfig;

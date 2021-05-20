@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace ModLibsCore.Helpers.DotNET.Extensions {
+namespace ModLibsCore.Libraries.DotNET.Extensions {
 	/// <summary>
 	/// Extensions for `KeyValuePair`.
 	/// </summary>

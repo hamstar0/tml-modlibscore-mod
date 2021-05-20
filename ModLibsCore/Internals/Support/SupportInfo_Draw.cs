@@ -6,8 +6,8 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.UI.Elements;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.TModLoader.Menus;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.TModLoader.Menus;
 
 
 namespace ModLibsCore.Internals.Menus.Support {
@@ -50,7 +50,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 				sid?.Update();
 				sid?.Draw( Main.spriteBatch );
 			} catch( Exception e ) {
-				LogHelpers.LogOnce( e.ToString() );
+				LogLibraries.LogOnce( e.ToString() );
 			}
 		}
 
@@ -77,7 +77,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 
 			////var rect = new Rectangle( Main.screenWidth - 252, 4, 248, (this.IsExtended ? 104 : 40) );
 			//var rect = this.GetInnerBox();
-			//HUDHelpers.DrawBorderedRect( sb, boxColor * colorMul, boxEdgeColor * colorMul, rect, 4 );
+			//HUDLibraries.DrawBorderedRect( sb, boxColor * colorMul, boxEdgeColor * colorMul, rect, 4 );
 
 			//if( this.SupportUrl != null ) {
 			//	this.SupportUrl.Theme.UrlColor = Color.Lerp( UITheme.Vanilla.UrlColor, AnimatedColors.Ether.CurrentColor, 0.25f );

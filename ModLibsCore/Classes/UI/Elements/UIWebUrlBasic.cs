@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
 
 
@@ -84,7 +84,7 @@ namespace ModLibsCore.Classes.UI.Elements {
 
 			this.OnClick += delegate ( UIMouseEvent evt, UIElement fromElem ) {
 				try {
-					SystemHelpers.OpenUrl( this.Url );
+					SystemLibraries.OpenUrl( this.Url );
 					//System.Diagnostics.Process.Start( this.Url );
 
 					this.IsVisited = true;
@@ -139,7 +139,7 @@ namespace ModLibsCore.Classes.UI.Elements {
 				}
 
 				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, this.Url, pos.X, pos.Y, Color.White, Color.Black, default(Vector2) );
-				//sb.DrawString( Main.fontMouseText, this.Url, UIHelpers.GetHoverTipPosition( this.Url ), Color.White );
+				//sb.DrawString( Main.fontMouseText, this.Url, UILibraries.GetHoverTipPosition( this.Url ), Color.White );
 			}
 		}
 

@@ -1,21 +1,21 @@
 ﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using System;
 using System.Reflection;
 using Terraria.ModLoader;
 
 
-namespace ModLibsCore.Helpers.DotNET.Reflection {
+namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionHelpers {
+	public partial class ReflectionLibraries {
 		/// <summary>
 		/// Returns the "main" assembly of tModLoader/Terraria.
 		/// </summary>
 		/// <returns></returns>
 		public static Assembly GetMainAssembly() {
-			var rh = ModContent.GetInstance<ReflectionHelpers>();
+			var rh = ModContent.GetInstance<ReflectionLibraries>();
 
 			if( rh.AssMap.ContainsKey( "___" ) ) {
 				return rh.AssMap["___"];
@@ -32,7 +32,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="assemblyName"></param>
 		/// <returns></returns>
 		public static Assembly GetAssembly( string assemblyName ) {
-			var rh = ModContent.GetInstance<ReflectionHelpers>();
+			var rh = ModContent.GetInstance<ReflectionLibraries>();
 
 			if( rh.AssMap.ContainsKey(assemblyName) ) {
 				return rh.AssMap[assemblyName];

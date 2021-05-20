@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
-namespace ModLibsCore.Helpers.DotNET.Reflection {
+namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
 	/// Attribute for indicating reference parameters that must be expected to sometimes occur as null
 	/// </summary>
@@ -17,7 +17,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionHelpers {
+	public partial class ReflectionLibraries {
 		/*/// <summary>
 		/// Defines a parameter (to be passed into RunMethod) to properly identify generic parameters.
 		/// </summary>

@@ -3,17 +3,17 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.DataStructures;
 
 
-namespace ModLibsCore.Helpers.Items.Attributes {
+namespace ModLibsCore.Libraries.Items.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of items.
 	/// </summary>
-	public partial class ItemAttributeHelpers {
+	public partial class ItemAttributeLibraries {
 		/// <summary>
 		/// Table of item ids by qualified names.
 		/// </summary>
 		public static ReadOnlyDictionaryOfSets<string, int> DisplayNamesToIds {
 			get {
-				return ModContent.GetInstance<ItemAttributeHelpers>()._DisplayNamesToIds;
+				return ModContent.GetInstance<ItemAttributeLibraries>()._DisplayNamesToIds;
 			}
 		}
 

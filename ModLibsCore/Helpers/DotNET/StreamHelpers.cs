@@ -1,15 +1,15 @@
-﻿using ModLibsCore.Helpers.DotNET.Extensions;
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
 using Terraria.ModLoader.IO;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
-namespace ModLibsCore.Helpers.DotNET {
+namespace ModLibsCore.Libraries.DotNET {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to basic stream IO.
 	/// </summary>
-	public partial class StreamHelpers {
+	public partial class StreamLibraries {
 		/// <summary>
 		/// Pumps a byte array to a stream (with compression).
 		/// </summary>

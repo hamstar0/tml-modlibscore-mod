@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Classes.Errors {
 	/// @private
-	class ModHelpersExceptionManager : ILoadable {
+	class ModLibsExceptionManager : ILoadable {
 		internal readonly IDictionary<string, int> MsgCount = new Dictionary<string, int>();
 
 
@@ -25,17 +25,17 @@ namespace ModLibsCore.Classes.Errors {
 
 
 	/// <summary>
-	/// Specialized exception with added Mod Helpers logging behavior.
+	/// Specialized exception with added Mod Libs logging behavior.
 	/// </summary>
-	public class ModHelpersException : Exception {
+	public class ModLibsException : Exception {
 		/// <param name="msg">Standard message to output.</param>
-		public ModHelpersException( string msg ) : base( msg ) {
+		public ModLibsException( string msg ) : base( msg ) {
 			this.Initialize( msg );
 		}
 
 		/// <param name="msg">Standard message to output.</param>
 		/// <param name="inner">Inner exception to wrap for further output.</param>
-		public ModHelpersException( string msg, Exception inner ) : base( msg, inner ) {
+		public ModLibsException( string msg, Exception inner ) : base( msg, inner ) {
 			this.Initialize( msg );
 		}
 
@@ -43,8 +43,8 @@ namespace ModLibsCore.Classes.Errors {
 		////////////////
 
 		private void Initialize( string msg ) {
-			string context = DebugHelpers.GetCurrentContext( 3 );
-			var msgCount = ModContent.GetInstance<ModHelpersExceptionManager>().MsgCount;
+			string context = DebugLibraries.GetCurrentContext( 3 );
+			var msgCount = ModContent.GetInstance<ModLibsExceptionManager>().MsgCount;
 			int count = 0;
 
 			if( msgCount.TryGetValue(msg, out count) ) {
@@ -57,9 +57,9 @@ namespace ModLibsCore.Classes.Errors {
 			msgCount[msg]++;
 
 			if( this.InnerException != null ) {
-				LogHelpers.Log( "!"+context+" (E#" + count + ") - " + msg + " | " + this.InnerException.Message );
+				LogLibraries.Log( "!"+context+" (E#" + count + ") - " + msg + " | " + this.InnerException.Message );
 			} else {
-				LogHelpers.Log( "!"+context+" (E#" + count + ") - " + msg );
+				LogLibraries.Log( "!"+context+" (E#" + count + ") - " + msg );
 			}
 		}
 	}

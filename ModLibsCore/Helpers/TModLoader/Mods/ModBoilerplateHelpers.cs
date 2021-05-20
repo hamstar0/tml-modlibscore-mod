@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Reflection;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
-namespace ModLibsCore.Helpers.TModLoader.Mods {
+namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// <summary>
 	/// Assorted static "helper" functions for alleviating tedious "boilerplate" code.
 	/// </summary>
-	public class ModBoilerplateHelpers {
+	public class ModBoilerplateLibraries {
 		/// <summary>
 		/// Allows using a class to bind its public static methods as `Mod.Call(...)` bindings (complete with parameter
 		/// validations). Meant to be called within `Mod.Call(...)`.
@@ -19,11 +19,11 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		/// <param name="args"></param>
 		/// <returns>API binding call return result. Should be piped out from `Mod.Call(...)` in turn.</returns>
 		public static object HandleModCall( Type apiClassType, params object[] args ) {
-			if( args == null || args.Length == 0 ) { throw new ModHelpersException( "Undefined call." ); }
+			if( args == null || args.Length == 0 ) { throw new ModLibsException( "Undefined call." ); }
 
 			string callType = args[0] as string;
 			if( callType == null ) {
-				LogHelpers.Alert( "Invalid call binding: " + args[0] );
+				LogLibraries.Alert( "Invalid call binding: " + args[0] );
 				return null;
 			}
 
@@ -32,7 +32,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 				var argsList = args.SafeSelect( a => a.GetType().Name + ": " + a == null ? "null" : a.ToString() );
 				string argsListStr = string.Join( ", ", argsList );
 
-				LogHelpers.Alert( apiClassType.Name+" has no Call binding for " + callType + " with args: "+argsListStr );
+				LogLibraries.Alert( apiClassType.Name+" has no Call binding for " + callType + " with args: "+argsListStr );
 				return null;
 			}
 
@@ -40,9 +40,9 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 			Array.Copy( args, 1, newArgs, 0, args.Length - 1 );
 
 			try {
-				return ReflectionHelpers.SafeCall( methodInfo, null, newArgs );
+				return ReflectionLibraries.SafeCall( methodInfo, null, newArgs );
 			} catch( Exception e ) {
-				throw new ModHelpersException( apiClassType.Name+" failed to execute Call binding " +callType, e );
+				throw new ModLibsException( apiClassType.Name+" failed to execute Call binding " +callType, e );
 			}
 		}
 	}

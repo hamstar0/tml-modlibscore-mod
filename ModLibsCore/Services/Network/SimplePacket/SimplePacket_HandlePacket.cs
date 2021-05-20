@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 using NetSerializer;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
 namespace ModLibsCore.Services.Network.SimplePacket {
@@ -29,7 +29,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 					return false;
 				}
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.Message );
+				LogLibraries.Warn( e.Message );
 				reader.BaseStream.Seek( oldStreamPos, SeekOrigin.Begin );
 				return false;
 			}
@@ -58,7 +58,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 				Type dataType = self.PayloadCodeToType[ code ];
 				Serializer ser = self.PayloadCodeToSerializer[ code ];
 
-				MethodInfo method = ser.GetType().GetMethod( "DeserializeDirect", ReflectionHelpers.MostAccess );
+				MethodInfo method = ser.GetType().GetMethod( "DeserializeDirect", ReflectionLibraries.MostAccess );
 				method = method.MakeGenericMethod( new Type[] { dataType } );
 
 				var parameters = new object[] { reader.BaseStream, null };
@@ -67,7 +67,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 				data = parameters[1];
 				return true;
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.Message );
+				LogLibraries.Warn( e.Message );
 
 				data = null;
 				return false;

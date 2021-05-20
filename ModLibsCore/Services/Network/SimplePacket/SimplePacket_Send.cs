@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 using NetSerializer;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
 namespace ModLibsCore.Services.Network.SimplePacket {
@@ -21,7 +21,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 		/// <param name="data"></param>
 		public static void SendToServer( SimplePacketPayload data ) {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
-				throw new ModHelpersException( "Not client" );
+				throw new ModLibsException( "Not client" );
 			}
 			SimplePacket.Send( data, -1, -1 );
 		}
@@ -36,7 +36,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 		/// <param name="ignoreWho">Main.player array index of player (`player.whoAmI`) to ignore. -1 for no one.</param>
 		public static void SendToClient( SimplePacketPayload data, int toWho = -1, int ignoreWho = -1 ) {
 			if( Main.netMode != NetmodeID.Server ) {
-				throw new ModHelpersException( "Not server" );
+				throw new ModLibsException( "Not server" );
 			}
 			SimplePacket.Send( data, toWho, ignoreWho );
 		}
@@ -58,7 +58,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 
 				packet.Write( (int)code );
 
-				MethodInfo method = ser.GetType().GetMethod( "SerializeDirect", ReflectionHelpers.MostAccess );
+				MethodInfo method = ser.GetType().GetMethod( "SerializeDirect", ReflectionLibraries.MostAccess );
 				method = method.MakeGenericMethod( new Type[] { dataType } );
 				method.Invoke( ser, new object[] { packet.BaseStream, data } );
 
@@ -69,13 +69,13 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 						.IsDefined( typeof(IsNoisyAttribute), false );
 
 					if( !isNoisy ) {
-						LogHelpers.Log( ">" + dataType.Name + " "+toWho+" "+ignoreWho );
+						LogLibraries.Log( ">" + dataType.Name + " "+toWho+" "+ignoreWho );
 					}
 				}
 
 				return true;
 			} catch( Exception e ) {
-				LogHelpers.WarnOnce( e.ToString() );
+				LogLibraries.WarnOnce( e.ToString() );
 			}
 			
 			return false;

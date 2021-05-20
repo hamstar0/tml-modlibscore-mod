@@ -4,8 +4,8 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Extensions;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -34,7 +34,7 @@ namespace ModLibsCore.Services.Timers {
 
 			LoadHooks.AddWorldUnloadEachHook( () => {
 				foreach( (string timerName, (bool, Func<int>, int) timer) in this.Running ) {
-					LogHelpers.Log( "Aborted timer " + timerName );
+					LogLibraries.Log( "Aborted timer " + timerName );
 				}
 
 				this.Running.Clear();
@@ -66,7 +66,7 @@ namespace ModLibsCore.Services.Timers {
 //long NOW = DateTime.Now.Ticks;
 //TICKCOUNT++;
 //if( (NOW - TICKSTART) > 10000000 ) { 
-//	DebugHelpers.Print("blah", ""+TICKCOUNT,20);
+//	DebugLibraries.Print("blah", ""+TICKCOUNT,20);
 //	TICKSTART = NOW;
 //	TICKCOUNT = 0;
 //}

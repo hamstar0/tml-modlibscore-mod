@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.Players;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.Players;
 
 
 namespace ModLibsCore.Commands {
@@ -22,10 +22,10 @@ namespace ModLibsCore.Commands {
 
 		/// @private
 		public override void Action( CommandCaller caller, string input, string[] args ) {
-			string uid = PlayerIdentityHelpers.GetUniqueId();
+			string uid = PlayerIdentityLibraries.GetUniqueId();
 			
 			caller.Reply( "Your user ID is (also see log file): " + uid, Color.Lime );
-			LogHelpers.Log( "Your user ID is: "+uid );
+			LogLibraries.Log( "Your user ID is: "+uid );
 		}
 	}
 }

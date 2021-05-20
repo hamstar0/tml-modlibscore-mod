@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
 
 
 namespace ModLibsCore.Commands {
@@ -34,7 +34,7 @@ namespace ModLibsCore.Commands {
 			}
 
 			string className = args[0];
-			IEnumerable<Type> configTypes = ReflectionHelpers.GetAllAvailableSubTypesFromMods( typeof(ModConfig) );
+			IEnumerable<Type> configTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof(ModConfig) );
 			Type configType = null;
 
 			foreach( Type subConfigType in configTypes ) {
@@ -51,7 +51,7 @@ namespace ModLibsCore.Commands {
 			}
 
 			ModConfig configSingleton;
-			bool success = ReflectionHelpers.RunMethod<ModConfig>( //ModContent.GetInstance<T>();
+			bool success = ReflectionLibraries.RunMethod<ModConfig>( //ModContent.GetInstance<T>();
 				classType: typeof( ModContent ),
 				instance: null,
 				methodName: "GetInstance",
@@ -67,7 +67,7 @@ namespace ModLibsCore.Commands {
 			string configJson = JsonConvert.SerializeObject( configSingleton );
 
 			Main.NewText( configJson );
-			LogHelpers.Log( configJson );
+			LogLibraries.Log( configJson );
 		}
 	}
 }

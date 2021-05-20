@@ -6,7 +6,7 @@ using System.Reflection;
 using NetSerializer;
 
 
-namespace ModLibsCore.Helpers.DotNET.Serialization {
+namespace ModLibsCore.Libraries.DotNET.Serialization {
 	sealed class HashSetSerializer : IStaticTypeSerializer {
 		private static MethodInfo GetGenericWriter( Type serializerType, Type genericType ) {
 			var mis = serializerType

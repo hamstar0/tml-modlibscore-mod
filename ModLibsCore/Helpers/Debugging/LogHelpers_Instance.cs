@@ -7,9 +7,9 @@ using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
-namespace ModLibsCore.Helpers.Debug {
+namespace ModLibsCore.Libraries.Debug {
 	/// @private
-	public partial class LogHelpers : ILoadable {
+	public partial class LogLibraries : ILoadable {
 		private DateTime StartTimeBase;
 		private double StartTime;
 
@@ -19,7 +19,7 @@ namespace ModLibsCore.Helpers.Debug {
 
 		////////////////
 
-		internal LogHelpers() { }
+		internal LogLibraries() { }
 
 		void ILoadable.OnModsLoad() {
 			this.Reset();

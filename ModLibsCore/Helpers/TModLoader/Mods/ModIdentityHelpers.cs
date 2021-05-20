@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.Net;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.Net;
 using ModLibsCore.Services.Hooks.LoadHooks;
 using ModLibsCore.Services.TML;
 
 
-namespace ModLibsCore.Helpers.TModLoader.Mods {
+namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// <summary>
 	/// Very basic informational representation of a given mod.
 	/// </summary>
@@ -45,7 +45,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to mod identification.
 	/// </summary>
-	public class ModIdentityHelpers {
+	public class ModIdentityLibraries {
 		/// <summary>
 		/// Reports whether a given mod (by the given internal name) is "properly presented": Has a valid description,
 		/// homepage, and any other needed checks (in future considerations).
@@ -55,13 +55,13 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 		public static bool IsLoadedModProperlyPresented( string modName ) {
 			Mod mod = ModLoader.GetMod( modName );
 			if( mod == null ) {
-				LogHelpers.Alert( "Invalid mod "+modName );
+				LogLibraries.Alert( "Invalid mod "+modName );
 				return false;
 			}
 
-			IDictionary<string, BuildPropertiesViewer> modInfos = ModListHelpers.GetLoadedModNamesWithBuildProps();
+			IDictionary<string, BuildPropertiesViewer> modInfos = ModListLibraries.GetLoadedModNamesWithBuildProps();
 			if( !modInfos.ContainsKey(modName) ) {
-				LogHelpers.Alert( "Missing mod "+modName );
+				LogLibraries.Alert( "Missing mod "+modName );
 				return false;
 			}
 
@@ -70,7 +70,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 				mod.Version, modInfos[modName].Description, modInfos[modName].Homepage
 			);
 
-			return ModIdentityHelpers.IsProperlyPresented( modInfo );
+			return ModIdentityLibraries.IsProperlyPresented( modInfo );
 		}
 
 
@@ -94,7 +94,7 @@ namespace ModLibsCore.Helpers.TModLoader.Mods {
 			//if( homepage.Contains( "discord.gg/" ) ) { return false; }
 
 			// Go away, url shorteners
-			foreach( string url in WebHelpers.UrlShortenerList ) {
+			foreach( string url in WebLibraries.UrlShortenerList ) {
 				if( homepage.Contains("/"+url+"/") ) { return false; }
 				if( homepage.Contains("."+url+"/") ) { return false; }
 			}

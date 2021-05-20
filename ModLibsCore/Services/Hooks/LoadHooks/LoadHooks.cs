@@ -1,4 +1,4 @@
-﻿using ModLibsCore.Helpers.Debug;
+﻿using ModLibsCore.Libraries.Debug;
 using System;
 using Terraria;
 

@@ -5,18 +5,18 @@ using ModLibsCore.Classes.DataStructures;
 using ModLibsCore.Classes.Loadable;
 
 
-namespace ModLibsCore.Helpers.NPCs.Attributes {
+namespace ModLibsCore.Libraries.NPCs.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of NPCs.
 	/// </summary>
-	public partial class NPCAttributeHelpers : ILoadable {
+	public partial class NPCAttributeLibraries : ILoadable {
 		private ReadOnlyDictionaryOfSets<string, int> _DisplayNamesToIds = null;
 
 
 
 		////////////////
 
-		internal NPCAttributeHelpers() { }
+		internal NPCAttributeLibraries() { }
 
 		void ILoadable.OnModsLoad() { }
 
@@ -31,7 +31,7 @@ namespace ModLibsCore.Helpers.NPCs.Attributes {
 			var dict = new Dictionary<string, ISet<int>>();
 
 			for( int i = 1; i < NPCLoader.NPCCount; i++ ) {
-				string name = NPCAttributeHelpers.GetQualifiedName( i );
+				string name = NPCAttributeLibraries.GetQualifiedName( i );
 
 				if( dict.ContainsKey( name ) ) {
 					dict[name].Add( i );

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace ModLibsCore.Helpers.DotNET {
+namespace ModLibsCore.Libraries.DotNET {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to .NET/C# functionality.
 	/// </summary>
-	public class DotNetHelpers {
+	public class DotNetLibraries {
 		/// <summary>
 		/// Radians-to-degrees.
 		/// </summary>

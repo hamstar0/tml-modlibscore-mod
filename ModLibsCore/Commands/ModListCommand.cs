@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.DotNET;
-using ModLibsCore.Helpers.TModLoader.Mods;
+using ModLibsCore.Libraries.DotNET;
+using ModLibsCore.Libraries.TModLoader.Mods;
 using ModLibsCore.Services.TML;
 
 
@@ -74,7 +74,7 @@ namespace ModLibsCore.Commands {
 			}
 
 			IList<string> reply = new List<string>( ModLoader.Mods.Length );
-			IDictionary<BuildPropertiesViewer, Mod> modList = ModListHelpers.GetLoadedModsAndBuildInfo();
+			IDictionary<BuildPropertiesViewer, Mod> modList = ModListLibraries.GetLoadedModsAndBuildInfo();
 
 			foreach( var kv in modList ) {
 				string modInfo = ModListCommand.GetBasicModInfo( kv.Value, kv.Key );

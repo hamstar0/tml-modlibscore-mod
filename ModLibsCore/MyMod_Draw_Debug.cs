@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore {
@@ -14,9 +14,9 @@ namespace ModLibsCore {
 		private void DrawDebug( SpriteBatch sb ) {
 			try {
 				this.DrawMouseData( sb );
-				DebugHelpers.PrintAll( sb );
+				DebugLibraries.PrintAll( sb );
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.ToString() );
+				LogLibraries.Warn( e.ToString() );
 			}
 		}
 

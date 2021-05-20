@@ -5,11 +5,11 @@ using System;
 using Terraria.ModLoader.Config;
 
 
-namespace ModLibsCore.Helpers.NPCs {
+namespace ModLibsCore.Libraries.NPCs {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to NPC identification.
 	/// </summary>
-	public partial class NPCIdentityHelpers {
+	public partial class NPCIdentityLibraries {
 		/// <summary>
 		/// Gets a (human readable) unique key (as segments) from a given NPC type.
 		/// </summary>

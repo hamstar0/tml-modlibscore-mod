@@ -1,14 +1,14 @@
 ﻿using System;
 using Terraria;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
 
 
-namespace ModLibsCore.Helpers.World {
+namespace ModLibsCore.Libraries.World {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to the current world.
 	/// </summary>
-	public partial class WorldHelpers {
+	public partial class WorldLibraries {
 		/// <summary>
 		/// Gets a unique identifier for the current loaded world.
 		/// </summary>
@@ -16,9 +16,9 @@ namespace ModLibsCore.Helpers.World {
 		/// <returns></returns>
 		public static string GetUniqueIdForCurrentWorld( bool asFileName ) {
 			if( asFileName ) {
-				return FileHelpers.SanitizePath( Main.worldName ) + "@" + Main.worldID;
+				return FileLibraries.SanitizePath( Main.worldName ) + "@" + Main.worldID;
 			} else {
-				return FileHelpers.SanitizePath( Main.worldName ) + ":" + Main.worldID;
+				return FileLibraries.SanitizePath( Main.worldName ) + ":" + Main.worldID;
 			}
 		}
 	}

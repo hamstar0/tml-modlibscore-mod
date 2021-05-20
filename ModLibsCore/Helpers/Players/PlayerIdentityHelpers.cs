@@ -2,23 +2,23 @@
 using Terraria;
 using Terraria.ID;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.Entities;
-using ModLibsCore.Helpers.Items;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.Entities;
+using ModLibsCore.Libraries.Items;
 using Terraria.ModLoader;
 
-namespace ModLibsCore.Helpers.Players {
+namespace ModLibsCore.Libraries.Players {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to unique player identification.
 	/// </summary>
-	public partial class PlayerIdentityHelpers {
+	public partial class PlayerIdentityLibraries {
 		/// <summary>
 		/// Gets a code to uniquely identify the current player.
 		/// </summary>
 		/// <returns></returns>
 		public static string GetUniqueId() {
 			if( Main.netMode == NetmodeID.Server ) {
-				throw new ModHelpersException( "No 'current' player on a server." );
+				throw new ModLibsException( "No 'current' player on a server." );
 			}
 
 			int hash = Math.Abs( Main.ActivePlayerFileData.Path.GetHashCode() ^ Main.ActivePlayerFileData.IsCloudSave.GetHashCode() );
@@ -31,15 +31,15 @@ namespace ModLibsCore.Helpers.Players {
 		/// <param name="player"></param>
 		/// <returns></returns>
 		public static string GetUniqueId( Player player ) {
-			var piHelpers = ModContent.GetInstance<PlayerIdentityHelpers>();
+			var piLibs = ModContent.GetInstance<PlayerIdentityLibraries>();
 			string id;
 
-			if( !piHelpers.PlayerIds.TryGetValue( player.whoAmI, out id ) ) {
+			if( !piLibs.PlayerIds.TryGetValue( player.whoAmI, out id ) ) {
 				if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
-					id = PlayerIdentityHelpers.GetUniqueId();
-					piHelpers.PlayerIds[ player.whoAmI ] = id;
+					id = PlayerIdentityLibraries.GetUniqueId();
+					piLibs.PlayerIds[ player.whoAmI ] = id;
 				} else {
-					//throw new HamstarException( "!ModHelpers.PlayerIdentityHelpers.GetProperUniqueId - Could not find player " + player.name + "'s id." );
+					//throw new ModLibsException( "Could not find player " + player.name + "'s id." );
 					return null;
 				}
 			}
@@ -57,10 +57,10 @@ namespace ModLibsCore.Helpers.Players {
 
 			for( int i=0; i<len; i++ ) {
 				Player plr = Main.player[ i ];
-//LogHelpers.Log( "GetPlayerByProperId: "+PlayerIdentityHelpers.GetProperUniqueId( plr )+" == "+uid+": "+plr.name+" ("+plr.whoAmI+")" );
+//LogLibraries.Log( "GetPlayerByProperId: "+PlayerIdentityLibraries.GetProperUniqueId( plr )+" == "+uid+": "+plr.name+" ("+plr.whoAmI+")" );
 				if( plr == null /*|| !plr.active*/ ) { continue; }	// <- This is WEIRD!
 				
-				if( PlayerIdentityHelpers.GetUniqueId(plr) == uid ) {
+				if( PlayerIdentityLibraries.GetUniqueId(plr) == uid ) {
 					return plr;
 				}
 			}
@@ -88,7 +88,7 @@ namespace ModLibsCore.Helpers.Players {
 
 			//
 
-			int hash = EntityHelpers.GetVanillaSnapshotHash( player, noContext );
+			int hash = EntityLibraries.GetVanillaSnapshotHash( player, noContext );
 			int itemHash;
 
 			hash += ( "statLifeMax" + player.statLifeMax ).GetHashCode() * Pow();
@@ -122,7 +122,7 @@ namespace ModLibsCore.Helpers.Players {
 				if( item == null || !item.active || item.stack == 0 ) {
 					itemHash = ( "inv" + i ).GetHashCode();
 				} else {
-					itemHash = i + ItemIdentityHelpers.GetVanillaSnapshotHash( item, noContext, true );
+					itemHash = i + ItemIdentityLibraries.GetVanillaSnapshotHash( item, noContext, true );
 				}
 				hash += itemHash * Pow();
 			}
@@ -131,7 +131,7 @@ namespace ModLibsCore.Helpers.Players {
 				if( item == null || !item.active || item.stack == 0 ) {
 					itemHash = ( "arm" + i ).GetHashCode();
 				} else {
-					itemHash = i + ItemIdentityHelpers.GetVanillaSnapshotHash( item, noContext, true );
+					itemHash = i + ItemIdentityLibraries.GetVanillaSnapshotHash( item, noContext, true );
 				}
 				hash += itemHash * Pow();
 			}
@@ -140,7 +140,7 @@ namespace ModLibsCore.Helpers.Players {
 				if( item == null || !item.active || item.stack == 0 ) {
 					itemHash = ( "bank" + i ).GetHashCode();
 				} else {
-					itemHash = i + ItemIdentityHelpers.GetVanillaSnapshotHash( item, noContext, true );
+					itemHash = i + ItemIdentityLibraries.GetVanillaSnapshotHash( item, noContext, true );
 				}
 				hash += itemHash * Pow();
 			}
@@ -149,7 +149,7 @@ namespace ModLibsCore.Helpers.Players {
 				if( item == null || !item.active || item.stack == 0 ) {
 					itemHash = ( "bank2" + i ).GetHashCode();
 				} else {
-					itemHash = i + ItemIdentityHelpers.GetVanillaSnapshotHash( item, noContext, true );
+					itemHash = i + ItemIdentityLibraries.GetVanillaSnapshotHash( item, noContext, true );
 				}
 				hash += itemHash;
 			}
@@ -158,7 +158,7 @@ namespace ModLibsCore.Helpers.Players {
 				if( item == null || !item.active || item.stack == 0 ) {
 					itemHash = ( "bank3" + i ).GetHashCode();
 				} else {
-					itemHash = i + ItemIdentityHelpers.GetVanillaSnapshotHash( item, noContext, true );
+					itemHash = i + ItemIdentityLibraries.GetVanillaSnapshotHash( item, noContext, true );
 				}
 				hash += itemHash * Pow();
 			}

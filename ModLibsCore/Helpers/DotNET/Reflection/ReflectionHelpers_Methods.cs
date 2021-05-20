@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
-namespace ModLibsCore.Helpers.DotNET.Reflection {
+namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
-	/// Simple wrapper to enable `ReflectionHelpers.RunMethod` to know parameter types. Useful for null values.
+	/// Simple wrapper to enable `ReflectionLibraries.RunMethod` to know parameter types. Useful for null values.
 	/// </summary>
 	public class TypedMethodParameter {
 		/// <summary></summary>
@@ -34,7 +34,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionHelpers {
+	public partial class ReflectionLibraries {
 		/// <summary>
 		/// Invokes a method, first validating the supplied parameters for type consistency.
 		/// </summary>
@@ -46,7 +46,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 			var paramInfos = method.GetParameters();
 			
 			if( args.Length != paramInfos.Length ) {
-				throw new ModHelpersException( "Mismatched input argument quantity. (for call " + method.Name + ")" );
+				throw new ModLibsException( "Mismatched input argument quantity. (for call " + method.Name + ")" );
 			}
 
 			for( int i = 0; i < paramInfos.Length; i++ ) {
@@ -55,14 +55,14 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 
 				if( args[i] == null ) {
 					if( !paramType.IsClass || paramInfos[i].GetCustomAttribute<NullableAttribute>() == null ) {
-						throw new ModHelpersException(
+						throw new ModLibsException(
 							"Invalid param "+paramInfos[i].Name+" (#"+i+"): "
 							+"Expected "+paramType.Name+", found null (for call "+method.Name+")"
 							+" - Set parameter to use `NullableAttribute` or wrap value with `TypedMethodParameter`."
 						);
 					}
 				} else if( argType.Name != paramType.Name && !argType.IsSubclassOf( paramType ) ) {
-					throw new ModHelpersException( "Invalid param "+paramInfos[i].Name+" (#"+i+"): Expected "+paramType.Name+", found "+argType.Name+" (for call "+method.Name+")" );
+					throw new ModLibsException( "Invalid param "+paramInfos[i].Name+" (#"+i+"): Expected "+paramType.Name+", found "+argType.Name+" (for call "+method.Name+")" );
 				}
 			}
 
@@ -92,7 +92,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 				returnVal = default( T );
 				return false;
 			}
-			return ReflectionHelpers.RunMethod<T>( instance.GetType(), instance, methodName, args, out returnVal );
+			return ReflectionLibraries.RunMethod<T>( instance.GetType(), instance, methodName, args, out returnVal );
 		}
 
 		/// <summary>
@@ -107,7 +107,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="returnVal">Return value of method.</param>
 		/// <returns>`true` if method found and invoked successfully.</returns>
 		public static bool RunMethod<T>( Type classType, Object instance, string methodName, object[] args, out T returnVal ) {
-			return ReflectionHelpers.RunMethod<T>( classType, instance, methodName, args, new Type[] { }, out returnVal );
+			return ReflectionLibraries.RunMethod<T>( classType, instance, methodName, args, new Type[] { }, out returnVal );
 		}
 
 		/// <summary>
@@ -132,7 +132,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 			returnVal = default( T );
 
 			if( args.Any(a => a == null) ) {
-				LogHelpers.AlertOnce( "`null` argument detected for "+classType.Name+"."+methodName
+				LogLibraries.AlertOnce( "`null` argument detected for "+classType.Name+"."+methodName
 					+ ". Wrap nullable arguments with `TypedMethodParameter`." );
 				return false;
 			}
@@ -159,7 +159,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 
 			MethodInfo method = classType.GetMethod(
 				name: methodName,
-				bindingAttr: ReflectionHelpers.MostAccess,
+				bindingAttr: ReflectionLibraries.MostAccess,
 				binder: null,
 				types: paramTypes,
 				modifiers: null
@@ -167,7 +167,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 
 			if( method == null ) {
 				if( classType.BaseType != null && classType.BaseType != typeof(object) ) {
-					return ReflectionHelpers.RunMethod<T>(
+					return ReflectionLibraries.RunMethod<T>(
 						classType: classType.BaseType,
 						instance: instance,
 						methodName: methodName,
@@ -183,7 +183,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 				method = method.MakeGenericMethod( generics );
 			}
 
-			returnVal = (T)ReflectionHelpers.SafeCall( method, instance, args );
+			returnVal = (T)ReflectionLibraries.SafeCall( method, instance, args );
 			return true;
 		}
 	}

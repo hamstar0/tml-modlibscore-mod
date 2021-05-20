@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using Terraria.Social;
 using Terraria.Utilities;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 
 
-namespace ModLibsCore.Helpers.DotNET {
+namespace ModLibsCore.Libraries.DotNET {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to basic file IO.
 	/// </summary>
-	public partial class FileHelpers {
+	public partial class FileLibraries {
 		/// <summary>
 		/// Outputs a byte array to file as compressed binary data.
 		/// </summary>
@@ -19,10 +19,10 @@ namespace ModLibsCore.Helpers.DotNET {
 		/// <returns>Returns `true` if file wrote successfully.</returns>
 		public static bool SaveBinaryFile( byte[] data, string fullPath, bool isCloud, bool backupOld ) {
 			string status;
-			bool success = FileHelpers.SaveBinaryFile( data, fullPath, isCloud, backupOld, out status );
+			bool success = FileLibraries.SaveBinaryFile( data, fullPath, isCloud, backupOld, out status );
 
 			if( !success ) {
-				LogHelpers.Warn( status );
+				LogLibraries.Warn( status );
 			}
 			return success;
 		}
@@ -50,13 +50,13 @@ namespace ModLibsCore.Helpers.DotNET {
 				}
 
 				using( Stream memStream = (Stream)new MemoryStream() ) {
-					StreamHelpers.ToStream( data, memStream );
+					StreamLibraries.ToStream( data, memStream );
 
 					SocialAPI.Cloud.Write( fullPath, ( (MemoryStream)memStream ).ToArray() );
 				}
 			} else {
 				using( Stream fileStream = (Stream)new FileStream( fullPath, FileMode.Create, FileAccess.Write ) ) {
-					StreamHelpers.ToStream( data, fileStream );
+					StreamLibraries.ToStream( data, fileStream );
 				}
 			}
 
@@ -75,10 +75,10 @@ namespace ModLibsCore.Helpers.DotNET {
 		/// <returns>A byte array of the input file's data. `null` if file does not exist, or error.</returns>
 		public static byte[] LoadBinaryFile( string fullPath, bool isCloud ) {
 			string status;
-			byte[] result = FileHelpers.LoadBinaryFile( fullPath, isCloud, out status );
+			byte[] result = FileLibraries.LoadBinaryFile( fullPath, isCloud, out status );
 
 			if( result == null ) {
-				LogHelpers.Alert( status );
+				LogLibraries.Alert( status );
 			}
 
 			return result;
@@ -104,21 +104,21 @@ namespace ModLibsCore.Helpers.DotNET {
 			}
 
 			status = "Success.";
-			return FileHelpers.DecompressFileData( buf );
+			return FileLibraries.DecompressFileData( buf );
 		}
 
 
 		////////////////
 
 		/// <summary>
-		/// Decompresses a file loaded from FileHelpers.SaveBinaryFile().
+		/// Decompresses a file loaded from FileLibraries.SaveBinaryFile().
 		/// </summary>
 		/// <param name="compressedFile"></param>
 		/// <returns>A byte array of the input file's data. `null` if file does not exist, or error.</returns>
 		public static byte[] DecompressFileData( byte[] compressedFile ) {
 			using( var memStream = new MemoryStream(compressedFile) ) {
-				return StreamHelpers.FromStreamToBytes( memStream );
-				//string jsonStr = StreamHelpers.FromStream( memStream );
+				return StreamLibraries.FromStreamToBytes( memStream );
+				//string jsonStr = StreamLibraries.FromStream( memStream );
 				//return JsonConvert.DeserializeObject<T>( jsonStr, jsonSettings );
 			}
 		}

@@ -1,16 +1,16 @@
-﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Threading;
-using System;
+﻿using System;
 using System.Net;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Threading;
 
 
-namespace ModLibsCore.Helpers.Net {
+namespace ModLibsCore.Libraries.Net {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to connecting to the web.
 	/// </summary>
-	public partial class WebConnectionHelpers {
+	public partial class WebConnectionLibraries {
 		private static void HandleResponse(
 					object _,
 					UploadStringCompletedEventArgs args,
@@ -28,7 +28,7 @@ namespace ModLibsCore.Helpers.Net {
 					onError( args.Error );
 				}
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.GetType().Name + " - " + e.Message );
+				LogLibraries.Warn( e.GetType().Name + " - " + e.Message );
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace ModLibsCore.Helpers.Net {
 					onError( args.Error );
 				}
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.GetType().Name + " - " + e?.Message );
+				LogLibraries.Warn( e.GetType().Name + " - " + e?.Message );
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace ModLibsCore.Helpers.Net {
 						client.UploadStringAsync( new Uri(url), "POST", jsonData );//UploadValuesAsync( new Uri( url ), "POST", values );
 						client.UploadStringCompleted += (sender, e) => {
 							if( token.IsCancellationRequested ) { return; }
-							WebConnectionHelpers.HandleResponse( sender, e, onError, onCompletion );
+							WebConnectionLibraries.HandleResponse( sender, e, onError, onCompletion );
 						};
 					}
 				} catch( WebException e ) {
@@ -109,7 +109,7 @@ namespace ModLibsCore.Helpers.Net {
 					}
 				} catch( Exception e ) {
 					onError?.Invoke( e );
-					//LogHelpers.Warn( e.ToString() );
+					//LogLibraries.Warn( e.ToString() );
 				}
 			} );
 		}
@@ -140,7 +140,7 @@ namespace ModLibsCore.Helpers.Net {
 						client.DownloadStringAsync( new Uri( url ) );
 						client.DownloadStringCompleted += ( sender, e ) => {
 							if( token.IsCancellationRequested ) { return; }
-							WebConnectionHelpers.HandleResponse( sender, e, onError, onCompletion );
+							WebConnectionLibraries.HandleResponse( sender, e, onError, onCompletion );
 						};
 						//client.UploadStringAsync( new Uri(url), "GET", "" );//UploadValuesAsync( new Uri( url ), "POST", values );
 					}
@@ -161,7 +161,7 @@ namespace ModLibsCore.Helpers.Net {
 					}
 				} catch( Exception e ) {
 					onError?.Invoke( e );
-						//LogHelpers.Warn( e.ToString() );
+					//LogLibraries.Warn( e.ToString() );
 				}
 			} );//, cts.Token );
 		}

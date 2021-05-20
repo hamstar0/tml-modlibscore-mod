@@ -1,17 +1,17 @@
 ﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Extensions;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.ModLoader;
 
 
-namespace ModLibsCore.Helpers.DotNET.Reflection {
+namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionHelpers {
+	public partial class ReflectionLibraries {
 		/// <summary>
 		/// Gets a class's type by it's proper name from a given assembly.
 		/// </summary>
@@ -19,7 +19,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="namespaceAndClassName"></param>
 		/// <returns></returns>
 		public static Type GetTypeFromAssembly( string assemblyName, string namespaceAndClassName ) {
-			var rh = ModContent.GetInstance<ReflectionHelpers>();
+			var rh = ModContent.GetInstance<ReflectionLibraries>();
 			string newAssemblyName = namespaceAndClassName + assemblyName.Substring( assemblyName.IndexOf( ',' ) );
 
 			if( rh.TypeMap.ContainsKey( newAssemblyName ) ) {
@@ -40,8 +40,8 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="className"></param>
 		/// <returns></returns>
 		public static IList<Type> GetTypesFromAssembly( string assemblyName, string className ) {
-			Assembly assemblies = ReflectionHelpers.GetAssembly( assemblyName );
-			return ReflectionHelpers.GetTypesFromAssembly( assemblies, className );
+			Assembly assemblies = ReflectionLibraries.GetAssembly( assemblyName );
+			return ReflectionLibraries.GetTypesFromAssembly( assemblies, className );
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="className"></param>
 		/// <returns></returns>
 		public static IList<Type> GetTypesFromAssembly( Assembly assembly, string className ) {
-			var rh = ModContent.GetInstance<ReflectionHelpers>();
+			var rh = ModContent.GetInstance<ReflectionLibraries>();
 			IList<Type> classTypeList;
 
 			if( rh.AssClassTypeMap.TryGetValue2D( assembly.FullName, className, out classTypeList) ) {
@@ -69,7 +69,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 					}
 				}
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.ToString() );
+				LogLibraries.Warn( e.ToString() );
 				return new List<Type>();
 			}
 
@@ -85,7 +85,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <param name="namespacedType"></param>
 		/// <returns></returns>
 		public static Type GetTypeFromAssembly( Assembly assembly, string namespacedType ) {
-			var rh = ModContent.GetInstance<ReflectionHelpers>();
+			var rh = ModContent.GetInstance<ReflectionLibraries>();
 			IList<Type> classTypeList;
 
 			if( rh.AssClassTypeMap.TryGetValue2D( assembly.FullName, namespacedType, out classTypeList ) ) {
@@ -97,7 +97,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 			try {
 				classTypeList = new List<Type> { assembly.GetType( namespacedType ) };
 			} catch( Exception e ) {
-				LogHelpers.Warn( e.ToString() );
+				LogLibraries.Warn( e.ToString() );
 				return null;
 			}
 
@@ -113,7 +113,7 @@ namespace ModLibsCore.Helpers.DotNET.Reflection {
 		/// <returns></returns>
 		public static IEnumerable<Type> GetAllAvailableSubTypesFromMods( Type parentType ) {
 			IEnumerable<Assembly> asses = ModLoader.Mods.SafeSelect( mod => mod.GetType().Assembly );
-			return ReflectionHelpers.GetAllAvailableSubTypesFromAssemblies( asses, parentType );
+			return ReflectionLibraries.GetAllAvailableSubTypesFromAssemblies( asses, parentType );
 		}
 
 		/// <summary>

@@ -3,31 +3,31 @@ using System.Reflection;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using ModLibsCore.Helpers.Debug;
-using ModLibsCore.Helpers.DotNET.Reflection;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Reflection;
 using ModLibsCore.Classes.Loadable;
 
 
-namespace ModLibsCore.Helpers.XNA {
+namespace ModLibsCore.Libraries.XNA {
 	/// @private
-	public partial class XNASpritebatchHelpers : ILoadable {
+	public partial class XNASpritebatchLibraries : ILoadable {
 		private FieldInfo SpriteBatchBegunField = null;
 
 
 
 		////////////////
 
-		internal XNASpritebatchHelpers() {
+		internal XNASpritebatchLibraries() {
 			if( Main.dedServ || Main.netMode == NetmodeID.Server ) { return; }
 
 			Type sbType = typeof(SpriteBatch);
-			this.SpriteBatchBegunField = sbType.GetField( "inBeginEndPair", ReflectionHelpers.MostAccess );
+			this.SpriteBatchBegunField = sbType.GetField( "inBeginEndPair", ReflectionLibraries.MostAccess );
 
 			if( this.SpriteBatchBegunField == null ) {
-				this.SpriteBatchBegunField = sbType.GetField( "_beginCalled", ReflectionHelpers.MostAccess );
+				this.SpriteBatchBegunField = sbType.GetField( "_beginCalled", ReflectionLibraries.MostAccess );
 			}
 			if( this.SpriteBatchBegunField == null ) {
-				this.SpriteBatchBegunField = sbType.GetField( "beginCalled", ReflectionHelpers.MostAccess );
+				this.SpriteBatchBegunField = sbType.GetField( "beginCalled", ReflectionLibraries.MostAccess );
 			}
 		}
 

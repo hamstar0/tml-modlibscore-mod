@@ -6,7 +6,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Classes.UI.Elements;
-using ModLibsCore.Helpers.Debug;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using ModLibsCore.Helpers.NPCs.Attributes;
-using ModLibsCore.Helpers.TModLoader.Commands;
+using ModLibsCore.Libraries.NPCs.Attributes;
+using ModLibsCore.Libraries.TModLoader.Commands;
 
 
 namespace ModLibsCore.Commands {
@@ -28,12 +28,12 @@ namespace ModLibsCore.Commands {
 
 			int _;
 			string itemName;
-			if( CommandsHelpers.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
-				if( !NPCAttributeHelpers.DisplayNamesToIds.ContainsKey(itemName) ) {
+			if( CommandsLibraries.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
+				if( !NPCAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
 					throw new UsageException( "Invalid item type." );
 				}
 
-				caller.Reply( "NPC ID for " + itemName + ": " + NPCAttributeHelpers.DisplayNamesToIds[itemName], Color.Lime );
+				caller.Reply( "NPC ID for " + itemName + ": " + NPCAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
 			}
 		}
 	}

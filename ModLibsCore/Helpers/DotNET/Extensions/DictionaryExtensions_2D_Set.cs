@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace ModLibsCore.Helpers.DotNET.Extensions {
+namespace ModLibsCore.Libraries.DotNET.Extensions {
 	/// <summary>
 	/// Assorted static extension "helper" functions pertaining to dictionaries.
 	/// </summary>
