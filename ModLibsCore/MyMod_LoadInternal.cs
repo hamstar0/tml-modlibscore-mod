@@ -32,7 +32,6 @@ namespace ModLibsCore {
 
 
 		private void LoadHotkeys() {
-			this.ControlPanelHotkey = this.RegisterHotKey( "Toggle Control Panel", "O" );
 			this.DataDumpHotkey = this.RegisterHotKey( "Dump Debug Data", "P" );
 		}
 

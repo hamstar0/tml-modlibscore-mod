@@ -24,7 +24,6 @@ namespace ModLibsCore {
 		internal LoadableManager Loadables;
 
 
-		public ModHotKey ControlPanelHotkey = null;
 		public ModHotKey DataDumpHotkey = null;
 
 
@@ -71,8 +70,6 @@ namespace ModLibsCore {
 			} catch { }
 
 			this.Loadables = null;
-			this.ControlPanelHotkey = null;
-			this.DataDumpHotkey = null;
 		}
 	}
 }
