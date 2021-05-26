@@ -2,4 +2,4 @@ displayName = Mod Libs - Core
 author = hamstar
 version = 1.0.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
-homepage = https://forums.terraria.org/index.php?threads/mod-helpers.63670/
+homepage = https://forums.terraria.org/index.php?threads/hamstars-mods-past-present-and-future.63713/
