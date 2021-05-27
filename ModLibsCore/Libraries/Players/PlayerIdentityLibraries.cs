@@ -88,7 +88,7 @@ namespace ModLibsCore.Libraries.Players {
 
 			//
 
-			int hash = EntityLibraries.GetVanillaSnapshotHash( player, noContext );
+			int hash = EntityIdentityLibraries.GetVanillaSnapshotHash( player, noContext );
 			int itemHash;
 
 			hash += ( "statLifeMax" + player.statLifeMax ).GetHashCode() * Pow();

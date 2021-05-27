@@ -8,7 +8,7 @@ namespace ModLibsCore.Libraries.World {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to the current world.
 	/// </summary>
-	public partial class WorldLibraries {
+	public partial class WorldIdentityLibraries {
 		/// <summary>
 		/// Gets a unique identifier for the current loaded world.
 		/// </summary>

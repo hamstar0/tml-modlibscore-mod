@@ -1,9 +1,9 @@
-﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Libraries.Debug;
-using System;
+﻿using System;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Libraries.Misc {

@@ -1,11 +1,11 @@
-﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Libraries.DotNET;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using Newtonsoft.Json;
 using Terraria;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET;
 
 
 namespace ModLibsCore.Libraries.Misc {

@@ -38,7 +38,7 @@ namespace ModLibsCore {
 
 		private void LoadDataSources() {
 			DataDumper.SetDumpSource( "WorldUidWithSeed", () => {
-				return "  " + WorldLibraries.GetUniqueIdForCurrentWorld(true) + " (net mode: " + Main.netMode + ")";
+				return "  " + WorldIdentityLibraries.GetUniqueIdForCurrentWorld(true) + " (net mode: " + Main.netMode + ")";
 			} );
 
 			DataDumper.SetDumpSource( "PlayerUid", () => {

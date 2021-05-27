@@ -9,7 +9,7 @@ namespace ModLibsCore.Libraries.Entities {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to `Entity`s (parent class of Item, NPC, Player, and Projectile).
 	/// </summary>
-	public class EntityLibraries {
+	public class EntityIdentityLibraries {
 		/// <summary>
 		/// Gets a hash value to attempt to uniquely identify a given entity. Not recommended if the specific entity's
 		/// `GetVanillaSnapshotHash(...)` (via. the respective Helper) is available.

@@ -7,9 +7,9 @@ v2
 	-	Set 'Enable' button in mods menu to auto-enable dependencies
 v1
 -	@Test load hooks
+
+
 -	@Check each mod for leftover Helpers references
-
-
 -	@Entity Groups: Set as always enabled; remove toggler
 -	Rename Helpers to Libraries
 -	Re-evaluate all non-web request uses of MyLock

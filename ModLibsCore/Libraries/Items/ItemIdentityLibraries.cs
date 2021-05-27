@@ -46,7 +46,7 @@ namespace ModLibsCore.Libraries.Items {
 
 			//
 
-			int hash = Entities.EntityLibraries.GetVanillaSnapshotHash( item, noContext );
+			int hash = Entities.EntityIdentityLibraries.GetVanillaSnapshotHash( item, noContext );
 
 			string id = ItemID.GetUniqueKey( item );
 
