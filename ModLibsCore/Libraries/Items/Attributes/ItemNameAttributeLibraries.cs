@@ -7,13 +7,13 @@ namespace ModLibsCore.Libraries.Items.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of items.
 	/// </summary>
-	public partial class ItemAttributeLibraries {
+	public partial class ItemNameAttributeLibraries {
 		/// <summary>
 		/// Table of item ids by qualified names.
 		/// </summary>
 		public static ReadOnlyDictionaryOfSets<string, int> DisplayNamesToIds {
 			get {
-				return ModContent.GetInstance<ItemAttributeLibraries>()._DisplayNamesToIds;
+				return ModContent.GetInstance<ItemNameAttributeLibraries>()._DisplayNamesToIds;
 			}
 		}
 

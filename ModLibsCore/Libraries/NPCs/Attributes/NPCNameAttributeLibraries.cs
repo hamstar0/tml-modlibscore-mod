@@ -8,12 +8,12 @@ namespace ModLibsCore.Libraries.NPCs.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of NPCs.
 	/// </summary>
-	public partial class NPCAttributeLibraries {
+	public partial class NPCNameAttributeLibraries {
 		/// <summary>
 		/// Table of NPC ids by qualified names.
 		/// </summary>
 		public static ReadOnlyDictionaryOfSets<string, int> DisplayNamesToIds =>
-			ModContent.GetInstance<NPCAttributeLibraries>()._DisplayNamesToIds;
+			ModContent.GetInstance<NPCNameAttributeLibraries>()._DisplayNamesToIds;
 
 
 

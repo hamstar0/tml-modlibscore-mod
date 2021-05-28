@@ -29,11 +29,11 @@ namespace ModLibsCore.Commands {
 			int _;
 			string itemName;
 			if( CommandsLibraries.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
-				if( !NPCAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
+				if( !NPCNameAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
 					throw new UsageException( "Invalid item type." );
 				}
 
-				caller.Reply( "NPC ID for " + itemName + ": " + NPCAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
+				caller.Reply( "NPC ID for " + itemName + ": " + NPCNameAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
 			}
 		}
 	}

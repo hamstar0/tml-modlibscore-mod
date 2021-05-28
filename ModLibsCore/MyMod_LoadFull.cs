@@ -45,9 +45,9 @@ namespace ModLibsCore {
 		////////////////
 
 		private void PostAddRecipesFull() {
-			ModContent.GetInstance<ItemAttributeLibraries>().PopulateNames();
-			ModContent.GetInstance<NPCAttributeLibraries>().PopulateNames();
-			ModContent.GetInstance<ProjectileAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<ItemNameAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<NPCNameAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<ProjectileNameAttributeLibraries>().PopulateNames();
 		}
 
 

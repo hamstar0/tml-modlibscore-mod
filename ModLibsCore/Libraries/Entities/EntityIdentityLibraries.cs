@@ -49,27 +49,5 @@ namespace ModLibsCore.Libraries.Entities {
 			
 			return hash;
 		}
-
-
-		/// <summary>
-		/// Gets the "qualified" name (the name the player sees) of a given entity.
-		/// </summary>
-		/// <param name="ent"></param>
-		/// <returns></returns>
-		public static string GetQualifiedName( Entity ent ) {
-			if( ent is Item ) {
-				return ItemAttributeLibraries.GetQualifiedName( (Item)ent );
-			}
-			if( ent is NPC ) {
-				return NPCAttributeLibraries.GetQualifiedName( (NPC)ent );
-			}
-			if( ent is Projectile ) {
-				return ProjectileAttributeLibraries.GetQualifiedName( (Projectile)ent );
-			}
-			if( ent is Player ) {
-				return ( (Player)ent ).name;
-			}
-			return "...a "+ent.GetType().Name;
-		}
 	}
 }

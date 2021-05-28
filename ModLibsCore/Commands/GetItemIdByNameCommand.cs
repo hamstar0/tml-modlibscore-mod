@@ -31,11 +31,11 @@ namespace ModLibsCore.Commands {
 			int _;
 			string itemName;
 			if( CommandsLibraries.GetQuotedStringFromArgsAt(args, 0, out _, out itemName) ) {
-				if( !ItemAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
+				if( !ItemNameAttributeLibraries.DisplayNamesToIds.ContainsKey(itemName) ) {
 					throw new UsageException( "Invalid item type." );
 				}
 
-				caller.Reply( "Item ID for " + itemName + ": " + ItemAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
+				caller.Reply( "Item ID for " + itemName + ": " + ItemNameAttributeLibraries.DisplayNamesToIds[itemName], Color.Lime );
 			}
 		}
 	}
