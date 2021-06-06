@@ -14,20 +14,27 @@ namespace ModLibsCore.Services.Timers {
 	/// Provides a way to delay the onset of a given action by a set amount of ticks. As a secondary function,
 	/// MainOnTickGet() provides a way to use Main.OnTick for running background tasks at 60FPS.
 	/// </summary>
-	public partial class Timers : ILoadable {
+	public partial class Timers : ISequencedLoadable {
 		private IDictionary<string, (bool RunsWhilePaused, Func<int> Callback, int Duration)> Running
 				= new Dictionary<string, (bool, Func<int>, int)>();
-		private IDictionary<string, int> Elapsed = new Dictionary<string, int>();
+		private IDictionary<string, int> Elapsed
+				= new Dictionary<string, int>();
 
 		private ISet<string> Expired = new HashSet<string>();
 
-		private readonly Func<bool> OnTickGet;
+		private Func<bool> OnTickGet;
 
 
 
 		////////////////
 
-		internal Timers() {
+		internal Timers() { }
+
+		bool ISequencedLoadable.OnModsLoad( ISet<object> alreadyLoaded ) {
+			if( alreadyLoaded.Any(o=>o.GetType() != typeof(LoadHooks)) ) {
+				return false;
+			}
+
 			this.OnTickGet = Timers.MainOnTickGet();
 			Main.OnTick += Timers._Update;
 //TICKSTART = DateTime.Now.Ticks;
@@ -41,16 +48,20 @@ namespace ModLibsCore.Services.Timers {
 				this.Elapsed.Clear();
 				this.Expired.Clear();
 			} );
+
+			return true;
 		}
 
-		void ILoadable.OnModsLoad() { }
+		bool ISequencedLoadable.OnPostModsLoad( ISet<object> alreadyPostLoaded ) {
+			return true;
+		}
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() {
+		bool ISequencedLoadable.OnModsUnload( ISet<object> alreadyUnloaded ) {
 			try {
 				Main.OnTick -= Timers._Update;
 			} catch { }
+
+			return true;
 		}
 
 
@@ -60,9 +71,7 @@ namespace ModLibsCore.Services.Timers {
 		//private static int TICKCOUNT=0;
 		private static void _Update() {  // <- Just in case references are doing something funky...
 			var timers = ModContent.GetInstance<Timers>();
-			if( timers == null ) { return; }
-
-			if( timers.OnTickGet() ) {
+			if( timers?.OnTickGet() ?? false ) {
 //long NOW = DateTime.Now.Ticks;
 //TICKCOUNT++;
 //if( (NOW - TICKSTART) > 10000000 ) { 
@@ -75,26 +84,26 @@ namespace ModLibsCore.Services.Timers {
 		}
 
 		private void Update() {
-			foreach( string name in this.Running.Keys.ToArray() ) {
-				if( Main.gamePaused && !this.Running[name].RunsWhilePaused ) {
+			foreach( string timerName in this.Running.Keys.ToArray() ) {
+				if( Main.gamePaused && !this.Running[timerName].RunsWhilePaused ) {
 					continue;
 				}
 
-				this.Elapsed[name]++;
+				this.Elapsed[timerName]++;
 
-				if( this.Elapsed[name] >= this.Running[name].Duration ) {
-					this.Expired.Add( name );
+				if( this.Elapsed[timerName] >= this.Running[timerName].Duration ) {
+					this.Expired.Add( timerName );
 
-					int duration = this.Running[name].Callback();
+					int duration = this.Running[timerName].Callback();
 					if( duration > 0 ) {
 						//this.Running[name].Duration = duration;
-						this.Running[name] = (
-							this.Running[name].RunsWhilePaused,
-							this.Running[name].Callback,
+						this.Running[timerName] = (
+							this.Running[timerName].RunsWhilePaused,
+							this.Running[timerName].Callback,
 							duration
 						);
-						this.Elapsed[name] = 0;
-						this.Expired.Remove( name );
+						this.Elapsed[timerName] = 0;
+						this.Expired.Remove( timerName );
 					}
 				}
 			}

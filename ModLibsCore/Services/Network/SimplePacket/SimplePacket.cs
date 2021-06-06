@@ -35,18 +35,9 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 
 			int i = 0;
 			foreach( Type payloadType in payloadTypes.ToArray() ) {
-				if( !payloadType.IsSerializable ) {
-					payloadTypes.Remove( payloadType );
-					LogLibraries.Warn( "Invalid payload type "+payloadType.Name+" "
-						+"(in "+payloadType.Assembly.GetName().Name+")" );
+				if( !this.ValidateSerializeable(payloadType, payloadType, new HashSet<Type>(), out string result) ) {
+					LogLibraries.Warn( payloadType.Name+" not serializeable: "+result );
 					continue;
-				}
-				foreach( FieldInfo field in payloadType.GetFields() ) {
-					if( !field.FieldType.IsSerializable && !field.IsNotSerialized ) {
-						payloadTypes.Remove( payloadType );
-						LogLibraries.Warn( "Invalid payload type "+payloadType.Name+"; field "+field.Name+" not serializeable "
-							+"(in "+payloadType.Assembly.GetName().Name+")" );
-					}
 				}
 
 				this.PayloadCodeToType[i] = payloadType;
@@ -59,5 +50,42 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 		void ILoadable.OnPostModsLoad() { }
 
 		void ILoadable.OnModsUnload() { }
+
+
+		////
+
+		private bool ValidateSerializeable(
+					Type basePayloadType,
+					Type payloadType,
+					ISet<Type> alreadyValidated,
+					out string result ) {
+			if( !payloadType.IsSerializable ) {
+				result = "Invalid payload type "+payloadType.Name+" "+"(in "+payloadType.Assembly.GetName().Name+")";
+				return false;
+			}
+
+			alreadyValidated.Add( payloadType );
+
+			foreach( FieldInfo field in payloadType.GetFields() ) {
+				if( !field.FieldType.IsSerializable || field.IsNotSerialized ) {
+					result = "Invalid payload type "+payloadType.Name+"; field "+field.Name+" not serializeable "
+						+"(in "+payloadType.Assembly.GetName().Name+")";
+					return false;
+				}
+
+				if( alreadyValidated.Contains(field.FieldType) ) {
+					continue;
+				}
+
+				if( !field.FieldType.IsValueType ) {
+					if( !this.ValidateSerializeable(basePayloadType, field.FieldType, alreadyValidated, out result) ) {
+						return false;
+					}
+				}
+			}
+
+			result = null;
+			return true;
+		}
 	}
 }

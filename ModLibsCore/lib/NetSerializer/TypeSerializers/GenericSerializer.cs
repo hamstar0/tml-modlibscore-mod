@@ -21,8 +21,15 @@ namespace NetSerializer
 	{
 		public bool Handles(Type type)
 		{
-			if (!type.IsSerializable)
-				throw new NotSupportedException(String.Format("Type {0} is not marked as Serializable", type.FullName));
+			// hamstar edit:
+			if( !type.IsSerializable ) {
+				ModLibsCore.ModLibsCoreMod.Instance.Logger.Info( "Type "+type.FullName+" is not marked as Serializable" );
+			}
+
+			//
+
+			//if (!type.IsSerializable)
+			//	throw new NotSupportedException(String.Format("Type {0} is not marked as Serializable", type.FullName));
 
 			if (typeof(System.Runtime.Serialization.ISerializable).IsAssignableFrom(type))
 				throw new NotSupportedException(String.Format("Cannot serialize {0}: ISerializable not supported", type.FullName));

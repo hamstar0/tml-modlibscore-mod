@@ -3,11 +3,13 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.UI.Elements;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.TModLoader.Menus;
+using ModLibsCore.Libraries.XNA;
 
 
 namespace ModLibsCore.Internals.Menus.Support {
@@ -45,10 +47,12 @@ namespace ModLibsCore.Internals.Menus.Support {
 					return;
 				}
 
-				var sid = ModContent.GetInstance<SupportInfoDisplay>();
-
-				sid?.Update();
-				sid?.Draw( Main.spriteBatch );
+				bool _;
+				XNASpritebatchLibraries.DrawBatch( ( sb ) => {
+					var sid = ModContent.GetInstance<SupportInfoDisplay>();
+					sid?.Update();
+					sid?.Draw( Main.spriteBatch );
+				}, out _, true );
 			} catch( Exception e ) {
 				LogLibraries.LogOnce( e.ToString() );
 			}
@@ -87,6 +91,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 			//}
 
 			foreach( var elem in this.Elements.ToArray() ) {
+				if( !(elem is UIElement) ) { continue; }
 				if( elem is UIWebUrlBasic ) { continue; }
 				if( elem is UIText ) {
 					if( elem == this.HeadLabel ) {

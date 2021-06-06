@@ -117,6 +117,8 @@ namespace ModLibsCore.Services.TML {
 
 		////////////////
 
+		private BuildPropertiesViewer() { }
+
 		internal BuildPropertiesViewer( object buildProps ) {
 			this.BuildProps = buildProps;
 		}

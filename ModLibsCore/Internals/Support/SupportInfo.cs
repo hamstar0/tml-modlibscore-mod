@@ -39,10 +39,15 @@ namespace ModLibsCore.Internals.Menus.Support {
 
 		////////////////
 
-		internal SupportInfoDisplay( float width = 248f, float yBeg = 8f, float rowHeight = 30f, float scale = 0.8f ) {
+		internal SupportInfoDisplay() {
 			if( Main.dedServ ) { return; }
 
 			var mymod = ModLibsCoreMod.Instance;
+			float width = 248f;
+			float yBeg = 8f;
+			float rowHeight = 30f;
+			float scale = 0.8f;
+
 			float y = yBeg;
 			float row = 0;
 			this.Width = width;

@@ -50,6 +50,7 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="action"></param>
 		public static void RunNow( Action action ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + action.GetHashCode();
+
 			Timers.SetTimer( ctx, 0, true, () => {
 				action();
 				return false;
@@ -63,7 +64,8 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="runsWhilePaused"></param>
 		public static void RunUntil( Func<bool> func, bool runsWhilePaused ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
-			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
+
+			Timers.SetTimer( ctx, 0, runsWhilePaused, () => {
 				return func();
 			} );
 		}
@@ -76,7 +78,8 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="runsWhilePaused"></param>
 		public static void RunUntil( Func<bool> func, int times, bool runsWhilePaused ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
-			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
+
+			Timers.SetTimer( ctx, 0, runsWhilePaused, () => {
 				if( !func() ) {
 					return false;
 				}

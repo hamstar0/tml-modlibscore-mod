@@ -33,6 +33,7 @@ namespace ModLibsCore {
 		private void LoadFull() {
 			this.LoadExceptionBehavior();
 
+			this.Loadables.RegisterLoadables();
 			this.Loadables.OnModsLoad();
 
 			this.LoadHotkeys();
