@@ -31,7 +31,7 @@ namespace ModLibsCore.Services.Timers {
 		internal Timers() { }
 
 		bool ISequencedLoadable.OnModsLoad( ISet<object> alreadyLoaded ) {
-			if( alreadyLoaded.Any(o=>o.GetType() != typeof(LoadHooks)) ) {
+			if( !alreadyLoaded.Any(o=>o.GetType() == typeof(LoadHooks)) ) {
 				return false;
 			}
 

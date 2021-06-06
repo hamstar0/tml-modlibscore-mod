@@ -21,7 +21,8 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 		/// <summary>
 		/// Gets the singleton instance of a given class type. If no such instance exists, one is created and registered.
-		/// Warning: Avoid calling ContentInstance.Register(...) for this class. Use caution with tModLoader's singletons.
+		/// Warning: Avoid calling ContentInstance.Register(...) for the given class after this method is called (such as with
+		/// tModLoader's singletons).
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>

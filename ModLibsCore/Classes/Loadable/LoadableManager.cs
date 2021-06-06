@@ -35,12 +35,11 @@ namespace ModLibsCore.Classes.Loadable {
 						if( !classType.IsClass || classType.IsAbstract ) {
 							continue;
 						}
-
 						if( !iLoadableType.IsAssignableFrom(classType) && !iSeqLoadableType.IsAssignableFrom(classType) ) {
 							continue;
 						}
 
-						var obj = TmlLibraries.SafelyGetInstanceForType( classType );
+						object obj = TmlLibraries.SafelyGetInstanceForType( classType );
 
 						if( obj is ILoadable ) {
 							this.Loadables.Add( obj as ILoadable );
@@ -56,6 +55,11 @@ namespace ModLibsCore.Classes.Loadable {
 		////////////////
 
 		public void OnModsLoad() {
+			this.OnModsLoad_Unsequenced();
+			this.OnModsLoad_Sequenced();
+		}
+
+		private void OnModsLoad_Unsequenced() {
 			foreach( ILoadable loadable in this.Loadables ) {
 				loadable.OnModsLoad();
 				//object _;
@@ -63,22 +67,19 @@ namespace ModLibsCore.Classes.Loadable {
 				//	throw new ModLibsException( "Could not call OnModsLoad for "+loadable.GetType() );
 				//}
 			}
-
-			this.OnModsLoad_Sequenced( this.Loadables );
 		}
 
-		private void OnModsLoad_Sequenced( IEnumerable<object> alreadyLoaded ) {
+		private void OnModsLoad_Sequenced() {
 			var loading = new HashSet<ISequencedLoadable>( this.SequencedLoadables );
-			var loaded = new HashSet<object>( alreadyLoaded );
+			var loaded = new HashSet<object>( this.Loadables );
 
 			int attempts = 0;
 
 			do {
 				foreach( ISequencedLoadable loadable in loading.ToArray() ) {
 					if( loadable.OnModsLoad(loaded) ) {
-						loaded.Add( loadable );
-
 						loading.Remove( loadable );
+						loaded.Add( loadable );
 					}
 				}
 
@@ -86,7 +87,7 @@ namespace ModLibsCore.Classes.Loadable {
 			} while( loading.Count > 0 && attempts < 1000 );
 
 			if( attempts >= 1000 ) {
-				LogLibraries.Warn( "Retry attempts exceeded: "+(loading.Count)+" of "+(this.SequencedLoadables.Count)+" remain." );
+				LogLibraries.Warn( "Retry attempts exceeded: "+(loading.Count)+" of "+(this.SequencedLoadables.Count)+" loaded." );
 			}
 		}
 
@@ -94,25 +95,27 @@ namespace ModLibsCore.Classes.Loadable {
 		////
 
 		public void OnPostModsLoad() {
+			this.OnPostModsLoad_Unsequenced();
+			this.OnPostModsLoad_Sequenced();
+		}
+
+		private void OnPostModsLoad_Unsequenced() {
 			foreach( ILoadable loadable in this.Loadables ) {
 				loadable.OnPostModsLoad();
 			}
-
-			this.OnPostModsLoad_Sequenced( this.Loadables );
 		}
 
-		private void OnPostModsLoad_Sequenced( IEnumerable<object> alreadyPostLoaded ) {
+		private void OnPostModsLoad_Sequenced() {
 			var loading = new HashSet<ISequencedLoadable>( this.SequencedLoadables );
-			var loaded = new HashSet<object>( alreadyPostLoaded );
+			var loaded = new HashSet<object>( this.Loadables );
 
 			int attempts = 0;
 
 			do {
 				foreach( ISequencedLoadable loadable in loading.ToArray() ) {
 					if( loadable.OnPostModsLoad(loaded) ) {
-						loaded.Add( loadable );
-
 						loading.Remove( loadable );
+						loaded.Add( loadable );
 					}
 				}
 
@@ -128,25 +131,27 @@ namespace ModLibsCore.Classes.Loadable {
 		////
 
 		public void OnModsUnload() {
+			this.OnModsUnload_Unsequenced();
+			this.OnModsUnload_Sequenced();
+		}
+
+		private void OnModsUnload_Unsequenced() {
 			foreach( ILoadable loadable in this.Loadables ) {
 				loadable.OnModsUnload();
 			}
-
-			this.OnModsUnload_Sequenced( this.Loadables );
 		}
 
-		private void OnModsUnload_Sequenced( IEnumerable<object> alreadyUnloaded ) {
+		private void OnModsUnload_Sequenced() {
 			var unloading = new HashSet<ISequencedLoadable>( this.SequencedLoadables );
-			var unloaded = new HashSet<object>( alreadyUnloaded );
+			var unloaded = new HashSet<object>( this.Loadables );
 
 			int attempts = 0;
 
 			do {
 				foreach( ISequencedLoadable loadable in unloading.ToArray() ) {
 					if( loadable.OnModsUnload(unloaded) ) {
-						unloaded.Add( loadable );
-
 						unloading.Remove( loadable );
+						unloaded.Add( loadable );
 					}
 				}
 
