@@ -135,10 +135,12 @@ namespace ModLibsCore.Services.Timers {
 		public static void SetTimer( string name, int tickDuration, bool runsWhilePaused, Func<int> action ) {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
-			
-			timers.Running[name] = (RunsWhilePaused: runsWhilePaused, Callback: action, Duration: tickDuration );
-			timers.Elapsed[name] = 0;
-			timers.Expired.Remove( name );
+
+			lock( Timers.MyLock ) {
+				timers.Running[name] = new TimerEntry( runsWhilePaused, action, tickDuration );
+				timers.Elapsed[name] = 0;
+				timers.Expired.Remove( name );
+			}
 		}
 
 
@@ -153,8 +155,10 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return 0; }
 
-			if( timers.Running.ContainsKey( name ) ) {
-				return timers.Running[name].Duration - timers.Elapsed[ name ];
+			lock( Timers.MyLock ) {
+				if( timers.Running.ContainsKey( name ) ) {
+					return timers.Running[name].Duration - timers.Elapsed[name];
+				}
 			}
 
 			return 0;
@@ -169,10 +173,12 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 
-			if( timers.Running.ContainsKey( name ) ) {
-				timers.Running.Remove( name );
-				timers.Elapsed.Remove( name );
-				timers.Expired.Remove( name );
+			lock( Timers.MyLock ) {
+				if( timers.Running.ContainsKey( name ) ) {
+					timers.Running.Remove( name );
+					timers.Elapsed.Remove( name );
+					timers.Expired.Remove( name );
+				}
 			}
 		}
 
@@ -184,9 +190,11 @@ namespace ModLibsCore.Services.Timers {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 
-			timers.Running = new Dictionary<string, (bool, Func<int>, int)>();
-			timers.Elapsed = new Dictionary<string, int>();
-			timers.Expired = new HashSet<string>();
+			lock( Timers.MyLock ) {
+				timers.Running = new Dictionary<string, TimerEntry>();
+				timers.Elapsed = new Dictionary<string, int>();
+				timers.Expired = new HashSet<string>();
+			}
 		}
 	}
 }
