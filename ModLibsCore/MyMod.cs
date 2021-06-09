@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
-using ModLibsCore.Classes.Loadable;
+
 
 namespace ModLibsCore {
 	/// @private
@@ -23,10 +24,6 @@ namespace ModLibsCore {
 
 
 		////////////////
-
-		private int LastSeenCPScreenWidth = -1;
-		private int LastSeenCPScreenHeight = -1;
-
 
 		private bool HasUnhandledExceptionLogger = false;
 
@@ -77,8 +74,6 @@ namespace ModLibsCore {
 		////////////////
 
 		public override void PostSetupContent() {
-			this.Loadables.OnPostModsLoad();
-
 			this.HasSetupContent = true;
 			this.CheckAndProcessLoadFinish();
 		}
@@ -104,7 +99,9 @@ namespace ModLibsCore {
 			if( !this.HasSetupContent ) { return; }
 			if( !this.HasAddedRecipeGroups ) { return; }
 			if( !this.HasAddedRecipes ) { return; }
-			
+
+			this.Loadables.OnPostModsLoad();
+
 			Services.Timers.Timers.SetTimer( 1, true, () => {
 				ModContent.GetInstance<LoadHooks>().FulfillPostModLoadHooks();
 				return false;
