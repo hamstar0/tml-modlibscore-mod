@@ -100,9 +100,9 @@ namespace ModLibsCore {
 			if( !this.HasAddedRecipeGroups ) { return; }
 			if( !this.HasAddedRecipes ) { return; }
 
-			this.Loadables.OnPostModsLoad();
-
 			Services.Timers.Timers.SetTimer( 1, true, () => {
+				this.Loadables.OnPostModsLoad();
+
 				ModContent.GetInstance<LoadHooks>().FulfillPostModLoadHooks();
 				return false;
 			} );

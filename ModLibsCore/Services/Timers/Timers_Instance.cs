@@ -105,8 +105,8 @@ namespace ModLibsCore.Services.Timers {
 		}
 
 		private void Update() {
-			KeyValuePair<string, TimerEntry>[] timers = null;
 			int currElapsed;
+			KeyValuePair<string, TimerEntry>[] timers = null;
 			lock( Timers.MyLock ) {
 				timers = this.Running.ToArray();
 			}
