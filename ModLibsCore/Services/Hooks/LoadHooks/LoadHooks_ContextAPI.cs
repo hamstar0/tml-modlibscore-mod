@@ -9,6 +9,22 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 		/// Declares an action to run after mods are loaded (PostSetupContent, PostAddRecipes, AddRecipeGroups).
 		/// </summary>
 		/// <param name="action"></param>
+		public static void AddPostContentLoadHook( Action action ) {
+			var loadHooks = ModContent.GetInstance<LoadHooks>();
+
+			if( loadHooks.PostContentLoadHookConditionsMet ) {
+				action();
+			} else {
+				lock( LoadHooks.PostContentLoadHookLock ) {
+					loadHooks.PostContentLoadHooks.Add( action );
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Declares an action to run after mods are loaded (PostSetupContent, PostAddRecipes, AddRecipeGroups).
+		/// </summary>
+		/// <param name="action"></param>
 		public static void AddPostModLoadHook( Action action ) {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
 

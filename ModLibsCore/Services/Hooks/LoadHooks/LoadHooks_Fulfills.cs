@@ -5,6 +5,22 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
 	public partial class LoadHooks {
+		internal void FulfillPostContentLoadHooks() {
+			if( this.PostContentLoadHookConditionsMet ) { return; }
+			this.PostContentLoadHookConditionsMet = true;
+			
+			Action[] hooks;
+			
+			lock( LoadHooks.PostContentLoadHookLock ) {
+				hooks = this.PostContentLoadHooks.ToArray();
+				this.PostContentLoadHooks.Clear();
+			}
+
+			foreach( Action hook in hooks ) {
+				hook();
+			}
+		}
+		
 		internal void FulfillPostModLoadHooks() {
 			if( this.PostModLoadHookConditionsMet ) { return; }
 			this.PostModLoadHookConditionsMet = true;

@@ -9,6 +9,7 @@ using ModLibsCore.Classes.Loadable;
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
 	public partial class LoadHooks : ILoadable {
+		private IList<Action> PostContentLoadHooks = new List<Action>();
 		private IList<Action> PostModLoadHooks = new List<Action>();
 		private IList<Action> ModUnloadHooks = new List<Action>();
 		private IList<Action> WorldLoadOnceHooks = new List<Action>();
@@ -24,6 +25,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 		private IList<Action> SafeWorldLoadOnceHooks = new List<Action>();
 		private IList<Action> SafeWorldLoadEachHooks = new List<Action>();
 
+		private bool PostContentLoadHookConditionsMet = false;
 		private bool PostModLoadHookConditionsMet = false;
 		private bool WorldLoadHookConditionsMet = false;
 		private bool WorldUnloadHookConditionsMet = false;

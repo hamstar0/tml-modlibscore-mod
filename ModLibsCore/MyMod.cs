@@ -76,6 +76,8 @@ namespace ModLibsCore {
 		public override void PostSetupContent() {
 			this.HasSetupContent = true;
 			this.CheckAndProcessLoadFinish();
+
+			ModContent.GetInstance<LoadHooks>().FulfillPostContentLoadHooks();
 		}
 
 		////////////////
