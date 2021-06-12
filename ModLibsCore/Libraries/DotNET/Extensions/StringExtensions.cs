@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-
+using System.Collections.Generic;
 
 namespace ModLibsCore.Libraries.DotNET.Extensions {
 	/// <summary>
@@ -17,6 +17,24 @@ namespace ModLibsCore.Libraries.DotNET.Extensions {
 			return value?.Substring( 0, Math.Min( value.Length, maxLength ) );
 		}
 	}
+
+
+
+
+	/// <summary>
+	/// Extensions for Enumerable collections to output as a string.
+	/// </summary>
+	public static class EnumerableExtensions {
+		/// <summary>
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string ToStringJoined<T>( this IEnumerable<T> collection, string delim ) {
+			return string.Join( delim, collection );
+		}
+	}
+
+
 
 
 	/// <summary>
