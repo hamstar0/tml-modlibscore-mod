@@ -10,7 +10,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 		internal uint WorldStartupDelay = 0;
 
 		internal bool IsLocalPlayerInGame_Hackish = false;
-		internal bool HasServerBegunHavingPlayers_Hackish = false;
+		internal bool HasGameBegunHavingPlayers_Hackish = false;
 
 
 
@@ -23,10 +23,12 @@ namespace ModLibsCore.Libraries.TModLoader {
 			LoadHooks.AddWorldUnloadEachHook( () => {
 				this.WorldStartupDelay = 0;
 				this.IsLocalPlayerInGame_Hackish = false;
+				this.HasGameBegunHavingPlayers_Hackish = false;
 			} );
 			LoadHooks.AddPostWorldUnloadEachHook( () => { // Redundant?
 				this.WorldStartupDelay = 0;
 				this.IsLocalPlayerInGame_Hackish = false;
+				this.HasGameBegunHavingPlayers_Hackish = false;
 			} );
 		}
 

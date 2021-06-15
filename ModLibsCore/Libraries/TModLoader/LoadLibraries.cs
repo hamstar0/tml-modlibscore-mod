@@ -67,7 +67,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 				if( !LoadLibraries.IsWorldLoaded() ) {
 					return false;
 				}
-				if( !loadLibs.HasServerBegunHavingPlayers_Hackish ) {
+				if( !loadLibs.HasGameBegunHavingPlayers_Hackish ) {
 					return false;
 				}
 
@@ -101,7 +101,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 					LogLibraries.LogOnce( DebugLibraries.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
 						+ "StartupDelay: "+!(loadLibs.WorldStartupDelay < (60 * 2))
 						+ ", IsModLoaded(): "+LoadLibraries.IsModLoaded()+" (true?)"
-						+ ", HasServerBegunHavingPlayers_Hackish: " + loadLibs.HasServerBegunHavingPlayers_Hackish+" (true?)"
+						+ ", HasGameBegunHavingPlayers_Hackish: " + loadLibs.HasGameBegunHavingPlayers_Hackish+" (true?)"
 						+ ", HasSetupContent: "+mymod.HasSetupContent+" (true?)"
 						+ ", HasAddedRecipeGroups: "+mymod.HasAddedRecipeGroups+" (true?)"
 						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes+" (true?)" );

@@ -5,14 +5,25 @@ using Terraria.GameInput;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Services.Debug.DataDumper;
+using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Debug.CustomHotkeys;
+using ModLibsCore.Services.Debug.DataDumper;
 
 
 namespace ModLibsCore {
 	/// @private
 	partial class ModLibsPlayer : ModPlayer {
 		public override bool CloneNewInstances => false;
+
+
+
+		////////////////
+
+		public override void PreUpdate() {
+			if( player.whoAmI != 255 ) {
+				ModContent.GetInstance<LoadLibraries>().HasGameBegunHavingPlayers_Hackish = true;   // Weird hack?
+			}
+		}
 
 
 
