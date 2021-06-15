@@ -73,13 +73,20 @@ namespace ModLibsCore.Classes.PlayerData {
 			}
 
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
-			IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[playerWho].Select( kv => (kv.Key, kv.Value) );
 
-			foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
-				object data = plrData.OnExit();
+			if( Main.netMode != NetmodeID.Server ) {
+				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[playerWho].Select( kv => (kv.Key, kv.Value) );
 
-				if( data != null ) {
-					CustomPlayerData.SaveFileData( plrData.GetType().Name, PlayerIdentityLibraries.GetUniqueId(), data );
+				foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
+					object data = plrData.OnExit();
+
+					if( data != null ) {
+						CustomPlayerData.SaveFileData(
+							plrData.GetType().Name,
+							PlayerIdentityLibraries.GetUniqueId(),
+							data
+						);
+					}
 				}
 			}
 
