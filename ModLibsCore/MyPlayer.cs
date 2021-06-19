@@ -20,7 +20,7 @@ namespace ModLibsCore {
 		////////////////
 
 		public override void PreUpdate() {
-			if( player.whoAmI != 255 ) {
+			if( this.player.whoAmI != 255 ) {
 				ModContent.GetInstance<LoadLibraries>().HasGameBegunHavingPlayers_Hackish = true;   // Weird hack?
 			}
 		}
