@@ -27,7 +27,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 			} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				data.ReceiveOnClient();
 			} else {
-				throw new ModLibsException( "Not MP" );
+				throw new ModLibsException( "Not MP ("+data.GetType().Name+")" );
 			}
 		}
 	}
