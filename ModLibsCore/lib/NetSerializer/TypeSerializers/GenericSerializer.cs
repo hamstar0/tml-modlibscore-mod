@@ -23,7 +23,9 @@ namespace NetSerializer
 		{
 			// hamstar edit:
 			if( !type.IsSerializable ) {
-				ModLibsCore.ModLibsCoreMod.Instance.Logger.Info( "Type "+type.FullName+" is not marked as Serializable" );
+				ModLibsCore.ModLibsCoreMod.Instance.Logger.Info(
+					"Type "+type.FullName+" is not marked as Serializable (not required, though)"
+				);
 			}
 
 			//

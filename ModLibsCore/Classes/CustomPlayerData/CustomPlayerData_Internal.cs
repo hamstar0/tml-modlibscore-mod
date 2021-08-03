@@ -41,7 +41,7 @@ namespace ModLibsCore.Classes.PlayerData {
 
 				singleton.DataMap.Set2D( playerWho, plrDataType, plrData );
 
-				var typedParam = new TypedMethodParameter( typeof( object ), data );
+				/*var typedParam = new TypedMethodParameter( typeof( object ), data );
 
 				ReflectionLibraries.RunMethod(
 					instance: plrData,
@@ -54,7 +54,7 @@ namespace ModLibsCore.Classes.PlayerData {
 					methodName: "OnEnter",
 					args: new object[] { Main.myPlayer == playerWho, typedParam },
 					returnVal: out object _
-				);
+				);*/	// <- what is this crap?
 
 				plrData.OnEnter( Main.myPlayer == playerWho, data );
 			}
