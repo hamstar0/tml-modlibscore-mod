@@ -40,6 +40,7 @@ namespace ModLibsCore.Libraries.Debug {
 					times = DebugLibraries.ChatTimes[id]++;
 				} else {
 					DebugLibraries.Chats[ id ] = msg;
+					DebugLibraries.ChatTimes[ id ] = 0;
 				}
 				
 				if( (Math.Log10((double)times) % 1d) == 0 ) {
