@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
+using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -75,6 +77,7 @@ namespace ModLibsCore {
 
 		public override void PostSetupContent() {
 			this.HasSetupContent = true;
+
 			this.CheckAndProcessLoadFinish();
 
 			ModContent.GetInstance<LoadHooks>().FulfillPostContentLoadHooks();
@@ -84,6 +87,7 @@ namespace ModLibsCore {
 
 		public override void AddRecipeGroups() {
 			this.HasAddedRecipeGroups = true;
+
 			this.CheckAndProcessLoadFinish();
 		}
 		
@@ -146,6 +150,23 @@ namespace ModLibsCore {
 
 		public override void PostUpdateEverything() {
 			this.MouseInterface = Main.LocalPlayer.mouseInterface;
+
+			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
+				string[] loaded = new string[] {
+					"mod: " + LoadLibraries.IsModLoaded(),
+					"world: " + LoadLibraries.IsWorldLoaded(),
+					"world in play: " + LoadLibraries.IsWorldBeingPlayed(),
+					"world in play S: " + LoadLibraries.IsWorldSafelyBeingPlayed(),
+					"curr plr in game: " + LoadLibraries.IsCurrentPlayerInGame(),
+				};
+				string loadedStr = loaded.ToStringJoined( ", " );
+
+				if( !Main.gameMenu ) {
+					DebugLibraries.Print( "LOADED", loadedStr );
+				}
+
+				LogLibraries.LogWhen( "LOAD STATES CHANGED: " + loadedStr, i => i == 0 );
+			}
 		}
 
 

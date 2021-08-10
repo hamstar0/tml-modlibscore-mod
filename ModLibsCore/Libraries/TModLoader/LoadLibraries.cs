@@ -88,7 +88,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 				return false;
 			}
 
-			bool notSafelyPlayed = loadLibs.WorldStartupDelay >= ( 60 * 2 );
+			bool notSafelyPlayed = loadLibs.WorldStartupDelay >= 120;
 
 			if( ModLibsConfig.Instance.DebugModeMiscInfo && !notSafelyPlayed ) {
 				if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
@@ -97,14 +97,14 @@ namespace ModLibsCore.Libraries.TModLoader {
 						+ ", IsLocalPlayerInGame_Hackish: " + loadLibs.IsLocalPlayerInGame_Hackish+" (true?)"
 					);
 				} else {
-					var myworld = ModContent.GetInstance<ModLibsWorld>();
 					LogLibraries.LogOnce( DebugLibraries.GetCurrentContext( 2 ) + " - IsWorldSafelyBeingPlayed - "
 						+ "StartupDelay: "+!(loadLibs.WorldStartupDelay < (60 * 2))
 						+ ", IsModLoaded(): "+LoadLibraries.IsModLoaded()+" (true?)"
 						+ ", HasGameBegunHavingPlayers_Hackish: " + loadLibs.HasGameBegunHavingPlayers_Hackish+" (true?)"
 						+ ", HasSetupContent: "+mymod.HasSetupContent+" (true?)"
 						+ ", HasAddedRecipeGroups: "+mymod.HasAddedRecipeGroups+" (true?)"
-						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes+" (true?)" );
+						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes+" (true?)"
+					);
 				}
 			}
 			return notSafelyPlayed;

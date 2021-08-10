@@ -69,6 +69,13 @@ namespace ModLibsCore {
 		[Tooltip( "Displays info at the mouse's location" )]
 		public bool DebugModeMouseInfo { get; set; } = false;
 
+		/// <summary>
+		/// Displays info on the game's load stages.
+		/// </summary>
+		[Label( "Debug Mode - Display info on the game's load stages" )]
+		[Tooltip( "Displays info on the game's load stages" )]
+		public bool DebugModeLoadStages { get; set; } = false;
+
 
 		////
 
