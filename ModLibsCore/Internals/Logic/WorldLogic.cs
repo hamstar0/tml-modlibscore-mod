@@ -11,11 +11,12 @@ namespace ModLibsCore.Internals.Logic {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() {
-		}
+		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnPostModsLoad() {
 			void onLoadWorld( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
+				orig.Invoke( loadFromCloud );
+
 				WorldLogic.IsLoaded = true;
 			}
 
@@ -24,7 +25,6 @@ namespace ModLibsCore.Internals.Logic {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 
-		void ILoadable.OnModsUnload() {
-		}
+		void ILoadable.OnModsUnload() { }
 	}
 }

@@ -53,7 +53,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="repeatLog10">Outputs once every log10 % 1 == 0 times.</param>
-		/// <returns>Output message, or else `null` if message has already output (amd a repeat isn't
+		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string LogOnce( string msg, bool repeatLog10=true ) {
 			string outMsg = null;
@@ -63,6 +63,7 @@ namespace ModLibsCore.Libraries.Debug {
 				if( repeats >= 1 ) {
 					outMsg = "("+repeats+"th) " + outMsg;
 				}
+				outMsg = "~"+msg;
 
 				LogLibraries.Log( outMsg );
 			}
@@ -75,7 +76,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="repeatLog10">Outputs once every log10 % 1 == 0 times.</param>
-		/// <returns>Output message, or else `null` if message has already output (amd a repeat isn't
+		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string AlertOnce( string msg, bool repeatLog10=true ) {
 			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
@@ -91,7 +92,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="repeatLog10">Outputs once every log10 % 1 == 0 times.</param>
-		/// <returns>Output message, or else `null` if message has already output (amd a repeat isn't
+		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string WarnOnce( string msg, bool repeatLog10=true ) {
 			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );

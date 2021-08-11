@@ -24,6 +24,36 @@ namespace ModLibsCore {
 		}
 
 
+		////
+
+		 private static string LastLoadState = null;
+
+		private static void OutputDebugLoadData() {
+			if( ModLibsConfig.Instance?.DebugModeLoadStages != true ) {
+				return;
+			}
+
+			string[] loaded = new string[] {
+					"MOD: " + LoadLibraries.IsModLoaded(),
+					"WORLD: " + LoadLibraries.IsWorldLoaded(),
+					"WORLD (PLAY): " + LoadLibraries.IsWorldBeingPlayed(),
+					"WORLD (PLAY S): " + LoadLibraries.IsWorldSafelyBeingPlayed(),
+					"IN GAME: " + LoadLibraries.IsCurrentPlayerInGame(),
+				};
+			string loadedStr = loaded.ToStringJoined( ", " );
+
+			if( !Main.gameMenu ) {
+				DebugLibraries.Print( "LOADED", loadedStr );
+			}
+
+			if( ModLibsCoreMod.LastLoadState != loadedStr ) {
+				ModLibsCoreMod.LastLoadState = loadedStr;
+
+				LogLibraries.Log( "LOAD STATES CHANGED: " + loadedStr );
+			}
+		}
+
+
 
 		////////////////
 
@@ -58,6 +88,8 @@ namespace ModLibsCore {
 			//}
 
 			this.LoadFull();
+
+			Main.OnTick += ModLibsCoreMod.OutputDebugLoadData;
 		}
 
 		////
@@ -70,6 +102,8 @@ namespace ModLibsCore {
 			this.UnloadFull();
 			
 			ModLibsCoreMod.Instance = null;
+
+			Main.OnTick -= ModLibsCoreMod.OutputDebugLoadData;
 		}
 
 
@@ -150,26 +184,6 @@ namespace ModLibsCore {
 
 		public override void PostUpdateEverything() {
 			this.MouseInterface = Main.LocalPlayer.mouseInterface;
-
-			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
-				string[] loaded = new string[] {
-					"mod: " + LoadLibraries.IsModLoaded(),
-					"world: " + LoadLibraries.IsWorldLoaded(),
-					"world in play: " + LoadLibraries.IsWorldBeingPlayed(),
-					"world in play S: " + LoadLibraries.IsWorldSafelyBeingPlayed(),
-					"curr plr in game: " + LoadLibraries.IsCurrentPlayerInGame(),
-				};
-				string loadedStr = loaded.ToStringJoined( ", " );
-
-				if( !Main.gameMenu ) {
-					DebugLibraries.Print( "LOADED", loadedStr );
-				}
-
-				LogLibraries.LogWhen( "LOAD STATES CHANGED: " + loadedStr, i => i == 0 );
-
-bool? isLPIG = ModContent.GetInstance<LoadLibraries>()?.IsLocalPlayerInGame_Hackish;
-LogLibraries.LogWhen( "eh? "+(isLPIG.HasValue?isLPIG.Value.ToString():"null"), i => i == 0 );
-			}
 		}
 
 
