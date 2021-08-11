@@ -9,21 +9,21 @@ using ModLibsCore.Classes.Loadable;
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
 	public partial class LoadHooks : ILoadable {
-		private IList<Action> PostContentLoadHooks = new List<Action>();
-		private IList<Action> PostModLoadHooks = new List<Action>();
-		private IList<Action> ModUnloadHooks = new List<Action>();
-		private IList<Action> WorldLoadOnceHooks = new List<Action>();
-		private IList<Action> WorldLoadEachHooks = new List<Action>();
-		private IList<Action> PostWorldLoadOnceHooks = new List<Action>();
-		private IList<Action> PostWorldLoadEachHooks = new List<Action>();
-		private IList<Action> WorldUnloadOnceHooks = new List<Action>();
-		private IList<Action> WorldUnloadEachHooks = new List<Action>();
-		private IList<Action> PostWorldUnloadOnceHooks = new List<Action>();
-		private IList<Action> PostWorldUnloadEachHooks = new List<Action>();
-		private IList<Action> WorldInPlayOnceHooks = new List<Action>();
-		private IList<Action> WorldInPlayEachHooks = new List<Action>();
-		private IList<Action> SafeWorldLoadOnceHooks = new List<Action>();
-		private IList<Action> SafeWorldLoadEachHooks = new List<Action>();
+		internal IList<Action> PostContentLoadHooks = new List<Action>();
+		internal IList<Action> PostModLoadHooks = new List<Action>();
+		internal IList<Action> ModUnloadHooks = new List<Action>();
+		internal IList<Action> WorldLoadOnceHooks = new List<Action>();
+		internal IList<Action> WorldLoadEachHooks = new List<Action>();
+		internal IList<Action> PostWorldLoadOnceHooks = new List<Action>();
+		internal IList<Action> PostWorldLoadEachHooks = new List<Action>();
+		internal IList<Action> WorldUnloadOnceHooks = new List<Action>();
+		internal IList<Action> WorldUnloadEachHooks = new List<Action>();
+		internal IList<Action> PostWorldUnloadOnceHooks = new List<Action>();
+		internal IList<Action> PostWorldUnloadEachHooks = new List<Action>();
+		internal IList<Action> WorldInPlayOnceHooks = new List<Action>();
+		internal IList<Action> WorldInPlayEachHooks = new List<Action>();
+		internal IList<Action> SafeWorldLoadOnceHooks = new List<Action>();
+		internal IList<Action> SafeWorldLoadEachHooks = new List<Action>();
 
 		private bool PostContentLoadHookConditionsMet = false;
 		private bool PostModLoadHookConditionsMet = false;
@@ -39,12 +39,11 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 		////////////////
 
-		internal LoadHooks() {
+		void ILoadable.OnModsLoad() {
 			this.OnTickGet = Timers.Timers.MainOnTickGet();
+
 			Main.OnTick += LoadHooks._Update;
 		}
-
-		void ILoadable.OnModsLoad() { }
 
 		void ILoadable.OnPostModsLoad() {
 			LoadHooks.AddWorldLoadEachHook( () => {

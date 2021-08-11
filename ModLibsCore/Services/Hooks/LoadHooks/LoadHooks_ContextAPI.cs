@@ -36,7 +36,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				}
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run as mods are unloading.
 		/// </summary>
@@ -51,7 +51,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 
 		////////////////
-
+		
 		/// <summary>
 		/// Declares an action to run as the current world loads. Action does not run for subsequent world loads.
 		/// </summary>
@@ -67,7 +67,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				}
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run after the current world loads. Action does not run for subsequent world loads.
 		/// </summary>
@@ -99,7 +99,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				}
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run after the current world unloads. Action does not run for subsequent world unloads.
 		/// </summary>
@@ -115,7 +115,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				}
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run once the current world is in play. Action does not run for subsequent worlds.
 		/// </summary>
@@ -131,7 +131,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				}
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run after the current world is "safely" loaded (waits a few seconds to help avoid confusing
 		/// errors). Action does not run for subsequent worlds.
@@ -151,7 +151,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 
 		////////////////
-
+		
 		/// <summary>
 		/// Declares an action to run as the current world loads.
 		/// </summary>
@@ -181,7 +181,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				loadHooks.PostWorldLoadEachHooks.Add( action );
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run as the current world unloads.
 		/// </summary>
@@ -196,7 +196,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				loadHooks.WorldUnloadEachHooks.Add( action );
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run after the current world unloads.
 		/// </summary>
@@ -211,7 +211,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				loadHooks.PostWorldUnloadEachHooks.Add( action );
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run once the current world is in play.
 		/// </summary>
@@ -226,7 +226,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				loadHooks.WorldInPlayEachHooks.Add( action );
 			}
 		}
-
+		
 		/// <summary>
 		/// Declares an action to run after the current world is "safely" loaded (waits a few seconds to help avoid confusing
 		/// errors).

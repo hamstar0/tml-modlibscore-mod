@@ -114,7 +114,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 		}
 
 
-		internal void FulfillSafeWorldLoadHook() {
+		internal void FulfillSafeWorldLoadHooks() {
 			if( this.SafeWorldLoadHookConditionsMet ) { return; }
 			this.SafeWorldLoadHookConditionsMet = true;
 

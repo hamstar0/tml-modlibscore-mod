@@ -3,8 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Libraries.DotNET.Extensions;
-using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -21,36 +19,6 @@ namespace ModLibsCore {
 			LogLibraries.Log( "UNHANDLED crash? " + e.IsTerminating
 				+ " \nSender: " + sender.ToString()
 				+ " \nMessage: " + e.ExceptionObject.ToString() );
-		}
-
-
-		////
-
-		 private static string LastLoadState = null;
-
-		private static void OutputDebugLoadData() {
-			if( ModLibsConfig.Instance?.DebugModeLoadStages != true ) {
-				return;
-			}
-
-			string[] loaded = new string[] {
-					"MOD: " + LoadLibraries.IsModLoaded(),
-					"WORLD: " + LoadLibraries.IsWorldLoaded(),
-					"WORLD (PLAY): " + LoadLibraries.IsWorldBeingPlayed(),
-					"WORLD (PLAY S): " + LoadLibraries.IsWorldSafelyBeingPlayed(),
-					"IN GAME: " + LoadLibraries.IsCurrentPlayerInGame(),
-				};
-			string loadedStr = loaded.ToStringJoined( ", " );
-
-			if( !Main.gameMenu ) {
-				DebugLibraries.Print( "LOADED", loadedStr );
-			}
-
-			if( ModLibsCoreMod.LastLoadState != loadedStr ) {
-				ModLibsCoreMod.LastLoadState = loadedStr;
-
-				LogLibraries.Log( "LOAD STATES CHANGED: " + loadedStr );
-			}
 		}
 
 
@@ -88,8 +56,6 @@ namespace ModLibsCore {
 			//}
 
 			this.LoadFull();
-
-			Main.OnTick += ModLibsCoreMod.OutputDebugLoadData;
 		}
 
 		////
@@ -102,8 +68,6 @@ namespace ModLibsCore {
 			this.UnloadFull();
 			
 			ModLibsCoreMod.Instance = null;
-
-			Main.OnTick -= ModLibsCoreMod.OutputDebugLoadData;
 		}
 
 

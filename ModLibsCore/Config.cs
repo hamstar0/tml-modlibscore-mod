@@ -74,6 +74,7 @@ namespace ModLibsCore {
 		/// </summary>
 		[Label( "Debug Mode - Display info on the game's load stages" )]
 		[Tooltip( "Displays info on the game's load stages" )]
+		[ReloadRequired]
 		public bool DebugModeLoadStages { get; set; } = false;
 
 

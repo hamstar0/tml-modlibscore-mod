@@ -34,6 +34,8 @@ namespace ModLibsCore {
 			this.Loadables.RegisterLoadables();
 			this.Loadables.OnModsLoad();
 
+			this.LoadDebug();
+
 			this.LoadHotkeys();
 			this.LoadDataSources();
 		}
@@ -53,6 +55,8 @@ namespace ModLibsCore {
 		private void UnloadFull() {
 			try {
 				this.Loadables.OnModsUnload();
+
+				this.UnloadDebug();
 			} catch( Exception e ) {
 				this.Logger.Warn( "!ModLibs.ModLibsMod.UnloadFull - " + e.ToString() );	//was Error(...)
 			}

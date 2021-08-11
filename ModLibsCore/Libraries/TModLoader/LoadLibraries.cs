@@ -58,6 +58,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 			var loadLibs = ModContent.GetInstance<LoadLibraries>();
 
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				// Ugly, but reliable?
 				if( !loadLibs.IsLocalPlayerInGame_Hackish ) {
 					return false;
 				}

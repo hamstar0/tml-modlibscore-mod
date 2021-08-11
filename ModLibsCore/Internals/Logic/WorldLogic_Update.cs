@@ -9,13 +9,13 @@ namespace ModLibsCore.Internals.Logic {
 	partial class WorldLogic : ILoadable {
 		public void PreUpdateSingle() {
 			this.PreUpdateShared();
-			this.PreUpdateLocal();
+			//this.PreUpdateLocal();
 		}
 
-		public void PreUpdateClient() {
-			this.PreUpdateShared();
-			this.PreUpdateLocal();
-		}
+		//public void PreUpdateClient() {
+		//	this.PreUpdateShared();
+		//	this.PreUpdateLocal();
+		//}
 		
 		public void PreUpdateServer() {
 			this.PreUpdateShared();
@@ -39,11 +39,11 @@ namespace ModLibsCore.Internals.Logic {
 			}
 
 			if( LoadLibraries.IsWorldSafelyBeingPlayed() ) {
-				loadHooks.FulfillSafeWorldLoadHook();
+				loadHooks.FulfillSafeWorldLoadHooks();
 			}
 		}
 
-		private void PreUpdateLocal() {
-		}
+		//private void PreUpdateLocal() {
+		//}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
@@ -7,7 +8,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 namespace ModLibsCore.Libraries.TModLoader {
 	/// @private
 	public partial class LoadLibraries : ILoadable {
-		internal uint WorldStartupDelay = 0;
+		private uint WorldStartupDelay = 0;
 
 		internal bool IsLocalPlayerInGame_Hackish = false;
 		internal bool HasGameBegunHavingPlayers_Hackish = false;
@@ -41,8 +42,12 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 		////////////////
 
+		internal void UpdateUponPlayerPlaying( Player player ) {
+			this.HasGameBegunHavingPlayers_Hackish = true;	// Hackish, but reliable?
+		}
+
 		internal void UpdateUponWorldBeingPlayed() {
-			this.WorldStartupDelay++;    // Seems needed for day/night tracking (and possibly other things?)
+			this.WorldStartupDelay++;
 		}
 	}
 }
