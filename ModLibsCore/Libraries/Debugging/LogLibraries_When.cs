@@ -11,32 +11,20 @@ namespace ModLibsCore.Libraries.Debug {
 		private static bool CanOutputMessageWhen(
 					string msg,
 					Func<int, bool> outputWhen,
-					out string formattedMsg ) {
+					out int repeats ) {
 			var logLibs = ModContent.GetInstance<LogLibraries>();
 			if( logLibs == null ) {
-				formattedMsg = msg;
+				repeats = -1;
 				return false;
 			}
 
-			bool isShown = false;
-
 			if( !logLibs.UniqueMessages.ContainsKey( msg ) ) {
-				logLibs.UniqueMessages[msg] = 1;
-				formattedMsg = msg;
-
-				isShown = outputWhen.Invoke(0);
-			} else {
-				int times = logLibs.UniqueMessages[ msg ]++;
-
-				if( outputWhen.Invoke(times) ) {
-					formattedMsg = "("+times+"th) " + msg;
-					isShown = true;
-				} else {
-					formattedMsg = msg;
-				}
+				logLibs.UniqueMessages[msg] = 0;
 			}
 
-			return isShown;
+			repeats = logLibs.UniqueMessages[msg]++;
+
+			return outputWhen.Invoke( repeats );
 		}
 
 
@@ -48,10 +36,13 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="msg"></param>
 		/// <param name="when">A side-effect-free function reporting if the message should output. Accepts a parameter
 		/// of the number of times an output attempt (including failures and "once"s) has occurred.</param>
-		public static void LogWhen( string msg, Func<int, bool> when ) {
-			if( LogLibraries.CanOutputMessageWhen(msg, when, out msg) ) {
-				LogLibraries.Log( "~" + msg );
+		/// <returns></returns>
+		public static int LogWhen( string msg, Func<int, bool> when ) {
+			if( LogLibraries.CanOutputMessageWhen(msg, when, out int repeats ) ) {
+				LogLibraries.Log( "~~" + msg );
 			}
+
+			return repeats;
 		}
 
 		/// <summary>
@@ -60,19 +51,17 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="msg"></param>
 		/// <param name="when">A side-effect-free function reporting if the message should output. Accepts a parameter
 		/// of the number of times an output attempt (including failures and "once"s) has occurred.</param>
-		public static void AlertWhen( string msg, Func<int, bool> when ) {
+		/// <returns></returns>
+		public static int AlertWhen( string msg, Func<int, bool> when ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
 			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
-
-			string outMsg;
-			LogLibraries.CanOutputMessageWhen( fmtMsg.Full, when, out outMsg );
-			
 			string msgWithCtx = fmtMsg.Context + " " + msg;
-			if( !LogLibraries.CanOutputMessageWhen(msgWithCtx, when, out _) ) {
-				return;
+
+			if( LogLibraries.CanOutputMessageWhen(msgWithCtx, when, out int repeats) ) {
+				mymod.Logger.Warn( "~~" + msg );    //was Error(...)
 			}
 
-			mymod.Logger.Warn( "~" + outMsg );	//was Error(...)
+			return repeats;
 		}
 
 		/// <summary>
@@ -81,19 +70,17 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="msg"></param>
 		/// <param name="when">A side-effect-free function reporting if the message should output. Accepts a parameter
 		/// of the number of times an output attempt (including failures and "once"s) has occurred.</param>
-		public static void WarnWhen( string msg, Func<int, bool> when ) {
+		/// <returns></returns>
+		public static int WarnWhen( string msg, Func<int, bool> when ) {
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
 			(string Context, string Info, string Full) fmtMsg = LogLibraries.FormatMessageFull( msg, 3 );
-
-			string outMsg;
-			LogLibraries.CanOutputMessageWhen( fmtMsg.Full, when, out outMsg );
-
 			string msgWithCtx = fmtMsg.Context + " " + msg;
-			if( !LogLibraries.CanOutputMessageWhen(msgWithCtx, when, out _) ) {
-				return;
+
+			if( LogLibraries.CanOutputMessageWhen(msgWithCtx, when, out int repeats) ) {
+				mymod.Logger.Error( "~~" + msg ); //was Fatal(...)
 			}
 
-			mymod.Logger.Error( "~" + outMsg );	//was Fatal(...)
+			return repeats;
 		}
 	}
 }

@@ -1,11 +1,12 @@
 ﻿using Terraria.ModLoader;
+using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
 namespace ModLibsCore.Internals.Logic {
 	/// @private
-	partial class WorldLogic {
+	partial class WorldLogic : ILoadable {
 		public void PreUpdateSingle() {
 			this.PreUpdateShared();
 			this.PreUpdateLocal();

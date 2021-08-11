@@ -14,25 +14,14 @@ using ModLibsCore.Internals.Logic;
 namespace ModLibsCore {
 	/// @private
 	class ModLibsWorld : ModWorld {
-		internal WorldLogic WorldLogic { get; private set; }
-
-
-
-		////////////////
-
-		public override void Initialize() {
-			this.WorldLogic = new WorldLogic();
-		}
-
-
-		////////////////
-
 		public override void PreUpdate() {
-			if( this.WorldLogic != null ) {
+			var logic = ModContent.GetInstance<WorldLogic>();
+
+			if( logic != null ) {
 				if( Main.netMode == NetmodeID.SinglePlayer ) { // Single
-					this.WorldLogic.PreUpdateSingle();
+					logic.PreUpdateSingle();
 				} else if( Main.netMode == NetmodeID.Server ) {
-					this.WorldLogic.PreUpdateServer();
+					logic.PreUpdateServer();
 				}
 			}
 		}

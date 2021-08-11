@@ -166,6 +166,9 @@ namespace ModLibsCore {
 				}
 
 				LogLibraries.LogWhen( "LOAD STATES CHANGED: " + loadedStr, i => i == 0 );
+
+bool? isLPIG = ModContent.GetInstance<LoadLibraries>()?.IsLocalPlayerInGame_Hackish;
+LogLibraries.LogWhen( "eh? "+(isLPIG.HasValue?isLPIG.Value.ToString():"null"), i => i == 0 );
 			}
 		}
 

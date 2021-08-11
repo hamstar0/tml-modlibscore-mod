@@ -1,13 +1,11 @@
 ﻿using System;
 using Terraria;
-using Terraria.IO;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.Items.Attributes;
 using ModLibsCore.Libraries.NPCs.Attributes;
 using ModLibsCore.Libraries.Projectiles.Attributes;
-using ModLibsCore.Internals.Logic;
 
 
 namespace ModLibsCore {
@@ -38,8 +36,6 @@ namespace ModLibsCore {
 
 			this.LoadHotkeys();
 			this.LoadDataSources();
-
-			WorldFile.OnWorldLoad += WorldLogic.OnWorldLoad;
 		}
 
 
@@ -55,8 +51,6 @@ namespace ModLibsCore {
 		////////////////
 
 		private void UnloadFull() {
-			WorldFile.OnWorldLoad -= WorldLogic.OnWorldLoad;
-
 			try {
 				this.Loadables.OnModsUnload();
 			} catch( Exception e ) {

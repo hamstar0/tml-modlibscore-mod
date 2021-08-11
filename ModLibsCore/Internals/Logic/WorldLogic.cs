@@ -1,25 +1,30 @@
-﻿using ModLibsCore.Services.Hooks.LoadHooks;
+﻿using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Services.Hooks.LoadHooks;
 
 
 namespace ModLibsCore.Internals.Logic {
 	/// @private
-	partial class WorldLogic {
+	partial class WorldLogic : ILoadable {
 		public static bool IsLoaded { get; private set; } = false;
 
 
 
 		////////////////
 
-		public static void OnWorldLoad() {
-			WorldLogic.IsLoaded = true;
+		void ILoadable.OnModsLoad() {
+		}
+
+		void ILoadable.OnPostModsLoad() {
+			void onLoadWorld( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
+				WorldLogic.IsLoaded = true;
+			}
+
+			On.Terraria.IO.WorldFile.loadWorld += onLoadWorld;
 
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 
-
-
-		////////////////
-
-		public WorldLogic() { }
+		void ILoadable.OnModsUnload() {
+		}
 	}
 }
