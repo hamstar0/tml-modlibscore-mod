@@ -74,7 +74,7 @@ namespace ModLibsCore {
 		
 		private void DebugModUnloadHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.ModUnloadHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugModUnloadHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - ModUnloadHooks: "+count );
@@ -82,7 +82,7 @@ namespace ModLibsCore {
 		
 		private void DebugPostContentLoadHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostContentLoadHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostContentLoadHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - PostContentLoadHooks: "+count );
@@ -90,7 +90,7 @@ namespace ModLibsCore {
 		
 		private void DebugPostModLoadHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostModLoadHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostModLoadHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - PostModLoadHooks: "+count );
@@ -98,7 +98,7 @@ namespace ModLibsCore {
 		
 		private void DebugPostWorldLoadEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldLoadEachHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostWorldLoadEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldLoadEachHooks: "+count );
@@ -106,17 +106,15 @@ namespace ModLibsCore {
 		
 		private void DebugPostWorldLoadOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostWorldLoadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostWorldLoadOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - PostWorldLoadOnceHooks: "+count );
-
-			LoadHooks.AddPostWorldLoadOnceHook( this.DebugPostWorldLoadOnceHook );
 		}
 		
 		private void DebugPostWorldUnloadEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostWorldUnloadEachHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostWorldUnloadEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - PostWorldUnloadEachHooks: "+count );
@@ -124,17 +122,15 @@ namespace ModLibsCore {
 		
 		private void DebugPostWorldUnloadOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostWorldUnloadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugPostWorldUnloadOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - PostWorldUnloadOnceHooks: "+count );
-
-			LoadHooks.AddPostWorldUnloadOnceHook( this.DebugPostWorldUnloadOnceHook );
 		}
 		
 		private void DebugSafeWorldLoadEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.PostWorldUnloadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugSafeWorldLoadEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - SafeWorldLoadEachHooks: "+count );
@@ -142,17 +138,15 @@ namespace ModLibsCore {
 		
 		private void DebugSafeWorldLoadOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.SafeWorldLoadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugSafeWorldLoadOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - SafeWorldLoadOnceHooks: "+count );
-
-			LoadHooks.AddSafeWorldLoadOnceHook( this.DebugSafeWorldLoadOnceHook );
 		}
 		
 		private void DebugWorldInPlayEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldInPlayEachHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldInPlayEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldInPlayEachHooks: "+count );
@@ -160,17 +154,15 @@ namespace ModLibsCore {
 		
 		private void DebugWorldInPlayOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldInPlayOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldInPlayOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldInPlayOnceHooks: "+count );
-
-			LoadHooks.AddWorldInPlayOnceHook( this.DebugWorldInPlayOnceHook );
 		}
 		
 		private void DebugWorldLoadEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldLoadEachHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldLoadEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldLoadEachHooks: "+count );
@@ -178,17 +170,15 @@ namespace ModLibsCore {
 		
 		private void DebugWorldLoadOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldLoadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldLoadOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldLoadOnceHooks: "+count );
-
-			LoadHooks.AddWorldLoadOnceHook( this.DebugWorldLoadOnceHook );
 		}
 		
 		private void DebugWorldUnloadEachHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldUnloadEachHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldUnloadEachHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldUnloadEachHooks: "+count );
@@ -196,12 +186,10 @@ namespace ModLibsCore {
 		
 		private void DebugWorldUnloadOnceHook() {
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
-			int count = loadHooks.WorldUnloadOnceHooks.Count - 1;
+			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugWorldUnloadOnceHookFlag = true;
 			LogLibraries.Log( "DEBUG LOAD - WorldUnloadOnceHooks: "+count );
-
-			LoadHooks.AddWorldUnloadOnceHook( this.DebugWorldUnloadOnceHook );
 		}
 	}
 }

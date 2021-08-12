@@ -5,6 +5,12 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
 	public partial class LoadHooks {
+		internal int LastRanHookReportedHookCount = -1;
+
+
+
+		////////////////
+
 		internal void FulfillPostContentLoadHooks() {
 			if( this.PostContentLoadHookConditionsMet ) { return; }
 			this.PostContentLoadHookConditionsMet = true;
@@ -15,6 +21,8 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				hooks = this.PostContentLoadHooks.ToArray();
 				this.PostContentLoadHooks.Clear();
 			}
+
+			this.LastRanHookReportedHookCount = hooks.Length;
 
 			foreach( Action hook in hooks ) {
 				hook();
@@ -32,6 +40,8 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				this.PostModLoadHooks.Clear();
 			}
 
+			this.LastRanHookReportedHookCount = hooks.Length;
+
 			foreach( Action hook in hooks ) {
 				hook();
 			}
@@ -44,6 +54,8 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				hooks = this.ModUnloadHooks.ToArray();
 				this.ModUnloadHooks.Clear();
 			}
+
+			this.LastRanHookReportedHookCount = hooks.Length;
 
 			foreach( Action hook in hooks ) {
 				hook();
@@ -75,15 +87,22 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				postWorldLoadEachHooks = this.PostWorldLoadEachHooks.ToArray();
 			}
 
+			this.LastRanHookReportedHookCount = worldLoadOnceHooks.Length;
 			foreach( Action hook in worldLoadOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = worldLoadEachHooks.Length;
 			foreach( Action hook in worldLoadEachHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = postWorldLoadOnceHooks.Length;
 			foreach( Action hook in postWorldLoadOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = postWorldLoadEachHooks.Length;
 			foreach( Action hook in postWorldLoadEachHooks ) {
 				hook();
 			}
@@ -105,9 +124,12 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				inPlayEachHooks = this.WorldInPlayEachHooks.ToArray();
 			}
 
+			this.LastRanHookReportedHookCount = inPlayOnceHooks.Length;
 			foreach( Action hook in inPlayOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = inPlayEachHooks.Length;
 			foreach( Action hook in inPlayEachHooks ) {
 				hook();
 			}
@@ -129,9 +151,12 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				safeWorldLoadEachHooks = this.SafeWorldLoadEachHooks.ToArray();
 			}
 
+			this.LastRanHookReportedHookCount = safeWorldLoadOnceHooks.Length;
 			foreach( Action hook in safeWorldLoadOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = safeWorldLoadEachHooks.Length;
 			foreach( Action hook in safeWorldLoadEachHooks ) {
 				hook();
 			}
@@ -153,9 +178,12 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				worldUnloadEachHooks = this.WorldUnloadEachHooks.ToArray();
 			}
 
+			this.LastRanHookReportedHookCount = worldUnloadOnceHooks.Length;
 			foreach( Action hook in worldUnloadOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = worldUnloadEachHooks.Length;
 			foreach( Action hook in worldUnloadEachHooks ) {
 				hook();
 			}
@@ -177,9 +205,12 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 				postWorldUnloadEachHooks = this.PostWorldUnloadEachHooks.ToArray();
 			}
 
+			this.LastRanHookReportedHookCount = postWorldUnloadOnceHooks.Length;
 			foreach( Action hook in postWorldUnloadOnceHooks ) {
 				hook();
 			}
+
+			this.LastRanHookReportedHookCount = postWorldUnloadEachHooks.Length;
 			foreach( Action hook in postWorldUnloadEachHooks ) {
 				hook();
 			}
