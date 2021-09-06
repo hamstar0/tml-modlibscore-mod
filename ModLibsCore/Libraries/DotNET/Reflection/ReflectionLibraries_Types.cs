@@ -1,10 +1,10 @@
-﻿using ModLibsCore.Classes.Errors;
-using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Libraries.DotNET.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Errors;
+using ModLibsCore.Libraries.Debug;
+using ModLibsCore.Libraries.DotNET.Extensions;
 
 
 namespace ModLibsCore.Libraries.DotNET.Reflection {

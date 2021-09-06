@@ -1,4 +1,8 @@
-﻿using ModLibsCore.Classes.Loadable;
+﻿using System;
+using Terraria;
+using Terraria.ID;
+using ModLibsCore.Classes.Loadable;
+using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -11,17 +15,42 @@ namespace ModLibsCore.Internals.Logic {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() { }
-
-		void ILoadable.OnPostModsLoad() {
-			void onLoadWorld( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
-				orig.Invoke( loadFromCloud );
-
-				WorldLogic.IsLoaded = true;
+		private static void OnEnterWorldClientOnly( Player player ) {
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				return;
 			}
 
+			WorldLogic.IsLoaded = true; // Clients don't load worlds I guess
+
+			LogLibraries.Alert( "Client entered into world." );
+		}
+
+
+
+		////////////////
+
+		void ILoadable.OnModsLoad() {
+			void onLoadWorld( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
+				try {
+					orig.Invoke( loadFromCloud );
+				} catch( Exception e ) {
+					LogLibraries.Warn( "Error loading world: " + e.ToString() );
+				}
+				
+				WorldLogic.IsLoaded = true;	// I guess load it anyway?
+
+				LogLibraries.Alert( "World file loaded." );
+			}
+
+			//
+
+			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
 			On.Terraria.IO.WorldFile.loadWorld += onLoadWorld;
 
+			LogLibraries.Alert( "World file load hook loaded." );
+		}
+
+		void ILoadable.OnPostModsLoad() {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 

@@ -1,6 +1,6 @@
-﻿using ModLibsCore.Libraries.Debug;
-using System;
+﻿using System;
 using Terraria;
+using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {

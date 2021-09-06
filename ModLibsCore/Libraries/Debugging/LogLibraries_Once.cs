@@ -8,7 +8,11 @@ namespace ModLibsCore.Libraries.Debug {
 	/// Assorted static "helper" functions pertaining to log outputs.
 	/// </summary>
 	public partial class LogLibraries {
-		private static bool CanOutputOnceMessage( string msg, bool repeatLog10, out int repeats ) {
+		private static bool CanOutputOnceMessage(
+					string msg,
+					bool repeatLog10,
+					bool incrementOutputCount,
+					out int repeats ) {
 			Func<int, bool> outputWhen;
 			if( repeatLog10 ) {
 				outputWhen = (times) => (Math.Log10(times) % 1d) == 0;
@@ -16,7 +20,7 @@ namespace ModLibsCore.Libraries.Debug {
 				outputWhen = (times) => times == 0;
 			}
 
-			return LogLibraries.CanOutputMessageWhen( msg, outputWhen, out repeats );
+			return LogLibraries.CanOutputMessageWhen( msg, outputWhen, incrementOutputCount, out repeats );
 		}
 
 
@@ -56,16 +60,9 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string LogOnce( string msg, bool repeatLog10=true ) {
-			string outMsg = null;
-
-			if( LogLibraries.CanOutputOnceMessage(msg, repeatLog10, out int repeats) ) {
-				outMsg = msg;
-				if( repeats >= 1 ) {
-					outMsg = "("+repeats+"th) " + outMsg;
-				}
-				outMsg = "~"+msg;
-
-				LogLibraries.Log( outMsg );
+			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
+			if( outMsg != null ) {
+				ModLibsCoreMod.Instance.Logger.Info( "~"+outMsg );
 			}
 
 			return outMsg;
@@ -81,7 +78,7 @@ namespace ModLibsCore.Libraries.Debug {
 		public static string AlertOnce( string msg, bool repeatLog10=true ) {
 			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
 			if( outMsg != null ) {
-				ModLibsCoreMod.Instance.Logger.Warn( outMsg );   //was Fatal(...)
+				ModLibsCoreMod.Instance.Logger.Warn( "~"+outMsg );   //was Fatal(...)
 			}
 
 			return outMsg;
@@ -97,7 +94,7 @@ namespace ModLibsCore.Libraries.Debug {
 		public static string WarnOnce( string msg, bool repeatLog10=true ) {
 			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
 			if( outMsg != null ) {
-				ModLibsCoreMod.Instance.Logger.Error( outMsg );   //was Fatal(...)
+				ModLibsCoreMod.Instance.Logger.Error( "~"+outMsg );   //was Fatal(...)
 			}
 
 			return outMsg;
@@ -105,19 +102,17 @@ namespace ModLibsCore.Libraries.Debug {
 
 		////
 
-		private static string RenderOnce( string msg, bool repeatLog10=true ) {
-			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 3 );
-
-			LogLibraries.CanOutputOnceMessage( logMsgData.Full, repeatLog10, out int repeats );
-
+		private static string RenderOnce( string msg, bool repeatLog10 ) {
 			string outMsg = null;
+			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 3 );
+			string internalMsg = logMsgData.Context + " " + msg;
 
-			if( LogLibraries.CanOutputOnceMessage(logMsgData.Context + " " + msg, true, out _) ) {
+			// Render formatted message
+			if( LogLibraries.CanOutputOnceMessage(internalMsg, repeatLog10, true, out int repeats) ) {
 				outMsg = msg;
 				if( repeats >= 1 ) {
 					outMsg = "("+repeats+"th) " + outMsg;
 				}
-				outMsg = "~" + outMsg;
 			}
 
 			return outMsg;

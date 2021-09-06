@@ -21,7 +21,7 @@ namespace ModLibsCore.Libraries.Debug {
 		}
 
 		/// <summary>
-		/// Formats a given message for conveying meta data for the log output.
+		/// Formats a given message for conveying its meta data for the log output.
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="contextDepth">Indicates whether to also output the callstack context at the specified depth.
