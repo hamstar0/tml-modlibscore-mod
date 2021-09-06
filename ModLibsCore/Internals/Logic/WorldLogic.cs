@@ -54,6 +54,8 @@ namespace ModLibsCore.Internals.Logic {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.OnModsUnload() {
+			Player.Hooks.OnEnterWorld -= WorldLogic.OnEnterWorldClientOnly;
+		}
 	}
 }
