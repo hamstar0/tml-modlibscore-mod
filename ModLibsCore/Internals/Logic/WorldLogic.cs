@@ -20,9 +20,9 @@ namespace ModLibsCore.Internals.Logic {
 				return;
 			}
 
-			WorldLogic.IsLoaded = true; // Clients don't load worlds I guess
+			WorldLogic.IsLoaded = true; // Clients don't 'load' worlds I guess
 
-			LogLibraries.Alert( "Client entered into world." );
+			LogLibraries.Alert( "World \"loaded\"." );
 		}
 
 
@@ -39,7 +39,7 @@ namespace ModLibsCore.Internals.Logic {
 				
 				WorldLogic.IsLoaded = true;	// I guess load it anyway?
 
-				LogLibraries.Alert( "World file loaded." );
+				LogLibraries.Alert( "World loaded." );
 			}
 
 			//
@@ -47,7 +47,7 @@ namespace ModLibsCore.Internals.Logic {
 			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
 			On.Terraria.IO.WorldFile.loadWorld += onLoadWorld;
 
-			LogLibraries.Alert( "World file load hook loaded." );
+			LogLibraries.Alert( "World load hook loaded." );
 		}
 
 		void ILoadable.OnPostModsLoad() {

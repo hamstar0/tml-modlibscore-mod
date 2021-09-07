@@ -26,7 +26,7 @@ namespace ModLibsCore {
 				"WORLD: " + LoadLibraries.IsWorldLoaded(),
 				"WORLD (PLAY): " + LoadLibraries.IsWorldBeingPlayed(),
 				"WORLD (PLAY S): " + LoadLibraries.IsWorldSafelyBeingPlayed(),
-				"IN GAME: " + LoadLibraries.IsCurrentPlayerInGame(),
+				"CP IN GAME: " + (Main.dedServ ? "N/A" : LoadLibraries.IsCurrentPlayerInGame().ToString()),
 			};
 			string loadedStr = loaded.ToStringJoined( ", " );
 

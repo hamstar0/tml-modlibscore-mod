@@ -7,24 +7,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 namespace ModLibsCore.Internals.Logic {
 	/// @private
 	partial class WorldLogic : ILoadable {
-		public void PreUpdateSingle() {
-			this.PreUpdateShared();
-			//this.PreUpdateLocal();
-		}
-
-		//public void PreUpdateClient() {
-		//	this.PreUpdateShared();
-		//	this.PreUpdateLocal();
-		//}
-		
-		public void PreUpdateServer() {
-			this.PreUpdateShared();
-		}
-
-
-		////////////////
-
-		private void PreUpdateShared() {
+		public void Update() {
 			var loadLibs = ModContent.GetInstance<LoadLibraries>();
 			var loadHooks = ModContent.GetInstance<LoadHooks>();
 

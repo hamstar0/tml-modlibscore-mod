@@ -27,13 +27,6 @@ namespace ModLibsCore {
 		////////////////
 
 		/// <summary>
-		/// Outputs (to log) misc debug information. Developers only.
-		/// </summary>
-		[Label( "Debug Mode - Misc Info" )]
-		[Tooltip( "Outputs (to log) misc debug information. Developers only." )]
-		public bool DebugModeMiscInfo { get; set; } = false;
-
-		/// <summary>
 		/// Catches and logs unhandled exceptions (before crash).
 		/// </summary>
 		[Label( "Debug Mode - Unhandled Exception Logging" )]

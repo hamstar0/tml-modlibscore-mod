@@ -110,7 +110,7 @@ namespace ModLibsCore.Libraries.Debug {
 			// Render formatted message
 			if( LogLibraries.CanOutputOnceMessage(internalMsg, repeatLog10, true, out int repeats) ) {
 				outMsg = msg;
-				if( repeats >= 1 ) {
+				if( repeats > 1 ) {
 					outMsg = "("+repeats+"th) " + outMsg;
 				}
 			}

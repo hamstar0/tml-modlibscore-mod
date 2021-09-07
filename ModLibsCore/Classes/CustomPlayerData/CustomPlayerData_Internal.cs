@@ -25,7 +25,7 @@ namespace ModLibsCore.Classes.PlayerData {
 			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof( CustomPlayerData ) );
 			string uid = PlayerIdentityLibraries.GetUniqueId( player );
 
-			if( ModLibsConfig.Instance.DebugModeMiscInfo ) {
+			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
 				LogLibraries.Alert( "Player "+player.name+" ("+playerWho+"; "+uid+") entered the game." );
 			}
 
@@ -61,7 +61,7 @@ namespace ModLibsCore.Classes.PlayerData {
 		}
 
 		private static void Exit( int playerWho ) {
-			if( ModLibsConfig.Instance.DebugModeMiscInfo ) {
+			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
 				Player plr = Main.player[playerWho];
 				string uid = "";
 

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
+using ModLibsCore.Internals.Logic;
 
 
 namespace ModLibsCore {
@@ -148,6 +149,16 @@ namespace ModLibsCore {
 
 		public override void PostUpdateEverything() {
 			this.MouseInterface = Main.LocalPlayer.mouseInterface;
+		}
+
+
+		////////////////
+
+		public override void MidUpdateTimeWorld() {
+			var logic = ModContent.GetInstance<WorldLogic>();
+			if( logic != null ) {
+				logic.Update();
+			}
 		}
 
 

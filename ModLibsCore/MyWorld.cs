@@ -1,34 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.XNA;
 using ModLibsCore.Services.Hooks.Draw;
-using ModLibsCore.Internals.Logic;
 
 
 namespace ModLibsCore {
 	/// @private
 	class ModLibsWorld : ModWorld {
-		public override void PreUpdate() {
-			var logic = ModContent.GetInstance<WorldLogic>();
-
-			if( logic != null ) {
-				if( Main.netMode == NetmodeID.SinglePlayer ) { // Single
-					logic.PreUpdateSingle();
-				} else if( Main.netMode == NetmodeID.Server ) {
-					logic.PreUpdateServer();
-				}
-			}
-		}
-
-
-		////////////////
-
 		public override void PostDrawTiles() {
 			//DataStore.Add( DebugLibraries.GetCurrentContext()+"_A", 1 );
 			Player player = Main.LocalPlayer;
