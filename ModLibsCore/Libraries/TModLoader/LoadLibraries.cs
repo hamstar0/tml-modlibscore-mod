@@ -91,20 +91,23 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 			if( ModLibsConfig.Instance.DebugModeLoadStages && !safelyInPlay ) {
 				//string ctx = DebugLibraries.GetCurrentContext( 2 );
+				int wldStartDelay = ((int)loadLibs.WorldStartupDelay / 20) * 20;
 
 				if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 					LogLibraries.LogOnce( "!IsWorldSafelyBeingPlayed - "
-						+ ", WorldStartupDelay: " + loadLibs.WorldStartupDelay
-						+ ", IsLocalPlayerInGame_Hackish: "+loadLibs.IsLocalPlayerInGame_Hackish
+						+ " WorldStartupDelay: " + wldStartDelay
+						+ ", IsLocalPlayerInGame_Hackish: "+loadLibs.IsLocalPlayerInGame_Hackish,
+						false
 					);
 				} else {
 					LogLibraries.LogOnce( "!IsWorldSafelyBeingPlayed - "
-						+ ", IsModLoaded(): "+LoadLibraries.IsModLoaded()
-						+ ", WorldStartupDelay: " + loadLibs.WorldStartupDelay
+						+ " IsModLoaded: "+LoadLibraries.IsModLoaded()
+						+ ", WorldStartupDelay: " + wldStartDelay
 						+ ", HasGameBegunHavingPlayers_Hackish: "+loadLibs.HasGameBegunHavingPlayers_Hackish
 						+ ", HasSetupContent: "+mymod.HasSetupContent
 						+ ", HasAddedRecipeGroups: "+mymod.HasAddedRecipeGroups
-						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes
+						+ ", HasAddedRecipes: "+mymod.HasAddedRecipes,
+						false
 					);
 				}
 			}

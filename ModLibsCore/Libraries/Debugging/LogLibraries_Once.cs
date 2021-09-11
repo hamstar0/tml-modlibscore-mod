@@ -60,7 +60,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string LogOnce( string msg, bool repeatLog10=true ) {
-			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
+			string outMsg = LogLibraries.RenderOnce( msg, true, repeatLog10 );
 			if( outMsg != null ) {
 				ModLibsCoreMod.Instance.Logger.Info( "~"+outMsg );
 			}
@@ -76,7 +76,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string AlertOnce( string msg, bool repeatLog10=true ) {
-			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
+			string outMsg = LogLibraries.RenderOnce( msg, true, repeatLog10 );
 			if( outMsg != null ) {
 				ModLibsCoreMod.Instance.Logger.Warn( "~"+outMsg );   //was Fatal(...)
 			}
@@ -92,7 +92,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <returns>Output message, or else `null` if message has already output (and a repeat isn't
 		/// occurring).</returns>
 		public static string WarnOnce( string msg, bool repeatLog10=true ) {
-			string outMsg = LogLibraries.RenderOnce( msg, repeatLog10 );
+			string outMsg = LogLibraries.RenderOnce( msg, true, repeatLog10 );
 			if( outMsg != null ) {
 				ModLibsCoreMod.Instance.Logger.Error( "~"+outMsg );   //was Fatal(...)
 			}
@@ -102,9 +102,9 @@ namespace ModLibsCore.Libraries.Debug {
 
 		////
 
-		private static string RenderOnce( string msg, bool repeatLog10 ) {
+		private static string RenderOnce( string msg, bool outputContext, bool repeatLog10 ) {
 			string outMsg = null;
-			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 3 );
+			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 5 );
 			string internalMsg = logMsgData.Context + " " + msg;
 
 			// Render formatted message
@@ -112,6 +112,9 @@ namespace ModLibsCore.Libraries.Debug {
 				outMsg = msg;
 				if( repeats > 1 ) {
 					outMsg = "("+repeats+"th) " + outMsg;
+				}
+				if( outputContext ) {
+					outMsg = logMsgData.Context + " - " + outMsg;
 				}
 			}
 
