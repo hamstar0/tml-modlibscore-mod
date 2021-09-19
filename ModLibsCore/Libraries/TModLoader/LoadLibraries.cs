@@ -91,7 +91,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 			if( ModLibsConfig.Instance.DebugModeLoadStages && !safelyInPlay ) {
 				//string ctx = DebugLibraries.GetCurrentContext( 2 );
-				int wldStartDelay = ((int)loadLibs.WorldStartupDelay / 20) * 20;
+				int wldStartDelay = ((int)loadLibs.WorldStartupDelay / 50) * 50;
 
 				if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 					LogLibraries.LogOnce( "!IsWorldSafelyBeingPlayed - "

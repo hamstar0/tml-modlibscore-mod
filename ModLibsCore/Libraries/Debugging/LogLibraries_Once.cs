@@ -104,7 +104,7 @@ namespace ModLibsCore.Libraries.Debug {
 
 		private static string RenderOnce( string msg, bool outputContext, bool repeatLog10 ) {
 			string outMsg = null;
-			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 5 );
+			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 4 );
 			string internalMsg = logMsgData.Context + " " + msg;
 
 			// Render formatted message
