@@ -15,7 +15,7 @@ namespace ModLibsCore.Libraries.Debug {
 					out int repeats ) {
 			Func<int, bool> outputWhen;
 			if( repeatLog10 ) {
-				outputWhen = (times) => (Math.Log10(times) % 1d) == 0;
+				outputWhen = (times) => times == 0 || (Math.Log10(times) % 1d) == 0d;
 			} else {
 				outputWhen = (times) => times == 0;
 			}
@@ -104,20 +104,23 @@ namespace ModLibsCore.Libraries.Debug {
 
 		private static string RenderOnce( string msg, bool outputContext, bool repeatLog10 ) {
 			string outMsg = null;
-			(string Context, string Info, string Full) logMsgData = LogLibraries.FormatMessageFull( msg, 4 );
-			string internalMsg = logMsgData.Context + " " + msg;
+			(string msgContext, string _, string _) = LogLibraries.FormatMessageFull( msg, 4 );
+			string internalMsg = msgContext + " " + msg;
+
+			bool canOutput = LogLibraries.CanOutputOnceMessage( internalMsg, repeatLog10, true, out int repeats );
 
 			// Render formatted message
-			if( LogLibraries.CanOutputOnceMessage(internalMsg, repeatLog10, true, out int repeats) ) {
+			if( canOutput ) {
 				outMsg = msg;
 				if( repeats > 1 ) {
 					outMsg = "("+repeats+"th) " + outMsg;
 				}
 				if( outputContext ) {
-					outMsg = logMsgData.Context + " - " + outMsg;
+					outMsg = msgContext + " - " + outMsg;
 				}
 			}
-
+			
+//ModLibsCoreMod.Instance.Logger.Info( "RenderOnce ("+repeats+") src: "+msg+", out: "+outMsg );
 			return outMsg;
 		}
 

@@ -19,7 +19,7 @@ namespace ModLibsCore.Libraries.Debug {
 				return false;
 			}
 
-			if( !logLibs.UniqueMessages.ContainsKey( msg ) ) {
+			if( !logLibs.UniqueMessages.ContainsKey(msg) ) {
 				logLibs.UniqueMessages[msg] = 0;
 			}
 
@@ -29,7 +29,8 @@ namespace ModLibsCore.Libraries.Debug {
 				logLibs.UniqueMessages[msg]++;
 			}
 
-			return outputWhen.Invoke( repeats );
+			bool canOutput = outputWhen.Invoke( repeats );
+			return canOutput;
 		}
 
 
