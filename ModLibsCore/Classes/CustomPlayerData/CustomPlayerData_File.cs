@@ -15,7 +15,7 @@ namespace ModLibsCore.Classes.PlayerData {
 	/// </summary>
 	public partial class CustomPlayerData : ILoadable {
 		/// <summary></summary>
-		public static string BaseFolder => "Player" + Path.DirectorySeparatorChar + "ModLibs";
+		public static string BaseFolder => "Players" + Path.DirectorySeparatorChar + "ModLibs";
 
 
 
