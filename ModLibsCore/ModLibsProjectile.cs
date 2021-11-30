@@ -6,8 +6,8 @@ using ModLibsCore.Services.ProjectileOwner;
 
 namespace ModLibsCore {
 	class ModLibsProjectile : GlobalProjectile {
-		private int NpcWho = -1;
-		private int PlayerWho = -1;
+		internal int NpcWho = -1;
+		internal int PlayerWho = -1;
 
 		public Entity Owner => this.NpcWho != -1
 			? Main.npc[ this.NpcWho ]
@@ -25,12 +25,7 @@ namespace ModLibsCore {
 		////////////////
 
 		public override void SetDefaults( Projectile projectile ) {
-			this.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
-
-			this.NpcWho = ProjectileOwner.ClaimingForProjectileNpcWho != -1
-				? ProjectileOwner.ClaimingForProjectileNpcWho
-				: ProjectileOwner.ClaimingForNpcWho;
-			this.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
+			ProjectileOwner.ClaimProjectile( this );
 		}
 	}
 }

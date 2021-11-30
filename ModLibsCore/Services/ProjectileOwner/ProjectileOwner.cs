@@ -9,6 +9,16 @@ namespace ModLibsCore.Services.ProjectileOwner {
 			return projectile.GetGlobalProjectile<ModLibsProjectile>()
 				.Owner;
 		}
+
+		public static Player GetPlayerOwner( this Projectile projectile ) {
+			return projectile.GetGlobalProjectile<ModLibsProjectile>()
+				.Owner as Player;
+		}
+
+		public static NPC GetNPCOwner( this Projectile projectile ) {
+			return projectile.GetGlobalProjectile<ModLibsProjectile>()
+				.Owner as NPC;
+		}
 	}
 
 
@@ -26,6 +36,31 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		public static Entity GetOwner( Projectile projectile ) {
 			return projectile.GetOwner();
+		}
+
+		////
+
+		internal static void SetOwnerManually( Projectile projectile, Entity owner ) {
+			var myproj = projectile.GetGlobalProjectile<ModLibsProjectile>();
+
+			myproj.NpcWho = owner is NPC
+				? owner.whoAmI
+				: -1;
+			myproj.PlayerWho = owner is Player
+				? owner.whoAmI
+				: -1;
+		}
+
+
+		////////////////
+
+		internal static void ClaimProjectile( ModLibsProjectile myproj ) {
+			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
+
+			myproj.NpcWho = ProjectileOwner.ClaimingForProjectileNpcWho != -1
+				? ProjectileOwner.ClaimingForProjectileNpcWho
+				: ProjectileOwner.ClaimingForNpcWho;
+			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
 		}
 
 
