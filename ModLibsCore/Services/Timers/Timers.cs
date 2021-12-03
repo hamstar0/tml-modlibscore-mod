@@ -51,7 +51,7 @@ namespace ModLibsCore.Services.Timers {
 		public static void RunNow( Action action ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + action.GetHashCode();
 
-			Timers.SetTimer( ctx, 0, true, () => {
+			Timers.SetTimer( ctx, 1, true, () => {
 				action();
 				return false;
 			} );
@@ -65,7 +65,7 @@ namespace ModLibsCore.Services.Timers {
 		public static void RunUntil( Func<bool> func, bool runsWhilePaused ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
 
-			Timers.SetTimer( ctx, 0, runsWhilePaused, () => {
+			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
 				return func();
 			} );
 		}
@@ -79,11 +79,8 @@ namespace ModLibsCore.Services.Timers {
 		public static void RunUntil( Func<bool> func, int times, bool runsWhilePaused ) {
 			string ctx = TmlLibraries.SafelyGetRand().NextDouble() + "_" + func.GetHashCode();
 
-			Timers.SetTimer( ctx, 0, runsWhilePaused, () => {
-				if( !func() ) {
-					return false;
-				}
-				return times-- > 0;
+			Timers.SetTimer( ctx, 1, runsWhilePaused, () => {
+				return func() && times-- > 0;
 			} );
 		}
 
@@ -130,14 +127,14 @@ namespace ModLibsCore.Services.Timers {
 		/// <param name="name">Identifier of timer. Re-assigning with this identifier replaces any existing timer.</param>
 		/// <param name="tickDuration"></param>
 		/// <param name="runsWhilePaused"></param>
-		/// <param name="action">Action to run. Returns a value of ticks to indicate the next duration of the next timer
+		/// <param name="func">Action to run. Returns a value of ticks to indicate the next duration of the next timer
 		/// loop. Return `0` to terminate loop.</param>
-		public static void SetTimer( string name, int tickDuration, bool runsWhilePaused, Func<int> action ) {
+		public static void SetTimer( string name, int tickDuration, bool runsWhilePaused, Func<int> func ) {
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers == null ) { return; }
 
 			lock( Timers.MyLock ) {
-				timers.Running[name] = new TimerEntry( runsWhilePaused, action, tickDuration );
+				timers.Running[name] = new TimerEntry( runsWhilePaused, func, tickDuration );
 				timers.Elapsed[name] = 0;
 				timers.Expired.Remove( name );
 			}

@@ -128,9 +128,9 @@ namespace ModLibsCore.Services.Timers {
 					if( duration > 0 ) {
 						lock( Timers.MyLock ) {
 							this.Running[timerName] = new TimerEntry(
-								timer.RunsWhilePaused,
-								timer.Callback,
-								duration
+								runsWhilePaused: timer.RunsWhilePaused,
+								callback: timer.Callback,
+								duration: duration
 							);
 							this.Elapsed[timerName] = 0;
 						}

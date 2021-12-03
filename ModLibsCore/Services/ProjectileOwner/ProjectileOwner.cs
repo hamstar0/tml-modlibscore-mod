@@ -40,7 +40,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		////
 
-		internal static void SetOwnerManually( Projectile projectile, Entity owner ) {
+		public static void SetOwnerManually( Projectile projectile, Entity owner ) {
 			var myproj = projectile.GetGlobalProjectile<ModLibsProjectile>();
 
 			myproj.NpcWho = owner is NPC
