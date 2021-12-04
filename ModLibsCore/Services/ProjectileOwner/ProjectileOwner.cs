@@ -4,17 +4,29 @@ using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Services.ProjectileOwner {
+	/// <summary>
+	/// Implements extension methods for `Projectile` mirroring `ProjectileOwner` methods.
+	/// </summary>
 	public static class ProjectileExtensions {
+		/// <summary></summary>
+		/// <param name="projectile"></param>
+		/// <returns></returns>
 		public static Entity GetOwner( this Projectile projectile ) {
 			return projectile.GetGlobalProjectile<ModLibsProjectile>()
 				.Owner;
 		}
 
+		/// <summary></summary>
+		/// <param name="projectile"></param>
+		/// <returns>`Player` instance, if applicable.</returns>
 		public static Player GetPlayerOwner( this Projectile projectile ) {
 			return projectile.GetGlobalProjectile<ModLibsProjectile>()
 				.Owner as Player;
 		}
 
+		/// <summary></summary>
+		/// <param name="projectile"></param>
+		/// <returns>`NPC` instance, if applicable.</returns>
 		public static NPC GetNPCOwner( this Projectile projectile ) {
 			return projectile.GetGlobalProjectile<ModLibsProjectile>()
 				.Owner as NPC;
@@ -24,6 +36,9 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 
 
+	/// <summary>
+	/// Implements a method to know the 'owner' `Entity` of a given projectile.
+	/// </summary>
 	public class ProjectileOwner : ILoadable {
 		internal static int ClaimingForPlayerWho = -1;
 		internal static int ClaimingForNpcWho = -1;
@@ -34,12 +49,21 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		////////////////
 
+		/// <summary></summary>
+		/// <param name="projectile"></param>
+		/// <returns></returns>
 		public static Entity GetOwner( Projectile projectile ) {
 			return projectile.GetOwner();
 		}
 
 		////
 
+		/// <summary>
+		/// Allows manually overriding the owner entity of a given projectile. Intended for custom use of projectiles that may
+		/// otherwise fail to register an owner. Use with care.
+		/// </summary>
+		/// <param name="projectile"></param>
+		/// <param name="owner"></param>
 		public static void SetOwnerManually( Projectile projectile, Entity owner ) {
 			var myproj = projectile.GetGlobalProjectile<ModLibsProjectile>();
 
