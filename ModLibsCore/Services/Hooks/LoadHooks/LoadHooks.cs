@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -7,7 +8,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 	/// <summary>
 	/// Allows defining load hooks. These are of a set of hooks corresponding to important game code "load" events.
 	/// </summary>
-	public partial class LoadHooks {
+	public partial class LoadHooks : ILoadable {
 		private readonly static object PostContentLoadHookLock = new object();
 		private readonly static object PostModLoadHookLock = new object();
 		private readonly static object ModUnloadHookLock = new object();

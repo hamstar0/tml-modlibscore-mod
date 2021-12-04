@@ -6,7 +6,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore.Services.Hooks.Draw {
 	/// <summary>
-	/// Supplies custom tModLoader-like, delegate-based hooks for conveniently plugging into existing drawing layers.
+	/// Allows defining tModLoader-like, delegate-based hooks for conveniently plugging into existing drawing layers.
 	/// </summary>
 	public partial class DrawHooks {
 		/// <summary>

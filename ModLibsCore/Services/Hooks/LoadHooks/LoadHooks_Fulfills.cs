@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
+using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
-	public partial class LoadHooks {
+	public partial class LoadHooks : ILoadable {
 		internal int LastRanHookReportedHookCount = -1;
 
 

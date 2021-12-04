@@ -6,7 +6,14 @@ using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Services.Hooks.NPCHooks {
+	/// <summary>
+	/// Allows defining tModLoader-like, delegate-based hooks for a variety of NPC-related functions.
+	/// </summary>
 	public class NPCHooks : ILoadable {
+		/// <summary>
+		/// General-use NPC spawn hooking.
+		/// </summary>
+		/// <param name="hook"></param>
 		public static void AddSpawnNPCHook( OnSpawnNPCHook hook ) {
 			ModContent.GetInstance<NPCHooks>()
 				.OnSpawnNPCHooks.Add( hook );
@@ -22,6 +29,10 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 
 		////////////////
 		
+		/// <summary>
+		/// Called when an NPC is spawned.
+		/// </summary>
+		/// <param name="npcWho">`Main.npc` index.</param>
 		public delegate void OnSpawnNPCHook( int npcWho );
 
 

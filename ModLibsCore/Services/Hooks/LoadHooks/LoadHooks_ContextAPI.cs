@@ -1,10 +1,11 @@
 ﻿using System;
 using Terraria.ModLoader;
+using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
-	public partial class LoadHooks {
+	public partial class LoadHooks : ILoadable {
 		/// <summary>
 		/// Declares an action to run after mods are loaded (PostSetupContent, PostAddRecipes, AddRecipeGroups).
 		/// </summary>
