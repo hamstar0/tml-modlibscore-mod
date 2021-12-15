@@ -25,7 +25,7 @@ namespace ModLibsCore {
 		////////////////
 
 		public override void SetDefaults( Projectile projectile ) {
-			ProjectileOwner.ClaimProjectile( this );
+			ProjectileOwner.ClaimProjectile( this, projectile );
 		}
 	}
 }
