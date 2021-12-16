@@ -9,12 +9,17 @@ namespace ModLibsCore.Services.ProjectileOwner {
 	/// Implements a method to know the 'owner' `Entity` of a given projectile.
 	/// </summary>
 	public partial class ProjectileOwner : ILoadable {
-		public delegate void OnProjectileOwnerSet( Projectile projectile, bool isManuallySet );
+		/// <summary></summary>
+		/// <param name="projectileWho"></param>
+		/// <param name="isManuallySet"></param>
+		public delegate void OnProjectileOwnerSet( int projectileWho, bool isManuallySet );
 
 
 
 		////////////////
 
+		/// <summary></summary>
+		/// <param name="hook"></param>
 		public static void AddOwnerSetHook( OnProjectileOwnerSet hook ) {
 			var self = ModContent.GetInstance<ProjectileOwner>();
 
@@ -24,11 +29,11 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		////////////////
 
-		private static void RunOwnerSetHooks( Projectile projectile, bool isManuallySet ) {
+		private static void RunOwnerSetHooks( int projectileWho, bool isManuallySet ) {
 			var self = ModContent.GetInstance<ProjectileOwner>();
 
 			foreach( OnProjectileOwnerSet hook in self.Hooks ) {
-				hook.Invoke( projectile, isManuallySet );
+				hook.Invoke( projectileWho, isManuallySet );
 			}
 		}
 	}

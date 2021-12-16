@@ -30,9 +30,10 @@ namespace ModLibsCore.Services.ProjectileOwner {
 		/// Allows manually overriding the owner entity of a given projectile. Intended for custom use of projectiles that may
 		/// otherwise fail to register an owner. Use with care.
 		/// </summary>
-		/// <param name="projectile"></param>
+		/// <param name="projectileWho">`Main.projectile` index.</param>
 		/// <param name="owner"></param>
-		public static void SetOwnerManually( Projectile projectile, Entity owner ) {
+		public static void SetOwnerManually( int projectileWho, Entity owner ) {
+			var projectile = Main.projectile[ projectileWho ];
 			var myproj = projectile.GetGlobalProjectile<ModLibsProjectile>();
 
 			myproj.NpcWho = owner is NPC
@@ -44,13 +45,13 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 			//
 
-			ProjectileOwner.RunOwnerSetHooks( projectile, true );
+			ProjectileOwner.RunOwnerSetHooks( projectileWho, true );
 		}
 
 
 		////////////////
 
-		internal static void ClaimProjectile( ModLibsProjectile myproj, Projectile projectile ) {
+		internal static bool ClaimProjectile( ModLibsProjectile myproj, Projectile projectile ) {
 			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
 
 			myproj.NpcWho = ProjectileOwner.ClaimingForProjectileNpcWho != -1
@@ -58,9 +59,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 				: ProjectileOwner.ClaimingForNpcWho;
 			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
 
-			//
-
-			ProjectileOwner.RunOwnerSetHooks( projectile, false );
+			return myproj.NpcWho != -1 || myproj.PlayerWho != -1;
 		}
 	}
 }

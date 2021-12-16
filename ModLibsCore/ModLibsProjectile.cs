@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Services.ProjectileOwner;
 
 
 namespace ModLibsCore {
@@ -19,13 +18,5 @@ namespace ModLibsCore {
 		////////////////
 
 		public override bool InstancePerEntity => true;
-
-
-
-		////////////////
-
-		public override void SetDefaults( Projectile projectile ) {
-			ProjectileOwner.ClaimProjectile( this, projectile );
-		}
 	}
 }
