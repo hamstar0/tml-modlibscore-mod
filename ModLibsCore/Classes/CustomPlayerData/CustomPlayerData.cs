@@ -10,6 +10,7 @@ using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Extensions;
 using ModLibsCore.Libraries.DotNET.Reflection;
 using ModLibsCore.Libraries.Players;
+using ModLibsCore.Libraries.TModLoader;
 
 
 namespace ModLibsCore.Classes.PlayerData {
@@ -19,9 +20,9 @@ namespace ModLibsCore.Classes.PlayerData {
 	public partial class CustomPlayerData : ILoadable {
 		private static void Enter( int playerWho ) {
 			Player player = Main.player[playerWho];
-			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
+			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
 
-			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof( CustomPlayerData ) );
+			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof(CustomPlayerData) );
 			string uid = PlayerIdentityLibraries.GetUniqueId( player );
 
 			//
@@ -32,6 +33,8 @@ namespace ModLibsCore.Classes.PlayerData {
 
 			//
 
+			singleton.PlayerWhoToTypeToTypeInstanceMap[ playerWho ] = new Dictionary<Type, CustomPlayerData>();
+			
 			foreach( Type plrDataType in plrDataTypes ) {
 				object data = uid != null
 					? CustomPlayerData.LoadFileData( plrDataType.Name, uid )
@@ -75,20 +78,21 @@ namespace ModLibsCore.Classes.PlayerData {
 
 		private static void Exit( int playerWho ) {
 			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
-				Player plr = Main.player[playerWho];
+				Player plr = Main.player[ playerWho ];
 				string uid = "";
 
 				if( plr != null ) {
 					uid = PlayerIdentityLibraries.GetUniqueId( Main.player[playerWho] );
 				}
 
-				LogLibraries.Alert( "Player " + ( plr?.name ?? "null" ) + " (" + playerWho + ", " + uid + ") exited the game." );
+				LogLibraries.Alert( "Player "+(plr?.name ?? "null")+" ("+playerWho+", "+uid+") exited the game." );
 			}
 
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
 
-			if( Main.netMode != NetmodeID.Server ) {
-				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.PlayerWhoToTypeToTypeInstanceMap[playerWho]
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
+				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton
+					.PlayerWhoToTypeToTypeInstanceMap[ playerWho ]
 					.Select( kv => (kv.Key, kv.Value) );
 
 				foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {

@@ -34,18 +34,22 @@ namespace ModLibsCore.Classes.PlayerData {
 		}
 
 
-		private static void UpdateForPlayer( int plrWho, bool isNotInMenu ) {
-			Player player = Main.player[plrWho];
+		private static void UpdateForPlayer( int playerWho, bool isNotInMenu ) {
+			Player player = Main.player[playerWho];
 			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
-			bool playerExists = singleton.PlayerWhoToTypeToTypeInstanceMap.ContainsKey( plrWho );
+			bool playerHasEnteredGame = singleton.PlayerWhoToTypeToTypeInstanceMap.ContainsKey( playerWho );
+
+			//
 
 			if( player?.active != true ) {
-				if( playerExists ) {
-					CustomPlayerData.Exit( plrWho );
+				if( playerHasEnteredGame ) {
+					CustomPlayerData.Exit( playerWho );
 				}
 
 				return;
 			}
+
+			//
 
 			//bool isInGame = Main.netMode == NetmodeID.Server
 			//	? true
@@ -54,20 +58,34 @@ namespace ModLibsCore.Classes.PlayerData {
 			//		: false;
 
 			if( isNotInMenu ) {
-				if( !playerExists ) {
-					CustomPlayerData.Enter( plrWho );
-				} else {
-					IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.PlayerWhoToTypeToTypeInstanceMap[ plrWho ]
-							.Select( kv => (kv.Key, kv.Value) );
-
-					foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
-						plrData.Update();
-					}
-				}
+				CustomPlayerData.UpdateForPlayerInGame( playerWho, playerHasEnteredGame );
 			} else {
-				if( playerExists ) {
-					CustomPlayerData.Exit( plrWho );
+				if( playerHasEnteredGame ) {
+					CustomPlayerData.Exit( playerWho );
 				}
+			}
+		}
+
+
+		private static void UpdateForPlayerInGame( int playerWho, bool playerHasEnteredGame ) {
+			if( !playerHasEnteredGame ) {
+				CustomPlayerData.Enter( playerWho );
+
+				return;
+			}
+
+			//
+
+			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
+
+			IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton
+				.PlayerWhoToTypeToTypeInstanceMap[ playerWho ]
+				.Select( kv => (kv.Key, kv.Value) );
+
+			//
+
+			foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
+				plrData.Update();
 			}
 		}
 	}
