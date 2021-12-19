@@ -11,7 +11,7 @@ namespace ModLibsCore.Classes.PlayerData {
 	/// An alternative to ModPlayer for basic per-player, per-game data storage and Update use.
 	/// </summary>
 	public partial class CustomPlayerData : ILoadable {
-		private IDictionary<int, IDictionary<Type, CustomPlayerData>> DataMap
+		private IDictionary<int, IDictionary<Type, CustomPlayerData>> PlayerWhoToTypeToTypeInstanceMap
 			= new Dictionary<int, IDictionary<Type, CustomPlayerData>>();
 
 		private bool CalledOnModsLoad = false;

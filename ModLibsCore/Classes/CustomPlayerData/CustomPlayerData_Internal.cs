@@ -20,26 +20,37 @@ namespace ModLibsCore.Classes.PlayerData {
 	public partial class CustomPlayerData : ILoadable {
 		private static void Enter( int playerWho ) {
 			Player player = Main.player[playerWho];
-
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
-			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof( CustomPlayerData ) );
+
+			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof(CustomPlayerData) );
 			string uid = PlayerIdentityLibraries.GetUniqueId( player );
+
+			//
 
 			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
 				LogLibraries.Alert( "Player "+player.name+" ("+playerWho+"; "+uid+") entered the game." );
 			}
 
+			//
+
 			foreach( Type plrDataType in plrDataTypes ) {
-				object data = CustomPlayerData.LoadFileData( plrDataType.Name, uid );
-				var plrData = (CustomPlayerData)Activator.CreateInstance(
+				object data = uid != null
+					? CustomPlayerData.LoadFileData( plrDataType.Name, uid )
+					: null;
+
+				var customPlrDataInst = (CustomPlayerData)Activator.CreateInstance(
 					plrDataType,
 					BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
 					null,
 					new object[] { },
 					null );
-				plrData.PlayerWho = playerWho;
+				customPlrDataInst.PlayerWho = playerWho;
 
-				singleton.DataMap.Set2D( playerWho, plrDataType, plrData );
+				//
+
+				singleton.PlayerWhoToTypeToTypeInstanceMap.Set2D( playerWho, plrDataType, customPlrDataInst );
+
+				//
 
 				/*var typedParam = new TypedMethodParameter( typeof( object ), data );
 
@@ -56,9 +67,12 @@ namespace ModLibsCore.Classes.PlayerData {
 					returnVal: out object _
 				);*/	// <- what is this crap?
 
-				plrData.OnEnter( Main.myPlayer == playerWho, data );
+				customPlrDataInst.OnEnter( Main.myPlayer == playerWho, data );
 			}
 		}
+
+
+		////
 
 		private static void Exit( int playerWho ) {
 			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
@@ -75,7 +89,8 @@ namespace ModLibsCore.Classes.PlayerData {
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
 
 			if( Main.netMode != NetmodeID.Server ) {
-				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[playerWho].Select( kv => (kv.Key, kv.Value) );
+				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.PlayerWhoToTypeToTypeInstanceMap[ playerWho ]
+					.Select( kv => (kv.Key, kv.Value) );
 
 				foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
 					object data = plrData.OnExit();
@@ -90,7 +105,7 @@ namespace ModLibsCore.Classes.PlayerData {
 				}
 			}
 
-			singleton.DataMap.Remove( playerWho );
+			singleton.PlayerWhoToTypeToTypeInstanceMap.Remove( playerWho );
 		}
 
 
@@ -102,50 +117,54 @@ namespace ModLibsCore.Classes.PlayerData {
 				return;
 			}
 
-			bool isNotMenu = Main.netMode == NetmodeID.Server
+			bool isNotMenu = Main.netMode == NetmodeID.Server || Main.dedServ
 				? true
 				: !Main.gameMenu;
-			Player player;
 
 			for( int plrWho = 0; plrWho < Main.maxPlayers; plrWho++ ) {
-				player = Main.player[plrWho];
-
-				bool containsKey = singleton.DataMap.ContainsKey( plrWho );
-
-				if( player?.active != true ) {
-					if( containsKey ) {
-						CustomPlayerData.Exit( plrWho );
-					}
-
-					continue;
-				}
-
-				//bool isInGame = Main.netMode == NetmodeID.Server
-				//	? true
-				//	: plrWho == Main.myPlayer
-				//		? LoadLibraries.IsCurrentPlayerInGame()
-				//		: false;
-
-				if( isNotMenu ) {
-					if( !containsKey ) {
-						CustomPlayerData.Enter( plrWho );
-					} else {
-						IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.DataMap[plrWho]
-								.Select( kv => (kv.Key, kv.Value) );
-
-						foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
-							plrData.Update();
-						}
-					}
-				} else {
-					if( containsKey ) {
-						CustomPlayerData.Exit( plrWho );
-					}
-				}
+				CustomPlayerData.UpdateForPlayer( plrWho, isNotMenu );
 			}
 
-			if( Main.netMode != NetmodeID.Server && Main.gameMenu ) {
-				singleton.DataMap.Clear();
+			// On main menu return
+			if( Main.netMode != NetmodeID.Server && !Main.dedServ && Main.gameMenu ) {
+				singleton.PlayerWhoToTypeToTypeInstanceMap.Clear();
+			}
+		}
+
+		private static void UpdateForPlayer( int plrWho, bool isNotInMenu ) {
+			Player player = Main.player[plrWho];
+			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
+			bool playerExists = singleton.PlayerWhoToTypeToTypeInstanceMap.ContainsKey( plrWho );
+
+			if( player?.active != true ) {
+				if( playerExists ) {
+					CustomPlayerData.Exit( plrWho );
+				}
+
+				return;
+			}
+
+			//bool isInGame = Main.netMode == NetmodeID.Server
+			//	? true
+			//	: plrWho == Main.myPlayer
+			//		? LoadLibraries.IsCurrentPlayerInGame()
+			//		: false;
+
+			if( isNotInMenu ) {
+				if( !playerExists ) {
+					CustomPlayerData.Enter( plrWho );
+				} else {
+					IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton.PlayerWhoToTypeToTypeInstanceMap[ plrWho ]
+							.Select( kv => (kv.Key, kv.Value) );
+
+					foreach( (Type plrDataType, CustomPlayerData plrData) in plrDataMap ) {
+						plrData.Update();
+					}
+				}
+			} else {
+				if( playerExists ) {
+					CustomPlayerData.Exit( plrWho );
+				}
 			}
 		}
 	}
