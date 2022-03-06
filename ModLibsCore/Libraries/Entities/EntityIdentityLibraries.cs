@@ -30,13 +30,19 @@ namespace ModLibsCore.Libraries.Entities {
 			int hash = ("active"+ent.active).GetHashCode();
 
 			if( !noContext ) {
+				if( ent is Projectile ) {
+					var proj = ent as Projectile;
+
+					hash += ("whoAmI"+Main.projectileIdentity[proj.owner, proj.projUUID]).GetHashCode() + Pow();
+				} else {
+					hash += ("whoAmI"+ent.whoAmI).GetHashCode() + Pow();
+				}
 				//hash ^= ("position"+ent.position).GetHashCode();
 				//hash ^= ("velocity"+ent.velocity).GetHashCode();
 				//hash ^= ("oldPosition"+ent.oldPosition).GetHashCode();
 				//hash ^= ("oldVelocity"+ent.oldVelocity).GetHashCode();
 				//hash ^= ("oldDirection"+ent.oldDirection).GetHashCode();
 				//hash ^= ("direction"+ent.direction).GetHashCode();
-				hash += ("whoAmI"+ent.whoAmI).GetHashCode() + Pow();
 				//hash ^= ("wet"+ent.wet).GetHashCode();
 				//hash ^= ("honeyWet"+ent.honeyWet).GetHashCode();
 				//hash ^= ("wetCount"+ent.wetCount).GetHashCode();
