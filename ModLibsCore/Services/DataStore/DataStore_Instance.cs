@@ -9,7 +9,7 @@ using ModLibsCore.Libraries.Debug;
 namespace ModLibsCore.Services.DataStore {
 	/// @private
 	public partial class DataStore : ILoadable {
-		private IDictionary<object, object> Data = new Dictionary<object, object>();
+		private IDictionary<object, (bool, object)> Data = new Dictionary<object, (bool, object)>();
 
 
 

@@ -54,15 +54,26 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 					return false;
 				}
 
-				Serializer ser = netIO.PayloadCodeToSerializer[ code ];
-
 				packet.Write( (int)code );
 
-				MethodInfo method = ser.GetType().GetMethod( "SerializeDirect", ReflectionLibraries.MostAccess );
+				//
+
+				Serializer ser = netIO.PayloadCodeToSerializer[ code ];
+
+				MethodInfo method = ser.GetType()
+					.GetMethod( "SerializeDirect", ReflectionLibraries.MostAccess );
 				method = method.MakeGenericMethod( new Type[] { dataType } );
-				method.Invoke( ser, new object[] { packet.BaseStream, data } );
+
+				method.Invoke( 
+					obj: ser,
+					parameters: new object[] { packet.BaseStream, data }
+				);
+
+				//
 
 				packet.Send( toWho, ignoreWho );
+
+				//
 
 				if( ModLibsConfig.Instance.DebugModeNetInfo ) {
 					bool isNoisy = dataType

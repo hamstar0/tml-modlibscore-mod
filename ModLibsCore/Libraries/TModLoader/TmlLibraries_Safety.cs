@@ -87,8 +87,8 @@ namespace ModLibsCore.Libraries.TModLoader {
 		////////////////
 
 		/// <summary>
-		/// Provides an alternative to `Player.GetModPlayer(...)` to ensure the given player is properly loaded. Addresses some
-		/// confusing types of errors.
+		/// Provides an alternative to `Player.GetModPlayer(...)` to ensure the given player is properly loaded.
+		/// Addresses some confusing types of errors.
 		/// </summary>
 		/// <param name="player"></param>
 		/// <param name="mod"></param>

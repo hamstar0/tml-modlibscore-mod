@@ -18,7 +18,8 @@ namespace ModLibsCore.Services.DataStore {
 		/// <param name="key"></param>
 		/// <returns></returns>
 		public static bool Has( object key ) {
-			return ModContent.GetInstance<DataStore>().Data.ContainsKey( key );
+			return ModContent.GetInstance<DataStore>()
+				.Data.ContainsKey( key );
 		}
 
 		/// <summary>
@@ -31,13 +32,14 @@ namespace ModLibsCore.Services.DataStore {
 		public static bool Get<T>( object key, out T val ) {
 			val = default(T);
 
-			object rawVal = null;
-			bool success = ModContent.GetInstance<DataStore>().Data.TryGetValue( key, out rawVal );
+			(bool, object) rawVal;
+			bool success = ModContent.GetInstance<DataStore>()
+				.Data.TryGetValue( key, out rawVal );
 
-			if( !( rawVal is T ) ) {
+			if( !(rawVal.Item2 is T) ) {
 				success = false;
 			} else {
-				val = (T)rawVal;
+				val = (T)rawVal.Item2;
 			}
 			
 			return success;
@@ -49,7 +51,27 @@ namespace ModLibsCore.Services.DataStore {
 		/// <param name="key"></param>
 		/// <param name="val"></param>
 		public static void Set( object key, object val ) {
-			ModContent.GetInstance<DataStore>().Data[ key ] = val;
+			var store = ModContent.GetInstance<DataStore>();
+			if( store.Data.ContainsKey(key) && store.Data[key].Item1 ) {
+				throw new ModLibsException( $"Data at {key} is read-only." );
+			}
+
+			store.Data[ key ] = (false, val);
+		}
+
+		/// <summary>
+		/// Sets data under a given key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		/// <param name="isReadOnly"></param>
+		public static void Set( object key, object val, bool isReadOnly ) {
+			var store = ModContent.GetInstance<DataStore>();
+			if( store.Data.ContainsKey(key) && store.Data[key].Item1 ) {
+				throw new ModLibsException( $"Data at {key} is read-only." );
+			}
+
+			store.Data[ key ] = (isReadOnly, val);
 		}
 
 		/// <summary>
@@ -68,8 +90,10 @@ namespace ModLibsCore.Services.DataStore {
 			var ds = ModContent.GetInstance<DataStore>();
 			IDictionary<object, object> clone;
 
-			clone = ds.Data.ToDictionary( kv => kv.Key, kv => kv.Value );
+			clone = ds.Data
+				.ToDictionary( kv => kv.Key, kv => kv.Value.Item2 );
 			clone.Remove( DataDumper.MyDataStorekey );
+
 			return clone;
 		}
 
@@ -83,21 +107,25 @@ namespace ModLibsCore.Services.DataStore {
 		/// <param name="val"></param>
 		public static bool Add( object key, double val ) {
 			var ds = ModContent.GetInstance<DataStore>();
+			if( ds.Data.ContainsKey(key) && ds.Data[key].Item1 ) {
+				throw new ModLibsException( $"Data at {key} is read-only." );
+			}
 
 			if( !ds.Data.ContainsKey( key ) ) {
-				ds.Data[key] = val;
+				ds.Data[key] = (false, val);
 			} else {
-				Type dst = ds.Data[key].GetType();
+				(bool, object) entry = ds.Data[key];
+				Type dst = entry.Item2.GetType();
 
 				if( !dst.IsValueType || Type.GetTypeCode(dst) == TypeCode.Boolean ) {
 					return false;
 				}
-				double amt = (double)ds.Data[key] + val;
+				double amt = (double)entry.Item2 + val;
 
 				if( dst == typeof(double) ) {
-					ds.Data[key] = amt;
+					ds.Data[key] = (false, amt);
 				} else {
-					ds.Data[key] = Convert.ChangeType( amt, dst );
+					ds.Data[key] = (false, Convert.ChangeType(amt, dst));
 				}
 			}
 
