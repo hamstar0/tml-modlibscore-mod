@@ -52,12 +52,13 @@ namespace ModLibsCore.Services.ProjectileOwner {
 		////////////////
 
 		internal static bool ClaimProjectile( ModLibsProjectile myproj, Projectile projectile ) {
-			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
+			myproj.PlayerWho = ProjectileOwner.ClaimingForProjectilePlayerWho != -1
+				? ProjectileOwner.ClaimingForProjectilePlayerWho
+				: ProjectileOwner.ClaimingForPlayerWho;
 
 			myproj.NpcWho = ProjectileOwner.ClaimingForProjectileNpcWho != -1
 				? ProjectileOwner.ClaimingForProjectileNpcWho
 				: ProjectileOwner.ClaimingForNpcWho;
-			myproj.PlayerWho = ProjectileOwner.ClaimingForPlayerWho;
 
 			return myproj.NpcWho != -1 || myproj.PlayerWho != -1;
 		}

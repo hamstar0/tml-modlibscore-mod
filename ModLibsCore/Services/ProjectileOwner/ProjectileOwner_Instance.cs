@@ -18,6 +18,35 @@ namespace ModLibsCore.Services.ProjectileOwner {
 		////////////////
 
 		void ILoadable.OnModsLoad() {
+			On.Terraria.Projectile.NewProjectile_float_float_float_float_int_int_float_int_float_float += (
+						On.Terraria.Projectile.orig_NewProjectile_float_float_float_float_int_int_float_int_float_float orig,
+						float X,
+						float Y,
+						float SpeedX,
+						float SpeedY,
+						int Type,
+						int Damage,
+						float KnockBack,
+						int Owner,
+						float ai0,
+						float ai1 ) => {
+				int projIdx = orig.Invoke( X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1 );
+
+				Projectile proj = Main.projectile[ projIdx ];
+
+				if( proj?.active == true ) {
+					var myproj = proj.GetGlobalProjectile<ModLibsProjectile>();
+
+					if( ProjectileOwner.ClaimProjectile(myproj, proj) ) {
+						this.NewProjectileIdxs.Add( projIdx );
+					}
+				}
+
+				return projIdx;
+			};
+
+			//
+
 			On.Terraria.Player.ItemCheck += ( On.Terraria.Player.orig_ItemCheck orig, Player self, int i ) => {
 				 ProjectileOwner.ClaimingForPlayerWho = self.whoAmI;
 				orig.Invoke( self, i );
@@ -45,33 +74,6 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 				this.RunOwnerSetHooksForNewProjectiles();
 			};
-
-			//
-
-			On.Terraria.Projectile.NewProjectile_float_float_float_float_int_int_float_int_float_float += (
-						On.Terraria.Projectile.orig_NewProjectile_float_float_float_float_int_int_float_int_float_float orig,
-						float X,
-						float Y,
-						float SpeedX,
-						float SpeedY,
-						int Type,
-						int Damage,
-						float KnockBack,
-						int Owner,
-						float ai0,
-						float ai1 ) => {
-				int projIdx = orig.Invoke( X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1 );
-
-				Projectile proj = Main.projectile[ projIdx ];
-
-				if( proj?.active == true ) {
-					if( ProjectileOwner.ClaimProjectile(proj.GetGlobalProjectile<ModLibsProjectile>(), proj) ) {
-						this.NewProjectileIdxs.Add( projIdx );
-					}
-				}
-
-				return projIdx;
-			};
 		}
 
 		void ILoadable.OnModsUnload() { }
@@ -80,7 +82,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 
 		////////////////
-
+		
 		private void RunOwnerSetHooksForNewProjectiles() {
 			foreach( int projIdx in this.NewProjectileIdxs ) {
 				Projectile proj = Main.projectile[projIdx];
@@ -90,6 +92,8 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 				ProjectileOwner.RunOwnerSetHooks( projIdx, false );
 			}
+
+			//
 
 			this.NewProjectileIdxs.Clear();
 		}
