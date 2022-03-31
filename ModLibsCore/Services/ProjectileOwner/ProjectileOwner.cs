@@ -23,7 +23,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 		public static Entity GetOwner( Projectile projectile ) {
 			return projectile.GetOwner();
 		}
-
+		
 		////
 
 		/// <summary>
