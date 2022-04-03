@@ -51,6 +51,7 @@ namespace ModLibsCore.Classes.UI.Elements {
 
 		public UITextInputPanelBasic( string hintText ) {
 			this.HintText = hintText;
+			this.TextColor = Color.White;
 
 			this.SetPadding( 6f );
 		}
@@ -139,6 +140,8 @@ namespace ModLibsCore.Classes.UI.Elements {
 				return;
 			}
 
+			//
+
 			float opacity = this.Opacity;
 
 			Color oldBg = this.BackgroundColor;
@@ -147,7 +150,11 @@ namespace ModLibsCore.Classes.UI.Elements {
 			this.BackgroundColor *= opacity;
 			this.BorderColor *= opacity;
 
+			//
+
 			base.Draw( spriteBatch );
+
+			//
 
 			this.BackgroundColor = oldBg;
 			this.BorderColor = oldBord;
