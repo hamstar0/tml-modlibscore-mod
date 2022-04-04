@@ -1,1 +1,1 @@
-Provides a basic set of (mostly "low level") classes, libraries, and "services" expected to be used by most advanced mods.
+Provides a basic set of (mostly "low level") classes, libraries, and "services" expected to be used by advanced mods.
