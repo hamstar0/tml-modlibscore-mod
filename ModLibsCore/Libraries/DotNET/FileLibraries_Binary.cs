@@ -109,6 +109,29 @@ namespace ModLibsCore.Libraries.DotNET {
 
 
 		////////////////
+		
+
+		/// <summary>
+		/// Deletes a file.
+		/// </summary>
+		/// <param name="fullPath">System path to the file.</param>
+		/// <param name="isCloud">Stores the file on the cloud.</param>
+		/// <param name="status">Reports specific information on IO result's status.</param>
+		/// <returns>`true` on apparent success.</returns>
+		public static bool DeleteFile( string fullPath, bool isCloud, out string status ) {
+			if( !FileUtilities.Exists( fullPath, isCloud ) ) {
+				status = "File " + fullPath + " does not exist.";
+				return false;
+			}
+
+			FileUtilities.Delete( fullPath, isCloud );
+
+			status = "Success.";
+			return true;
+		}
+
+
+		////////////////
 
 		/// <summary>
 		/// Decompresses a file loaded from FileLibraries.SaveBinaryFile().

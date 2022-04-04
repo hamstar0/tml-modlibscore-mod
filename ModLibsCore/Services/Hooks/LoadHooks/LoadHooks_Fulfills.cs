@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Terraria;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
@@ -32,12 +33,16 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 		
 		internal void FulfillPostModLoadHooks() {
 			if( this.PostModLoadHookConditionsMet ) { return; }
+
 			this.PostModLoadHookConditionsMet = true;
+
+			//
 
 			Action[] hooks;
 			
 			lock( LoadHooks.PostModLoadHookLock ) {
 				hooks = this.PostModLoadHooks.ToArray();
+
 				this.PostModLoadHooks.Clear();
 			}
 

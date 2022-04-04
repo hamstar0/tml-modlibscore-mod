@@ -15,7 +15,7 @@ namespace ModLibsCore.Classes.PlayerData {
 	/// </summary>
 	public partial class CustomPlayerData : ILoadable {
 		/// <summary></summary>
-		public static string BaseFolder => "Players" + Path.DirectorySeparatorChar + "ModLibs";
+		public static string BaseFolder => $"Players{Path.DirectorySeparatorChar}ModLibs";
 
 
 
@@ -29,21 +29,27 @@ namespace ModLibsCore.Classes.PlayerData {
 				Directory.CreateDirectory( Main.SavePath + Path.DirectorySeparatorChar + ModCustomDataFileLibraries.BaseFolder );
 				Directory.CreateDirectory( fullDir );
 			} catch( IOException e ) {
-				LogLibraries.Warn( "Failed to prepare directory: " + fullDir + " - " + e.ToString() );
-				throw new IOException( "Failed to prepare directory: " + fullDir, e );
+				LogLibraries.Warn( $"Failed to prepare directory: {fullDir} - {e.ToString()}" );
+				throw new IOException( $"Failed to prepare directory: {fullDir}", e );
 			}
 		}
 
 		private static string GetRelativeDirectoryPath( string className ) {
-			return CustomPlayerData.BaseFolder + Path.DirectorySeparatorChar + className;
+			return CustomPlayerData.BaseFolder
+				+ Path.DirectorySeparatorChar
+				+ className;
 		}
 
 		private static string GetFullDirectoryPath( string className ) {
-			return Main.SavePath + Path.DirectorySeparatorChar + CustomPlayerData.GetRelativeDirectoryPath( className );
+			return Main.SavePath
+				+ Path.DirectorySeparatorChar
+				+ CustomPlayerData.GetRelativeDirectoryPath( className );
 		}
 
 		private static string GetFullPath( string className, string fileNameWithExt ) {
-			return CustomPlayerData.GetFullDirectoryPath( className ) + Path.DirectorySeparatorChar + fileNameWithExt;
+			return CustomPlayerData.GetFullDirectoryPath( className )
+				+ Path.DirectorySeparatorChar
+				+ fileNameWithExt;
 		}
 
 
@@ -76,10 +82,10 @@ namespace ModLibsCore.Classes.PlayerData {
 				}
 			} catch( IOException e ) {
 				string fullDir = CustomPlayerData.GetFullDirectoryPath( className );
-				LogLibraries.Warn( "Failed to load file " + playerUid + " at " + fullDir + " - " + e.ToString() );
-				throw new IOException( "Failed to load file " + playerUid + " at " + fullDir, e );
+				LogLibraries.Warn( $"Failed to load file {playerUid} at {fullDir} - {e.ToString()}" );
+				throw new IOException( $"Failed to load file {playerUid} at {fullDir}", e );
 			} catch( Exception e ) {
-				throw new ModLibsException( "Failed to load file " + playerUid, e );
+				throw new ModLibsException( $"Failed to load file {playerUid}", e );
 			}
 		}
 
@@ -88,18 +94,24 @@ namespace ModLibsCore.Classes.PlayerData {
 
 		private static bool SaveFileData( string className, string playerUid, object data ) {
 			if( data == null ) {
-				LogLibraries.Warn( "Failed to save file " + playerUid + " - Data is null." );
+				LogLibraries.Warn( $"Failed to save file {playerUid} - Data is null." );
 				return false;
 			}
 
+			//
+
 			CustomPlayerData.PrepareDir( className );
+
+			//
 
 			string relDir = CustomPlayerData.GetRelativeDirectoryPath( className );
 
 			if( data == null ) {
-				LogLibraries.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - Data is null." );
+				LogLibraries.Warn( $"Failed to save json file {playerUid} at {relDir} - Data is null." );
 				return false;
 			}
+
+			//
 
 			try {
 				if( ModLibsConfig.Instance.CustomPlayerDataAsText ) {
@@ -118,8 +130,39 @@ namespace ModLibsCore.Classes.PlayerData {
 					return FileLibraries.SaveBinaryFile( dataBytes, fullPath, false, true, out _ );
 				}
 			} catch( IOException e ) {
-				LogLibraries.Warn( "Failed to save json file " + playerUid + " at " + relDir + " - " + e.ToString() );
-				throw new IOException( "Failed to save json file " + playerUid + " at " + relDir, e );
+				LogLibraries.Warn( $"Failed to save json file {playerUid} at {relDir} - {e.ToString()}" );
+				throw new IOException( $"Failed to save json file {playerUid} at {relDir}", e );
+			}
+		}
+
+
+		////
+
+		internal static bool DeletePlayerData( string className, string playerUid ) {
+			CustomPlayerData.PrepareDir( className );
+
+			//
+
+			try {
+				string fullPath;
+
+				//
+
+				if( ModLibsConfig.Instance.CustomPlayerDataAsText ) {
+					fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".json" );
+				} else {
+					fullPath = CustomPlayerData.GetFullPath( className, playerUid + ".dat" );
+				}
+
+				return FileLibraries.DeleteFile( fullPath, false, out _ );
+			} catch( IOException e ) {
+				string fullDir = CustomPlayerData.GetFullDirectoryPath( className );
+
+				LogLibraries.Warn( $"Failed to delete file {playerUid} at {fullDir} - {e.ToString()}" );
+
+				throw new IOException( $"Failed to load file {playerUid} at {fullDir}", e );
+			} catch( Exception e ) {
+				throw new ModLibsException( $"Failed to load file {playerUid}", e );
 			}
 		}
 	}

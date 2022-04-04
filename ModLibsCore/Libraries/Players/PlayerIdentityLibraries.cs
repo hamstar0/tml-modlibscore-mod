@@ -1,11 +1,12 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.Entities;
 using ModLibsCore.Libraries.Items;
-using Terraria.ModLoader;
+
 
 namespace ModLibsCore.Libraries.Players {
 	/// <summary>
@@ -21,7 +22,14 @@ namespace ModLibsCore.Libraries.Players {
 				throw new ModLibsException( "No 'current' player on a server." );
 			}
 
-			int hash = Math.Abs( Main.ActivePlayerFileData.Path.GetHashCode() ^ Main.ActivePlayerFileData.IsCloudSave.GetHashCode() );
+			//
+
+			int plrFileHash = Main.ActivePlayerFileData.GetFileName().GetHashCode();
+			int plrNameHash = Main.LocalPlayer.name.GetHashCode();
+			//int activePlrCloudHashCode = Main.ActivePlayerFileData.IsCloudSave.GetHashCode();
+
+			int hash = Math.Abs( plrFileHash + plrNameHash );
+
 			return Main.clientUUID + "_" + hash;
 		}
 
@@ -37,6 +45,7 @@ namespace ModLibsCore.Libraries.Players {
 			if( !piLibs.PlayerIds.TryGetValue( player.whoAmI, out id ) ) {
 				if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
 					id = PlayerIdentityLibraries.GetUniqueId();
+
 					piLibs.PlayerIds[ player.whoAmI ] = id;
 				} else {
 					//throw new ModLibsException( "Could not find player " + player.name + "'s id." );

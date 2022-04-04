@@ -40,7 +40,9 @@ namespace ModLibsCore.Libraries.Debug {
 
 		internal void Reset() {
 			this.StartTimeBase = DateTime.UtcNow;
-			this.StartTime = DateTime.UtcNow.Subtract( new DateTime( 1970, 1, 1, 0, 0, 0 ) ).TotalSeconds;
+			this.StartTime = DateTime.UtcNow
+				.Subtract( new DateTime(1970, 1, 1, 0, 0, 0) )
+				.TotalSeconds;
 		}
 
 		////////////////

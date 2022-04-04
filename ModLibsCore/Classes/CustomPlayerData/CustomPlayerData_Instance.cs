@@ -40,7 +40,14 @@ namespace ModLibsCore.Classes.PlayerData {
 			if( this.CalledOnModsLoad ) {
 				throw new ModLibsException( "Attempted multiple calls." );
 			}
+
 			this.CalledOnModsLoad = true;
+
+			//
+
+			CustomPlayerData.InstallCustomPlayerDataCleanup();
+
+			//
 
 			Main.OnTick += CustomPlayerData.UpdateAll;
 		}
@@ -50,7 +57,12 @@ namespace ModLibsCore.Classes.PlayerData {
 			if( this.CalledOnModsUnload ) {
 				throw new ModLibsException( "Attempted multiple calls." );
 			}
+
+			//
+
 			this.CalledOnModsUnload = true;
+
+			//
 
 			Main.OnTick -= CustomPlayerData.UpdateAll;
 		}

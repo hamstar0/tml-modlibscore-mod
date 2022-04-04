@@ -27,7 +27,9 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="contextDepth">Indicates whether to also output the callstack context at the specified depth.
 		/// No output if -1 is set.</param>
 		/// <returns>Calling context, global info, and full (chained together) output.</returns>
-		public static (string Context, string Info, string Full) FormatMessageFull( string msg, int contextDepth = -1 ) {
+		public static (string Context, string Info, string Full) FormatMessageFull(
+					string msg,
+					int contextDepth = -1 ) {
 			string context, info;
 			ModLibsCoreMod mymod = ModLibsCoreMod.Instance;
 
@@ -37,6 +39,8 @@ namespace ModLibsCore.Libraries.Debug {
 
 				return ( context, "", "!Mod Libs unloaded. Message called from: "+context );
 			}
+
+			//
 
 			var logLibs = ModContent.GetInstance<LogLibraries>();
 			string output;
@@ -68,11 +72,15 @@ namespace ModLibsCore.Libraries.Debug {
 					info += "  ";
 				}
 
+				//
+
 				output += info + msg;
 			} catch( Exception e ) {
 				info = "";
 				output += "FORMATTING ERROR 2 (" + e.GetType().Name + ") - " + msg;
 			}
+
+			//
 
 			// Generate calling context output
 			if( contextDepth >= 0 ) {
@@ -82,6 +90,8 @@ namespace ModLibsCore.Libraries.Debug {
 					context = "";
 				}
 
+				//
+
 				if( output.Length > 0 ) {
 					output = context + " - " + output;
 				} else {
@@ -90,6 +100,8 @@ namespace ModLibsCore.Libraries.Debug {
 			} else {
 				context = "";
 			}
+
+			//
 
 			return ( context, info, output );
 		}

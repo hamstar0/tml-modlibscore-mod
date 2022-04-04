@@ -22,13 +22,15 @@ namespace ModLibsCore.Classes.PlayerData {
 			Player player = Main.player[playerWho];
 			var singleton = TmlLibraries.SafelyGetInstance<CustomPlayerData>();
 
-			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods( typeof(CustomPlayerData) );
+			IEnumerable<Type> plrDataTypes = ReflectionLibraries.GetAllAvailableSubTypesFromMods(
+				typeof(CustomPlayerData)
+			);
 			string uid = PlayerIdentityLibraries.GetUniqueId( player );
 
 			//
 
 			if( ModLibsConfig.Instance.DebugModeLoadStages ) {
-				LogLibraries.Alert( "Player " + player.name + " (" + playerWho + "; " + uid + ") entered the game." );
+				LogLibraries.Alert( $"Player {player.name} ({playerWho}; {uid}) entered the game." );
 			}
 
 			//
@@ -85,10 +87,14 @@ namespace ModLibsCore.Classes.PlayerData {
 					uid = PlayerIdentityLibraries.GetUniqueId( Main.player[playerWho] );
 				}
 
-				LogLibraries.Alert( "Player "+(plr?.name ?? "null")+" ("+playerWho+", "+uid+") exited the game." );
+				LogLibraries.Alert( $"Player {(plr?.name ?? "null")} ({playerWho}, {uid}) exited the game." );
 			}
 
+			//
+
 			CustomPlayerData singleton = ModContent.GetInstance<CustomPlayerData>();
+
+			//
 
 			if( Main.netMode != NetmodeID.Server && !Main.dedServ ) {
 				IEnumerable<(Type, CustomPlayerData)> plrDataMap = singleton

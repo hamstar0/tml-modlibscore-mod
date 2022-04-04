@@ -87,7 +87,11 @@ namespace ModLibsCore.Libraries.TModLoader {
 				return false;
 			}
 
+			//
+
 			bool safelyInPlay = loadLibs.WorldStartupDelay >= 120;
+
+			//
 
 			if( ModLibsConfig.Instance.DebugModeLoadStages && !safelyInPlay ) {
 				//string ctx = DebugLibraries.GetCurrentContext( 2 );
@@ -111,6 +115,9 @@ namespace ModLibsCore.Libraries.TModLoader {
 					);
 				}
 			}
+
+			//
+
 			return safelyInPlay;
 		}
 	}
