@@ -63,7 +63,12 @@ namespace ModLibsCore.Internals.Menus.Support {
 			this.HeadLabel.TextColor = SupportInfoDisplay.HeaderLabelColor;
 			this.HeadLabel.Recalculate();
 
-			this.HeadUrl = new UIWebUrlBasic( "Mod Libs v" + mymod.Version.ToString(), "https://forums.terraria.org/index.php?threads/.63670/", true, 1.1f * scale );
+			this.HeadUrl = new UIWebUrlBasic(
+				"Mod Libs v" + mymod.Version.ToString(),
+				"https://forums.terraria.org/index.php?threads/.111593/",
+				true,
+				1.1f * scale
+			);
 			this.HeadUrl.Left.Set( -( width - ( 114f * scale ) ), 1f );
 			this.HeadUrl.Top.Set( (4f + y) * scale, 0f );
 			this.HeadUrl.Recalculate();
