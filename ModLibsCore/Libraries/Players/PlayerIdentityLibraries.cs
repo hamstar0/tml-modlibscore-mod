@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
@@ -21,16 +23,13 @@ namespace ModLibsCore.Libraries.Players {
 			if( Main.netMode == NetmodeID.Server ) {
 				throw new ModLibsException( "No 'current' player on a server." );
 			}
+			if( Main.gameMenu ) {
+				throw new ModLibsException( "No 'current' player defined outside of the game." );
+			}
 
 			//
 
-			int plrFileHash = Main.ActivePlayerFileData.GetFileName().GetHashCode();
-			int plrNameHash = Main.LocalPlayer.name.GetHashCode();
-			//int activePlrCloudHashCode = Main.ActivePlayerFileData.IsCloudSave.GetHashCode();
-
-			int hash = Math.Abs( plrFileHash + plrNameHash );
-
-			return Main.clientUUID + "_" + hash;
+			return PlayerIdentityLibraries.GetUniqueId( Main.ActivePlayerFileData );
 		}
 
 		/// <summary>
@@ -42,19 +41,51 @@ namespace ModLibsCore.Libraries.Players {
 			var piLibs = ModContent.GetInstance<PlayerIdentityLibraries>();
 			string id;
 
-			if( !piLibs.PlayerIds.TryGetValue( player.whoAmI, out id ) ) {
-				if( Main.netMode != NetmodeID.Server && player.whoAmI == Main.myPlayer ) {
-					id = PlayerIdentityLibraries.GetUniqueId();
+			if( piLibs.PlayerIds.TryGetValue(player.whoAmI, out id) ) {
+				return id;
+			}
 
-					piLibs.PlayerIds[ player.whoAmI ] = id;
-				} else {
-					//throw new ModLibsException( "Could not find player " + player.name + "'s id." );
+			//
+
+			if( Main.netMode == NetmodeID.Server ) {
+				//throw new ModLibsException( "Could not find player " + player.name + "'s id." );
+				return null;
+			}
+
+			//
+
+			if( !Main.gameMenu ) {
+				if( player.whoAmI == Main.myPlayer ) {
+					id = PlayerIdentityLibraries.GetUniqueId();
+				}
+			} else {
+				PlayerFileData plrData = Main.PlayerList.FirstOrDefault( pd => pd.Name == player.name );
+				if( plrData == null ) {
 					return null;
 				}
+
+				id = PlayerIdentityLibraries.GetUniqueId( plrData );
 			}
+
+			piLibs.PlayerIds[ player.whoAmI ] = id;
+
 			return id;
 		}
 
+		////
+
+		private static string GetUniqueId( PlayerFileData plrData ) {
+			int plrFileHash = plrData.GetFileName().GetHashCode();
+			int plrNameHash = Main.LocalPlayer.name.GetHashCode();
+			//int activePlrCloudHashCode = Main.ActivePlayerFileData.IsCloudSave.GetHashCode();
+
+			int hash = Math.Abs( plrFileHash + plrNameHash );
+
+			return Main.clientUUID + "_" + hash;
+		}
+
+
+		////
 
 		/// <summary>
 		/// Gets an active player by a given unique id (if present).
