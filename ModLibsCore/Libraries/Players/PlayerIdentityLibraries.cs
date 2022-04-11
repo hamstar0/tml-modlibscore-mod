@@ -29,7 +29,7 @@ namespace ModLibsCore.Libraries.Players {
 
 			//
 
-			return PlayerIdentityLibraries.GetUniqueId( Main.ActivePlayerFileData );
+			return PlayerIdentityLibraries.GetUniqueId( Main.LocalPlayer );
 		}
 
 		/// <summary>
@@ -55,9 +55,11 @@ namespace ModLibsCore.Libraries.Players {
 			//
 
 			if( !Main.gameMenu ) {
-				if( player.whoAmI == Main.myPlayer ) {
-					id = PlayerIdentityLibraries.GetUniqueId();
+				if( player.whoAmI != Main.myPlayer ) {
+					return null;
 				}
+
+				id = PlayerIdentityLibraries.GetUniqueId( Main.ActivePlayerFileData );
 			} else {
 				PlayerFileData plrData = Main.PlayerList.FirstOrDefault( pd => pd.Name == player.name );
 				if( plrData == null ) {
@@ -67,7 +69,11 @@ namespace ModLibsCore.Libraries.Players {
 				id = PlayerIdentityLibraries.GetUniqueId( plrData );
 			}
 
+			//
+
 			piLibs.PlayerIds[ player.whoAmI ] = id;
+
+			//
 
 			return id;
 		}
@@ -76,7 +82,7 @@ namespace ModLibsCore.Libraries.Players {
 
 		private static string GetUniqueId( PlayerFileData plrData ) {
 			int plrFileHash = plrData.GetFileName().GetHashCode();
-			int plrNameHash = Main.LocalPlayer.name.GetHashCode();
+			int plrNameHash = plrData.Player.name.GetHashCode();
 			//int activePlrCloudHashCode = Main.ActivePlayerFileData.IsCloudSave.GetHashCode();
 
 			int hash = Math.Abs( plrFileHash + plrNameHash );
