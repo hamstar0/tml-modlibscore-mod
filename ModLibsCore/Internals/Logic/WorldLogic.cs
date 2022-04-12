@@ -30,22 +30,8 @@ namespace ModLibsCore.Internals.Logic {
 		////////////////
 
 		void ILoadable.OnModsLoad() {
-			void onLoadWorld( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
-				try {
-					orig.Invoke( loadFromCloud );
-				} catch( Exception e ) {
-					LogLibraries.Warn( "Error loading world: " + e.ToString() );
-				}
-				
-				WorldLogic.IsLoaded = true;	// I guess load it anyway?
-
-				LogLibraries.Alert( "World loaded." );
-			}
-
-			//
-
 			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
-			On.Terraria.IO.WorldFile.loadWorld += onLoadWorld;
+			On.Terraria.IO.WorldFile.loadWorld += this.OnLoadWorld_Inject;
 
 			LogLibraries.Alert( "World load hook loaded." );
 		}
@@ -56,6 +42,20 @@ namespace ModLibsCore.Internals.Logic {
 
 		void ILoadable.OnModsUnload() {
 			Player.Hooks.OnEnterWorld -= WorldLogic.OnEnterWorldClientOnly;
+		}
+
+		////
+
+		private void OnLoadWorld_Inject( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
+			try {
+				orig.Invoke( loadFromCloud );
+			} catch( Exception e ) {
+				LogLibraries.Warn( "Error loading world: " + e.ToString() );
+			}
+
+			WorldLogic.IsLoaded = true; // I guess load it anyway?
+
+			LogLibraries.Alert( "World loaded." );
 		}
 	}
 }
