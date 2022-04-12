@@ -68,9 +68,14 @@ namespace ModLibsCore.Libraries.Debug {
 				var stack = new StackTrace();
 				StackFrame frame = stack.GetFrame( stackFrameIdx );
 				MethodBase method = frame?.GetMethod();
-				string namespaceBase = method?.DeclaringType?.Namespace.Split('.')[0];
+				string methodName = method?.Name
+					?? "<Unknown Method>";
+				string declaringTypeName = method?.DeclaringType?.Name
+					?? "<Unknown Declaring Type>";
+				string namespaceBase = method?.DeclaringType?.Namespace.Split('.')[0]
+					?? "<Unknown Namespace>";
 
-				return $"{namespaceBase}.{method?.DeclaringType?.Name}.{method?.Name}";
+				return $"{namespaceBase}.{declaringTypeName}.{methodName}";
 			} catch {
 				return "Unknown Context";
 			}
