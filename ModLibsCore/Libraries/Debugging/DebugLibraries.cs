@@ -70,7 +70,7 @@ namespace ModLibsCore.Libraries.Debug {
 				MethodBase method = frame?.GetMethod();
 				string namespaceBase = method?.DeclaringType?.Namespace.Split('.')[0];
 
-				return $"{namespaceBase}.{method.DeclaringType.Name}.{method.Name}";
+				return $"{namespaceBase}.{method?.DeclaringType?.Name}.{method?.Name}";
 			} catch {
 				return "Unknown Context";
 			}
