@@ -142,7 +142,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="msg"></param>
 		public static void Alert( string msg = "" ) {
 			try {
-				string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
+				string fmtMsg = LogLibraries.FormatMessage( msg, 4 );
 
 				ModLibsCoreMod.Instance.Logger.Warn( fmtMsg );   //was Error(...)
 			} catch { }
@@ -155,7 +155,7 @@ namespace ModLibsCore.Libraries.Debug {
 		/// <param name="msg"></param>
 		public static void Warn( string msg = "" ) {
 			try {
-				string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
+				string fmtMsg = LogLibraries.FormatMessage( msg, 4 );
 
 				ModLibsCoreMod.Instance.Logger.Error( fmtMsg );	//was Fatal(...)
 			} catch { }

@@ -128,11 +128,11 @@ namespace ModLibsCore.Libraries.Debug {
 		////////////////
 
 		/// <summary>
-		/// Resets a given "once" log, alert, or warn messages.
+		/// Resets a given "once" log, alert, or warn message.
 		/// </summary>
 		/// <param name="msg"></param>
 		public static void ResetOnceMessage( string msg ) {
-			string fmtMsg = LogLibraries.FormatMessage( msg, 3 );
+			string fmtMsg = LogLibraries.FormatMessage( msg, 4 );
 			var logLibs = ModContent.GetInstance<LogLibraries>();
 
 			logLibs.UniqueMessages.Remove( "~" + msg );
