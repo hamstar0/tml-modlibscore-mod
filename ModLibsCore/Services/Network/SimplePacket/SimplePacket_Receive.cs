@@ -22,6 +22,8 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 				}
 			}
 
+			//
+
 			if( Main.netMode == NetmodeID.Server ) {
 				data.ReceiveOnServer( playerWho );
 			} else if( Main.netMode == NetmodeID.MultiplayerClient ) {

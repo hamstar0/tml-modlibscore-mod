@@ -39,6 +39,8 @@ namespace ModLibsCore.Classes.Loadable {
 							continue;
 						}
 
+						//
+
 						object obj = TmlLibraries.SafelyGetInstanceForType( classType );
 
 						if( obj is ILoadable ) {
@@ -46,7 +48,9 @@ namespace ModLibsCore.Classes.Loadable {
 						} else if( obj is ISequencedLoadable ) {
 							this.SequencedLoadables.Add( obj as ISequencedLoadable );
 						}
-					} catch { }
+					} catch {
+						LogLibraries.Warn( $"Error loading ILoadable {classType.Name}" );
+					}
 				}
 			}
 		}

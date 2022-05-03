@@ -1,6 +1,6 @@
-﻿using ModLibsCore.Classes.Errors;
-using System;
+﻿using System;
 using System.Diagnostics;
+using ModLibsCore.Classes.Errors;
 
 
 namespace ModLibsCore.Libraries.DotNET {
@@ -13,7 +13,7 @@ namespace ModLibsCore.Libraries.DotNET {
 		/// </summary>
 		/// <returns>The time span.</returns>
 		public static TimeSpan TimeStamp() {
-			return ( DateTime.UtcNow - new DateTime( 1970, 1, 1, 0, 0, 0 ) );
+			return ( DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0) );
 		}
 
 		/// <summary>
@@ -22,7 +22,7 @@ namespace ModLibsCore.Libraries.DotNET {
 		/// <returns>Seconds of the time span.</returns>
 		public static long TimeStampInSeconds() {
 			//return DateTime.UtcNow.Ticks / TimeSpan.TicksPerSecond;
-			TimeSpan span = ( DateTime.UtcNow - new DateTime( 1970, 1, 1, 0, 0, 0 ) );
+			TimeSpan span = ( DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0) );
 			return (long)span.TotalSeconds;
 		}
 		
