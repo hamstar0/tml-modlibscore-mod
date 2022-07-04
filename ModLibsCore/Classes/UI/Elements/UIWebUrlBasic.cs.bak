@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using ModLibsCore.Libraries.DotNET;
@@ -22,8 +21,8 @@ namespace ModLibsCore.Classes.UI.Elements {
 		////////////////
 
 		public static UIText GetLineElement( string label, float scale, bool large ) {
-			float underscoreLen = FontAssets.MouseText.Value.MeasureString("_").X;
-			float textLen = FontAssets.MouseText.Value.MeasureString( label ).X;
+			float underscoreLen = Main.fontMouseText.MeasureString("_").X;
+			float textLen = Main.fontMouseText.MeasureString( label ).X;
 			int lineLen = (int)Math.Max( 1f, Math.Round(textLen / (underscoreLen - 2)) );
 
 			return new UIText( new String('_', lineLen), scale, large );
@@ -132,14 +131,14 @@ namespace ModLibsCore.Classes.UI.Elements {
 
 		public void DrawHoverEffects( SpriteBatch sb ) {
 			if( !string.IsNullOrEmpty(this.Url) ) {
-				Vector2 dim = FontAssets.MouseText.Value.MeasureString( this.Url );
+				Vector2 dim = Main.fontMouseText.MeasureString( this.Url );
 				Vector2 pos = new Vector2( Main.mouseX + 10f, Main.mouseY + 10f );
 
 				if( ( pos.X + dim.X ) > Main.screenWidth ) {
 					pos.X = Main.screenWidth - dim.X;
 				}
 
-				Utils.DrawBorderStringFourWay( sb, FontAssets.MouseText.Value, this.Url, pos.X, pos.Y, Color.White, Color.Black, default(Vector2) );
+				Utils.DrawBorderStringFourWay( sb, Main.fontMouseText, this.Url, pos.X, pos.Y, Color.White, Color.Black, default(Vector2) );
 				//sb.DrawString( Main.fontMouseText, this.Url, UILibraries.GetHoverTipPosition( this.Url ), Color.White );
 			}
 		}

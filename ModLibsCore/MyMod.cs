@@ -4,13 +4,17 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
-using ModLibsCore.Internals.Logic;
 
 
 namespace ModLibsCore {
 	/// @private
 	partial class ModLibsCoreMod : Mod {
 		public static ModLibsCoreMod Instance { get; private set; }
+
+		////
+
+		public static string GithubUserName => "hamstar0";
+		public static string GithubProjectName => "tml-modlibscore-mod";
 
 
 
@@ -27,12 +31,6 @@ namespace ModLibsCore {
 		////////////////
 
 		private bool HasUnhandledExceptionLogger = false;
-
-
-
-		////////////////
-		
-		public bool MouseInterface { get; private set; }
 
 
 
@@ -137,30 +135,6 @@ namespace ModLibsCore {
 
 	return str;
 } );*/
-		}
-
-
-		////////////////
-
-		public override void PreSaveAndQuit() {
-			ModContent.GetInstance<LoadHooks>().PreSaveAndExit();
-		}
-
-
-		////////////////
-
-		public override void PostUpdateEverything() {
-			this.MouseInterface = Main.LocalPlayer.mouseInterface;
-		}
-
-
-		////////////////
-
-		public override void MidUpdateTimeWorld() {
-			var logic = ModContent.GetInstance<WorldLogic>();
-			if( logic != null ) {
-				logic.Update();
-			}
 		}
 
 

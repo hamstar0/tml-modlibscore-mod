@@ -21,7 +21,7 @@ namespace ModLibsCore.Commands {
 
 		/// @private
 		public override void Action( CommandCaller caller, string input, string[] args ) {
-			var mymod = (ModLibsCoreMod)this.Mod;
+			var mymod = (ModLibsCoreMod)this.mod;
 
 			if( args.Length == 0 ) {
 				caller.Reply( "No arguments supplied.", Color.Red );

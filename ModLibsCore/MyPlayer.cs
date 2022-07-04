@@ -13,16 +13,16 @@ using ModLibsCore.Services.Debug.DataDumper;
 namespace ModLibsCore {
 	/// @private
 	partial class ModLibsPlayer : ModPlayer {
-		public override bool CloneNewInstances => false;
+		protected override bool CloneNewInstances => false;
 
 
 
 		////////////////
 		
 		public override void PreUpdate() {
-			if( this.player.whoAmI != 255 ) {
+			if( this.Player.whoAmI != 255 ) {
 				ModContent.GetInstance<LoadLibraries>()
-					.UpdateUponPlayerPlaying( this.player );
+					.UpdateUponPlayerPlaying( this.Player );
 			}
 		}
 
@@ -31,7 +31,7 @@ namespace ModLibsCore {
 
 		public override void ProcessTriggers( TriggersSet triggersSet ) {
 //DataStore.Add( DebugLibraries.GetCurrentContext()+"_"+this.player.name+":"+this.player.whoAmI+"_A", 1 );
-			var mymod = (ModLibsCoreMod)this.mod;
+			var mymod = (ModLibsCoreMod)this.Mod;
 
 			try {
 				if( mymod.DataDumpHotkey != null && mymod.DataDumpHotkey.JustPressed ) {

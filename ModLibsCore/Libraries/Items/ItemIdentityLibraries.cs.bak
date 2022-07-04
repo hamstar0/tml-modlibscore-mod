@@ -23,7 +23,7 @@ namespace ModLibsCore.Libraries.Items {
 			}
 
 			var modItem = ItemLoader.GetItem( itemType );
-			return Tuple.Create( modItem.Mod.Name, modItem.Name );
+			return Tuple.Create( modItem.mod.Name, modItem.Name );
 		}
 
 
@@ -92,11 +92,11 @@ namespace ModLibsCore.Libraries.Items {
 				//hash += ("newAndShiny"+item.newAndShiny).GetHashCode() * Pow();	//?
 				hash += ( "reuseDelay" + item.reuseDelay ).GetHashCode() * Pow();
 				hash += ( "sentry" + item.sentry ).GetHashCode() * Pow();
-				hash += ( "summon" + item.CountsAsClass(DamageClass.Summon) ).GetHashCode() * Pow();
-				hash += ( "thrown" + item.CountsAsClass(DamageClass.Throwing) ).GetHashCode() * Pow();
-				hash += ( "ranged" + item.CountsAsClass(DamageClass.Ranged) ).GetHashCode() * Pow();
-				hash += ( "magic" + item.CountsAsClass(DamageClass.Magic) ).GetHashCode() * Pow();
-				hash += ( "melee" + item.CountsAsClass(DamageClass.Melee) ).GetHashCode() * Pow();
+				hash += ( "summon" + item.summon ).GetHashCode() * Pow();
+				hash += ( "thrown" + item.thrown ).GetHashCode() * Pow();
+				hash += ( "ranged" + item.ranged ).GetHashCode() * Pow();
+				hash += ( "magic" + item.magic ).GetHashCode() * Pow();
+				hash += ( "melee" + item.melee ).GetHashCode() * Pow();
 				hash += ( "crit" + item.crit ).GetHashCode() * Pow();
 				hash += ( "DD2Summon" + item.DD2Summon ).GetHashCode() * Pow();
 				hash += ( "shopCustomPrice" + ( item.shopCustomPrice == null ? -1 : (int)item.shopCustomPrice ) ).GetHashCode() * Pow();
