@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -17,11 +17,9 @@ namespace ModLibsCore.Services.DataStore {
 
 		internal DataStore() { }
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

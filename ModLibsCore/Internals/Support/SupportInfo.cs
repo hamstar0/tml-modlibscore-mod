@@ -4,11 +4,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Classes.UI.Elements;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
-
+using Terraria.ModLoader;
 
 namespace ModLibsCore.Internals.Menus.Support {
 	/// @private
@@ -86,9 +85,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 			Main.OnPostDraw += SupportInfoDisplay._Draw;
 		}
 
-		void ILoadable.OnModsLoad() { }
-
-		void ILoadable.OnPostModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			// This is deferred to here because of LoadHooks load order (ironically)
 			LoadHooks.AddModUnloadHook( () => {
 				try {
@@ -97,7 +94,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 			} );
 		}
 
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

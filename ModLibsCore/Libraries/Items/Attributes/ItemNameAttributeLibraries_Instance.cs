@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.DataStructures;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Libraries.Items.Attributes {
@@ -18,12 +17,9 @@ namespace ModLibsCore.Libraries.Items.Attributes {
 
 		internal ItemNameAttributeLibraries() { }
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
-
+		void ILoadable.Unload() { }
 
 
 		////////////////

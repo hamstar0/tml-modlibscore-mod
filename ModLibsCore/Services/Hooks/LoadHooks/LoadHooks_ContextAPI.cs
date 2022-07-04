@@ -1,6 +1,5 @@
 ﻿using System;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -193,6 +192,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 			if( loadHooks.WorldUnloadHookConditionsMet ) {
 				action();
 			}
+
 			lock( LoadHooks.WorldUnloadEachHookLock ) {
 				loadHooks.WorldUnloadEachHooks.Add( action );
 			}

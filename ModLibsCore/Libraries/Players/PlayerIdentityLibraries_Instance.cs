@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
@@ -15,14 +15,12 @@ namespace ModLibsCore.Libraries.Players {
 
 		////////////////
 		
-		void ILoadable.OnModsLoad() { }
-
-		void ILoadable.OnPostModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			LoadHooks.AddPostWorldUnloadEachHook( () => {
 				this.PlayerIds = new Dictionary<int, string>();
 			} );
 		}
 
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Capture;
 using Terraria.ID;
 using Terraria.IO;
@@ -35,8 +36,8 @@ namespace ModLibsCore.Libraries.TModLoader {
 				SocialAPI.Shutdown();
 				Main.instance.Exit();
 			} else {
-				if( save ) { WorldFile.saveWorld(); }
-				Netplay.disconnect = true;
+				if( save ) { WorldFile.SaveWorld(); }
+				Netplay.Disconnect = true;
 				if( Main.netMode == NetmodeID.MultiplayerClient ) { SocialAPI.Shutdown(); }
 				Environment.Exit( 0 );
 			}
@@ -54,22 +55,31 @@ namespace ModLibsCore.Libraries.TModLoader {
 				WorldGen.SaveAndQuit( (Action)null );
 			} else {
 				ThreadPool.QueueUserWorkItem( new WaitCallback( delegate ( object state ) {
-					Main.invasionProgress = 0;
+					Main.invasionProgress = -1;	//0
 					Main.invasionProgressDisplayLeft = 0;
 					Main.invasionProgressAlpha = 0f;
+					Main.invasionProgressIcon = 0;
 
-					Main.StopTrackedSounds();
+					Main.menuMode = 10;
+					Main.gameMenu = true;
+
+					SoundEngine.StopTrackedSounds();
 					CaptureInterface.ResetFocus();
-					Main.ActivePlayerFileData.StopPlayTimer();
+					Main.ActivePlayerFileData?.StopPlayTimer();
 
 					Main.gameMenu = true;
-					if( Main.netMode != NetmodeID.SinglePlayer ) {
-						Netplay.disconnect = true;
+
+					if (Main.netMode == NetmodeID.SinglePlayer) {
+						Main.GoToWorldSelect();
+						Main.player[ Main.myPlayer ].position = default;
+					} else {
+						Netplay.Disconnect = true;
 						Main.netMode = NetmodeID.SinglePlayer;
 					}
 
 					Main.fastForwardTime = false;
-					Main.UpdateSundial();
+					//Main.UpdateSundial();
+					Main.UpdateTimeRate();
 
 					Main.menuMode = 0;
 				} ), (Action)null );

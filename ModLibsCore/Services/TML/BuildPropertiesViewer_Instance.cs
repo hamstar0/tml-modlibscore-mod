@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Reflection;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Services.TML {
@@ -123,11 +122,9 @@ namespace ModLibsCore.Services.TML {
 			this.BuildProps = buildProps;
 		}
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

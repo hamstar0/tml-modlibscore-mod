@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Services.Hooks.NPCHooks {
@@ -45,14 +45,12 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 
 		////////////////
 		
-		void ILoadable.OnModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			On.Terraria.NPC.SpawnNPC += this.NPC_SpawnNPC;
 			On.Terraria.NPC.NewNPC += this.NPC_NewNPC;
 		}
 
-		void ILoadable.OnModsUnload() { }
-
-		void ILoadable.OnPostModsLoad() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////
@@ -67,6 +65,7 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 
 		private int NPC_NewNPC(
 					On.Terraria.NPC.orig_NewNPC orig,
+					IEntitySource src,
 					int X,
 					int Y,
 					int Type,
@@ -76,7 +75,7 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 					float ai2,
 					float ai3,
 					int Target ) {
-			int npcWho = orig.Invoke( X, Y, Type, Start, ai0, ai1, ai2, ai3, Target );
+			int npcWho = orig.Invoke( src, X, Y, Type, Start, ai0, ai1, ai2, ai3, Target );
 
 			if( this.IsSpawningNPC ) {
 				foreach( OnSpawnNPCHook hook in this.OnSpawnNPCHooks ) {

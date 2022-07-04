@@ -1,6 +1,6 @@
 ﻿using System;
 using Terraria;
-using ModLibsCore.Classes.Loadable;
+using Terraria.ModLoader;
 
 
 namespace ModLibsCore.Services.ProjectileOwner {

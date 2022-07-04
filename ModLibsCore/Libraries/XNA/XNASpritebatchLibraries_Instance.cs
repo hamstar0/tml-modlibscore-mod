@@ -3,9 +3,9 @@ using System.Reflection;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Reflection;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Libraries.XNA {
@@ -34,10 +34,8 @@ namespace ModLibsCore.Libraries.XNA {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 	}
 }

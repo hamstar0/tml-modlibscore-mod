@@ -4,8 +4,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using NetSerializer;
 using Terraria;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Reflection;
 using ModLibsCore.Libraries.DotNET.Serialization;
@@ -24,7 +24,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			IList<Type> payloadTypes = ReflectionLibraries
 				.GetAllAvailableSubTypesFromMods( typeof(SimplePacketPayload) )
 				.OrderBy( t => t.Namespace + "." + t.Name )
@@ -47,9 +47,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 			}
 		}
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////

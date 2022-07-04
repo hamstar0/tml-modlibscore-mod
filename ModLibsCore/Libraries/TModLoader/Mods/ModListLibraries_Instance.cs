@@ -4,7 +4,6 @@ using System.Linq;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Extensions;
 using ModLibsCore.Libraries.DotNET.Reflection;
@@ -21,11 +20,9 @@ namespace ModLibsCore.Libraries.TModLoader.Mods {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

@@ -1,5 +1,4 @@
-﻿using ModLibsCore.Classes.Loadable;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Terraria.GameInput;
 using Terraria.ModLoader;
@@ -23,11 +22,9 @@ namespace ModLibsCore.Services.Debug.CustomHotkeys {
 			this.Key2 = KeybindLoader.RegisterKeybind(ModLibsCoreMod.Instance, "Custom Hotkey 2", "L" );
 		}
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 		////////////////
 

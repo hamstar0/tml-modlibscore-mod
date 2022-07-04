@@ -38,7 +38,7 @@ namespace ModLibsCore.Libraries.DotNET.Encoding {
 			using( var password = new Rfc2898DeriveBytes( passPhrase, saltStringBytes, SimpleStringCipher.DerivationIterations ) ) {
 				byte[] keyBytes = password.GetBytes( Keysize / 8 );
 
-				using( var symmetricKey = new RijndaelManaged() ) {
+				using( var symmetricKey = Aes.Create() ) {
 					symmetricKey.BlockSize = 256;
 					symmetricKey.Mode = CipherMode.CBC;
 					symmetricKey.Padding = PaddingMode.PKCS7;
@@ -84,7 +84,7 @@ namespace ModLibsCore.Libraries.DotNET.Encoding {
 			using( var password = new Rfc2898DeriveBytes( passPhrase, saltStringBytes, SimpleStringCipher.DerivationIterations ) ) {
 				byte[] keyBytes = password.GetBytes( Keysize / 8 );
 
-				using( var symmetricKey = new RijndaelManaged() ) {
+				using( var symmetricKey = Aes.Create() ) {
 					symmetricKey.BlockSize = 256;
 					symmetricKey.Mode = CipherMode.CBC;
 					symmetricKey.Padding = PaddingMode.PKCS7;
@@ -110,10 +110,12 @@ namespace ModLibsCore.Libraries.DotNET.Encoding {
 
 		private static byte[] Generate256BitsOfRandomEntropy() {
 			var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
-			using( var rngCsp = new RNGCryptoServiceProvider() ) {
+
+			using( var rngCsp = RandomNumberGenerator.Create() ) {
 				// Fill the array with cryptographically secure random bytes.
 				rngCsp.GetBytes( randomBytes );
 			}
+
 			return randomBytes;
 		}
 	}

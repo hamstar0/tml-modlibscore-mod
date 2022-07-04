@@ -29,7 +29,7 @@ namespace ModLibsCore.Services.Timers {
 	/// Provides a way to delay the onset of a given action by a set amount of ticks. As a secondary function,
 	/// MainOnTickGet() provides a way to use Main.OnTick for running background tasks at 60FPS.
 	/// </summary>
-	public partial class Timers : ISequencedLoadable {
+	public partial class Timers : ILoadable {
 		private static object MyLock = new object();
 
 
@@ -49,55 +49,55 @@ namespace ModLibsCore.Services.Timers {
 
 		internal Timers() { }
 
-		bool ISequencedLoadable.OnModsLoad( ISet<object> alreadyLoaded ) {
-			if( !alreadyLoaded.Any(o=>o.GetType() == typeof(LoadHooks)) ) {
-				return false;
+		void ILoadable.Load(Mod mod) {
+			ModContent.GetInstance<ModLibsCoreModSystem>()
+				.TickUpdates.Add( Timers._ConditionalLoad );
+		}
+
+
+		private static void _ConditionalLoad() {
+			if( ContentInstance<LoadHooks>.Instance == null ) {
+				return;
 			}
 
-			this.OnTickGet = Timers.MainOnTickGet();
-			Main.OnTick += Timers._Update;
-//TICKSTART = DateTime.Now.Ticks;
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+
+			modsys.TickUpdates.Remove( Timers._ConditionalLoad );
+
+			modsys.TickUpdates.Add( Timers._Update );
+
+			//
+
+			var timers = ModContent.GetInstance<Timers>();
+
+			timers.OnTickGet = Timers.MainOnTickGet();
+
+			//
 
 			LoadHooks.AddWorldUnloadEachHook( () => {
-				foreach( (string timerName, TimerEntry timer) in this.Running ) {
+				var timers = ModContent.GetInstance<Timers>();
+
+				foreach ( (string timerName, TimerEntry timer) in timers.Running ) {
 					LogLibraries.Log( "Aborted timer " + timerName );
 				}
 
-				this.Running.Clear();
-				this.Elapsed.Clear();
-				this.Expired.Clear();
+				timers.Running.Clear();
+				timers.Elapsed.Clear();
+				timers.Expired.Clear();
 			} );
-
-			return true;
 		}
 
-		bool ISequencedLoadable.OnPostModsLoad( ISet<object> alreadyPostLoaded ) {
-			return true;
-		}
-
-		bool ISequencedLoadable.OnModsUnload( ISet<object> alreadyUnloaded ) {
-			try {
-				Main.OnTick -= Timers._Update;
-			} catch { }
-
-			return true;
+		void ILoadable.Unload() {
+			ModContent.GetInstance<ModLibsCoreModSystem>()
+				.TickUpdates.Remove( Timers._Update );
 		}
 
 
 		////////////////
 
-		//private static long TICKSTART=0;
-		//private static int TICKCOUNT=0;
 		private static void _Update() {  // <- Just in case references are doing something funky...
 			var timers = ModContent.GetInstance<Timers>();
 			if( timers?.OnTickGet() ?? false ) {
-//long NOW = DateTime.Now.Ticks;
-//TICKCOUNT++;
-//if( (NOW - TICKSTART) > 10000000 ) { 
-//	DebugLibraries.Print("blah", ""+TICKCOUNT,20);
-//	TICKSTART = NOW;
-//	TICKCOUNT = 0;
-//}
 				timers.Update();
 			}
 		}

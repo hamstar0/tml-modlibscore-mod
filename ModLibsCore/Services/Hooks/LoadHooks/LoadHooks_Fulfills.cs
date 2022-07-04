@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Terraria;
-using ModLibsCore.Classes.Loadable;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 
 

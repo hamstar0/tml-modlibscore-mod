@@ -1,5 +1,4 @@
 ﻿using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.TModLoader;
 using ModLibsCore.Services.Hooks.LoadHooks;
 

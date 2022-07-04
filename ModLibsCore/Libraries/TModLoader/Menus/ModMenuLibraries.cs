@@ -119,7 +119,7 @@ namespace ModLibsCore.Libraries.TModLoader.Menus {
 			}
 
 			if( localmod != null ) {
-				return ModMenuLibraries.GetLocalMod( localmod ).name;
+				return ModMenuLibraries.GetLocalMod( localmod ).Name;
 			} else {
 				if( prevUi?.GetType().Name == "UIModBrowser" ) {
 					return ModMenuLibraries.GetSelectedModBrowserModName( prevUi );

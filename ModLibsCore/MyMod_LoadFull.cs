@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.Items.Attributes;
 using ModLibsCore.Libraries.NPCs.Attributes;
@@ -18,9 +17,6 @@ namespace ModLibsCore {
 
 		////////////////
 
-		// Classes
-		internal LoadableManager Loadables;
-
 
 		public ModKeybind DataDumpHotkey = null;
 
@@ -30,9 +26,6 @@ namespace ModLibsCore {
 
 		private void LoadFull() {
 			this.LoadExceptionBehavior();
-
-			this.Loadables.RegisterLoadables();
-			this.Loadables.OnModsLoad();
 
 			this.LoadDebug();
 
@@ -54,8 +47,6 @@ namespace ModLibsCore {
 
 		private void UnloadFull() {
 			try {
-				this.Loadables.OnModsUnload();
-
 				this.UnloadDebug();
 			} catch( Exception e ) {
 				this.Logger.Warn( "!ModLibs.ModLibsMod.UnloadFull - " + e.ToString() );	//was Error(...)
@@ -67,8 +58,6 @@ namespace ModLibsCore {
 					AppDomain.CurrentDomain.UnhandledException -= ModLibsCoreMod.UnhandledLogger;
 				}
 			} catch { }
-
-			this.Loadables = null;
 		}
 	}
 }

@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.DataStructures;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Libraries.Projectiles.Attributes {
@@ -27,11 +26,9 @@ namespace ModLibsCore.Libraries.Projectiles.Attributes {
 
 		internal ProjectileNameAttributeLibraries() { }
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

@@ -86,7 +86,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 		////////////////
 
-		/// <summary>
+		/*/// <summary>
 		/// Provides an alternative to `Player.GetModPlayer(...)` to ensure the given player is properly loaded.
 		/// Addresses some confusing types of errors.
 		/// </summary>
@@ -97,7 +97,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 		public static ModPlayer SafelyGetModPlayer( Player player, Mod mod, string modPlayerName ) {    // Solely for Main.LocalPlayer?
 			TmlLibraries.ForceSetupPlayer( player );
 			return player.GetModPlayer( mod, modPlayerName );
-		}
+		}*/
 
 		/// <summary>
 		/// Provides an alternative to `Player.GetModPlayer(...)` to ensure the given player is properly loaded. Addresses some

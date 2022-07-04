@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -30,11 +29,9 @@ namespace ModLibsCore.Libraries.DotNET.Reflection {
 		
 		internal ReflectionLibraries() { }
 
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 
-		void ILoadable.OnPostModsLoad() { }
-
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

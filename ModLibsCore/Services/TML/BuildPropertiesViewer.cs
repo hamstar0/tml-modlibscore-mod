@@ -50,13 +50,13 @@ namespace ModLibsCore.Services.TML {
 		public static BuildPropertiesViewer GetBuildPropertiesForModFile( TmodFile modfile ) {
 			Type buildPropType = BuildPropertiesViewer.GetBuildPropertiesClassType();
 			if( buildPropType == null ) {
-				LogLibraries.Alert( "Could not get `Type` of build properties classes (eventually to get "+modfile.name+" props)" );
+				LogLibraries.Alert( $"Could not get `Type` of build properties classes (eventually to get {modfile.Name} props)" );
 				return (BuildPropertiesViewer)null;
 			}
 
 			MethodInfo method = buildPropType.GetMethod( "ReadModFile", BindingFlags.NonPublic | BindingFlags.Static );
 			if( method == null ) {
-				LogLibraries.Alert( "Could not get ReadModFile method of build properties class for " + modfile.name );
+				LogLibraries.Alert( $"Could not get ReadModFile method of build properties class for {modfile.Name}" );
 				return (BuildPropertiesViewer)null;
 			}
 

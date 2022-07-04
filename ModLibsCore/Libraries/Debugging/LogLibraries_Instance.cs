@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
 
@@ -21,15 +20,13 @@ namespace ModLibsCore.Libraries.Debug {
 
 		internal LogLibraries() { }
 
-		void ILoadable.OnModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			this.Reset();
-		}
 
-		void ILoadable.OnPostModsLoad() {
 			LoadHooks.AddWorldUnloadEachHook( this.OnWorldExit );
 		}
 
-		void ILoadable.OnModsUnload() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

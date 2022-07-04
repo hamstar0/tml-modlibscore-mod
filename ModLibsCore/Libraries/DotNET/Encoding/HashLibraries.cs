@@ -13,7 +13,7 @@ namespace ModLibsCore.Libraries.DotNET.Encoding {
 		/// <param name="str"></param>
 		/// <returns></returns>
 		public static string ComputeSHA256Hash( string str ) {
-			var crypt = new SHA256Managed();
+			var crypt = SHA256.Create();
 			byte[] hashBytes = crypt.ComputeHash( System.Text.Encoding.UTF8.GetBytes( str ) );
 			string hash = Convert.ToBase64String( hashBytes );
 			

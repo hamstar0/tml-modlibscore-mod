@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using ModLibsCore.Classes.Loadable;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -15,11 +15,9 @@ namespace ModLibsCore.Services.Hooks.Draw {
 		////////////////
 
 		/// @ private
-		void ILoadable.OnModsLoad() { }
+		void ILoadable.Load( Mod mod ) { }
 		/// @ private
-		void ILoadable.OnModsUnload() { }
-		/// @ private
-		void ILoadable.OnPostModsLoad() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////

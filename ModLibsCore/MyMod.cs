@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
@@ -42,8 +41,6 @@ namespace ModLibsCore {
 			this.HasSetupContent = false;
 			this.HasAddedRecipeGroups = false;
 			this.HasAddedRecipes = false;
-
-			this.Loadables = new LoadableManager();
 		}
 
 
@@ -106,8 +103,6 @@ namespace ModLibsCore {
 			//
 
 			Services.Timers.Timers.SetTimer( 1, true, () => {
-				this.Loadables.OnPostModsLoad();
-
 				ModContent.GetInstance<LoadHooks>().FulfillPostModLoadHooks();
 				return false;
 			} );

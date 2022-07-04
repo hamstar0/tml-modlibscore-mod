@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using ModLibsCore.Classes.Loadable;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-
+using Terraria.DataStructures;
 
 namespace ModLibsCore.Services.ProjectileOwner {
 	/// <summary>
@@ -20,24 +20,23 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() {
-			On.Terraria.Projectile.NewProjectile_float_float_float_float_int_int_float_int_float_float +=
-				this.Projectile_NewProjectile_float_float_float_float_int_int_float_int_float_float;
+		void ILoadable.Load( Mod mod ) {
+			On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float +=
+				this.Projectile_NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float;
 			On.Terraria.MessageBuffer.GetData += this.MessageBuffer_GetData;
 			On.Terraria.Player.ItemCheck += this.Player_ItemCheck;
 			On.Terraria.NPC.AI += this.NPC_AI;
 			On.Terraria.Projectile.AI += this.Projectile_AI;
 		}
 
-		void ILoadable.OnModsUnload() { }
-
-		void ILoadable.OnPostModsLoad() { }
+		void ILoadable.Unload() { }
 
 
 		////////////////
 		
-		private int Projectile_NewProjectile_float_float_float_float_int_int_float_int_float_float(
-					On.Terraria.Projectile.orig_NewProjectile_float_float_float_float_int_int_float_int_float_float orig,
+		private int Projectile_NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float(
+					On.Terraria.Projectile.orig_NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float orig,
+					IEntitySource src,
 					float X,
 					float Y,
 					float SpeedX,
@@ -48,7 +47,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 					int Owner,
 					float ai0,
 					float ai1 ) {
-			int projIdx = orig.Invoke( X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1 );
+			int projIdx = orig.Invoke( src, X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1 );
 
 			Projectile proj = Main.projectile[ projIdx ];
 

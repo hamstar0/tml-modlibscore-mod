@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
@@ -12,7 +13,9 @@ namespace ModLibsCore {
 	partial class ModLibsCoreModSystem : ModSystem {
 		public bool MouseInterface { get; private set; }
 
-		internal IList<Action> TickUpdates;
+		////
+
+		internal IList<Action> TickUpdates = new List<Action>();
 		
 
 
@@ -38,7 +41,7 @@ namespace ModLibsCore {
 				logic.Update();
 			}
 
-			foreach( Action action in this.TickUpdates ) {
+			foreach( Action action in this.TickUpdates.ToArray() ) {
 				action();
 			}
 		}

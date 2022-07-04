@@ -13,8 +13,8 @@ namespace ModLibsCore.Services.Timers {
 	/// </summary>
 	public partial class Timers {
 		/// <summary>
-		/// Returns a delegate that returns true when at least 1/60th second (1 60FPS 'tick') has fully elapsed since
-		/// the last time the delegate returned true (seems necessary?).
+		/// Returns a delegate that returns true when at least 1/60th second (1 60FPS 'tick') has fully
+		/// elapsed since the last time the delegate returned true (seemed necessary?).
 		/// </summary>
 		/// <returns></returns>
 		public static Func<bool> MainOnTickGet() {

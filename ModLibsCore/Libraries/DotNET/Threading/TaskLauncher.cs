@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Timers;
 
@@ -48,9 +47,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() { }
-
-		void ILoadable.OnPostModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			Timers.SetTimer( 1, false, () => {
 				foreach( Task task in this.Tasks.ToArray() ) {
 					if( task == null || task.IsCompleted || task.IsCanceled ) {
@@ -62,7 +59,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 			} );
 		}
 
-		void ILoadable.OnModsUnload() {
+		void ILoadable.Unload() {
 			this.CancelTokenSrc.Cancel();
 
 			Task[] tasks = this.Tasks.Where(t=>t!=null).ToArray();

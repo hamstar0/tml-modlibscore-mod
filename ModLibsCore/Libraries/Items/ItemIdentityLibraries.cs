@@ -34,7 +34,8 @@ namespace ModLibsCore.Libraries.Items {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <param name="noContext">Omits `owner`, `netID`, and `favorited` fields.</param>
-		/// <param name="minimal">Uses only the item's unique ID (`GetUniqueKey(...)`), `prefix`, and `stack`.</param>
+		/// <param name="minimal">Uses only the item's unique ID (`ItemID.Search.GetName(...)`), `prefix`,
+		/// and `stack`.</param>
 		/// <returns></returns>
 		public static int GetVanillaSnapshotHash( Item item, bool noContext, bool minimal ) {
 			int pow = 1;
@@ -48,7 +49,7 @@ namespace ModLibsCore.Libraries.Items {
 
 			int hash = Entities.EntityIdentityLibraries.GetVanillaSnapshotHash( item, noContext );
 
-			string id = ItemID.GetUniqueKey( item );
+			string id = ItemID.Search.GetName( item.type );
 
 			hash += ( "id" + id ).GetHashCode() * Pow();
 			hash += ( "prefix" + item.prefix ).GetHashCode() * Pow();
@@ -130,7 +131,7 @@ namespace ModLibsCore.Libraries.Items {
 				hash += ( "dye" + item.dye ).GetHashCode() * Pow();
 				hash += ( "wornArmor" + item.wornArmor ).GetHashCode() * Pow();
 				hash += ( "tileWand" + item.tileWand ).GetHashCode() * Pow();
-				hash += ( "spawnTime" + item.spawnTime ).GetHashCode() * Pow();
+				hash += ( "timeSinceItemSpawned" + item.timeSinceItemSpawned ).GetHashCode() * Pow();
 				//hash += ("isBeingGrabbed"+item.isBeingGrabbed).GetHashCode()* Pow();
 				//hash += ("beingGrabbed"+item.beingGrabbed).GetHashCode()* Pow();
 				//hash += ("noGrabDelay"+item.noGrabDelay).GetHashCode()* Pow();

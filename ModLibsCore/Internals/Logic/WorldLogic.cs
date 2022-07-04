@@ -1,7 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
-using ModLibsCore.Classes.Loadable;
+using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 
@@ -29,24 +29,22 @@ namespace ModLibsCore.Internals.Logic {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
-			On.Terraria.IO.WorldFile.loadWorld += this.OnLoadWorld_Inject;
+			On.Terraria.IO.WorldFile.LoadWorld += this.OnLoadWorld_Inject;
 
 			LogLibraries.Alert( "World load hook loaded." );
-		}
 
-		void ILoadable.OnPostModsLoad() {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 
-		void ILoadable.OnModsUnload() {
+		void ILoadable.Unload() {
 			Player.Hooks.OnEnterWorld -= WorldLogic.OnEnterWorldClientOnly;
 		}
 
 		////
 
-		private void OnLoadWorld_Inject( On.Terraria.IO.WorldFile.orig_loadWorld orig, bool loadFromCloud ) {
+		private void OnLoadWorld_Inject( On.Terraria.IO.WorldFile.orig_LoadWorld orig, bool loadFromCloud ) {
 			try {
 				orig.Invoke( loadFromCloud );
 			} catch( Exception e ) {
