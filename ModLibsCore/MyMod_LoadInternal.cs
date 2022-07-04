@@ -32,7 +32,7 @@ namespace ModLibsCore {
 
 
 		private void LoadHotkeys() {
-			this.DataDumpHotkey = this.RegisterHotKey( "Dump Debug Data", "P" );
+			this.DataDumpHotkey = KeybindLoader.RegisterKeybind(this, "Dump Debug Data", "P" );
 		}
 
 

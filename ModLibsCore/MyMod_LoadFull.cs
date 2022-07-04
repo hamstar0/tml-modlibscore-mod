@@ -22,7 +22,7 @@ namespace ModLibsCore {
 		internal LoadableManager Loadables;
 
 
-		public ModHotKey DataDumpHotkey = null;
+		public ModKeybind DataDumpHotkey = null;
 
 
 

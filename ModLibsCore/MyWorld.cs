@@ -10,7 +10,7 @@ using ModLibsCore.Services.Hooks.Draw;
 
 namespace ModLibsCore {
 	/// @private
-	class ModLibsWorld : ModWorld {
+	class ModLibsWorld : ModSystem {
 		public override void PostDrawTiles() {
 			//DataStore.Add( DebugLibraries.GetCurrentContext()+"_A", 1 );
 			Player player = Main.LocalPlayer;

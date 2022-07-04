@@ -73,7 +73,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 			ModPlayer[] modPlayers;
 
 			if( !ReflectionLibraries.Get(player, "modPlayers", out modPlayers) || modPlayers.Length == 0 ) {
-				MethodInfo setupPlayerMethod = typeof( PlayerLoader )
+				MethodInfo setupPlayerMethod = typeof( PlayerHooks )
 					.GetMethod( "SetupPlayer", ReflectionLibraries.MostAccess );
 
 				if( setupPlayerMethod == null ) {

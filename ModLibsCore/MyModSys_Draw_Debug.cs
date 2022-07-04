@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
@@ -10,7 +11,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore {
 	/// @private
-	partial class ModLibsCoreMod : Mod {
+	partial class ModLibsCoreModSystem : ModSystem {
 		private void DrawDebug( SpriteBatch sb ) {
 			try {
 				this.DrawMouseData( sb );
@@ -39,13 +40,13 @@ namespace ModLibsCore {
 
 			if( tile != null ) {
 				tileData += " - ";
-				if( tile.active() ) {
-					tileData += TileID.GetUniqueKey( tile.type ) + " " + tile.frameX + ":"+tile.frameY;
+				if( tile.HasTile ) {
+					tileData += TileID.Search.GetName(tile.TileType)+" "+tile.TileFrameX+":"+tile.TileFrameY;
 				} else {
 					tileData += "Air";
 				}
-				if( tile.wall > 0 ) {
-					tileData += ", wall: " + WallID.GetUniqueKey( tile.wall ) + " " + tile.wallFrameX()+":"+tile.wallFrameY();
+				if( tile.WallType > 0 ) {
+					tileData += ", wall: "+WallID.Search.GetName(tile.WallType)+" "+tile.WallFrameX+":"+tile.WallFrameY;
 				} else {
 					tileData += ", wall: None";
 				}
@@ -80,7 +81,7 @@ namespace ModLibsCore {
 			for( int i=0; i<data.Count; i++ ) {
 				Utils.DrawBorderStringFourWay(
 					sb,
-					Main.fontMouseText,
+					FontAssets.MouseText.Value,
 					data[i],
 					Main.mouseX + 24,
 					Main.mouseY + (i * 16) + 36,

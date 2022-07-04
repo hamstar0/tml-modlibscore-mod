@@ -1,5 +1,5 @@
 displayName = Mod Libs - Core
 author = hamstar
-version = 1.5.4.2
+version = 2.0.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://forums.terraria.org/index.php?threads/mod-libs.111593/

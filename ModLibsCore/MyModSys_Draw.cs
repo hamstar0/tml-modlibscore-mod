@@ -9,8 +9,8 @@ using ModLibsCore.Libraries.TModLoader;
 
 namespace ModLibsCore {
 	/// @private
-	partial class ModLibsCoreMod : Mod {
-		public override void ModifyInterfaceLayers( List<GameInterfaceLayer> layers ) {
+	partial class ModLibsCoreModSystem : ModSystem {
+		public override void ModifyInterfaceLayers( List<GameInterfaceLayer> layers )/* tModPorter Note: Removed. Use ModSystem.ModifyInterfaceLayers */ {
 			int idx = layers.FindIndex( layer => layer.Name.Equals("Vanilla: Mouse Text") );
 			if( idx == -1 ) { return; }
 

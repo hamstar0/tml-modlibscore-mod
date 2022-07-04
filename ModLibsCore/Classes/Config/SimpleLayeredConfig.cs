@@ -8,8 +8,8 @@ using ModLibsCore.Libraries.DotNET.Reflection;
 
 namespace ModLibsCore.Classes.Config {
 	/// <summary>
-	/// Allows programmatically storing config field/property values that are not saved to the .json file, and do not affect existing user
-	/// settings. In short, you can now use your configs for data API use.
+	/// Allows programmatically storing config field/property values that are not saved to the .json file, and
+	/// do not affect existing user settings. In short, you can now use your configs for data API use.
 	/// </summary>
 	abstract public class SimpleLayeredConfig : ModConfig {
 		private IDictionary<string, object> Overrides = new ConcurrentDictionary<string, object>();

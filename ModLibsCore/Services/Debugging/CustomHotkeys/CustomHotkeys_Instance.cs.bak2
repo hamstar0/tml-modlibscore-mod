@@ -19,8 +19,8 @@ namespace ModLibsCore.Services.Debug.CustomHotkeys {
 		////////////////
 
 		internal CustomHotkeys() {
-			this.Key1 = KeybindLoader.RegisterKeybind(ModLibsCoreMod.Instance, "Custom Hotkey 1", "K" );
-			this.Key2 = KeybindLoader.RegisterKeybind(ModLibsCoreMod.Instance, "Custom Hotkey 2", "L" );
+			this.Key1 = ModLibsCoreMod.Instance.RegisterHotKey( "Custom Hotkey 1", "K" );
+			this.Key2 = ModLibsCoreMod.Instance.RegisterHotKey( "Custom Hotkey 2", "L" );
 		}
 
 		void ILoadable.OnModsLoad() { }
