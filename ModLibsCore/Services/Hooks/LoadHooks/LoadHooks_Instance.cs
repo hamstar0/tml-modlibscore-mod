@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
-using ModLibsCore.Classes.Loadable;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
@@ -39,26 +38,26 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 		////////////////
 
-		void ILoadable.OnModsLoad() {
+		void ILoadable.Load( Mod mod ) {
 			this.OnTickGet = Timers.Timers.MainOnTickGet();
 
-			Main.OnTick += LoadHooks._Update;
-		}
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+			modsys.TickUpdates.Add( LoadHooks._Update );
 
-		void ILoadable.OnPostModsLoad() {
 			LoadHooks.AddWorldLoadEachHook( () => {
 				this.WorldUnloadHookConditionsMet = false;
 				this.PostWorldUnloadHookConditionsMet = false;
 			} );
 		}
 
-		void ILoadable.OnModsUnload() {
+		void ILoadable.Unload() {
 			this.FulfillModUnloadHooks();
 
 			try {
-				Main.OnTick -= LoadHooks._Update;
+				var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+				modsys.TickUpdates.Remove( LoadHooks._Update );
 
-				if( this.WorldLoadHookConditionsMet && !this.WorldUnloadHookConditionsMet ) {
+				if ( this.WorldLoadHookConditionsMet && !this.WorldUnloadHookConditionsMet ) {
 					this.FulfillWorldUnloadHooks();
 					this.FulfillPostWorldUnloadHooks();
 				}

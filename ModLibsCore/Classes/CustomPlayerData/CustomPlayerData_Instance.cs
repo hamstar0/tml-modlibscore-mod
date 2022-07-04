@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 
 
@@ -36,7 +36,8 @@ namespace ModLibsCore.Classes.PlayerData {
 		////////////////
 
 		/// @private
-		void ILoadable.OnModsLoad() {
+
+		void ILoadable.Load( Mod mod ) {
 			if( this.CalledOnModsLoad ) {
 				throw new ModLibsException( "Attempted multiple calls." );
 			}
@@ -49,11 +50,13 @@ namespace ModLibsCore.Classes.PlayerData {
 
 			//
 
-			Main.OnTick += CustomPlayerData.UpdateAll;
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+			modsys.TickUpdates.Add( CustomPlayerData.UpdateAll );
 		}
 
 		/// @private
-		void ILoadable.OnModsUnload() {
+
+		void ILoadable.Unload() {
 			if( this.CalledOnModsUnload ) {
 				throw new ModLibsException( "Attempted multiple calls." );
 			}
@@ -64,10 +67,8 @@ namespace ModLibsCore.Classes.PlayerData {
 
 			//
 
-			Main.OnTick -= CustomPlayerData.UpdateAll;
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+			modsys.TickUpdates.Remove( CustomPlayerData.UpdateAll );
 		}
-
-		/// @private
-		void ILoadable.OnPostModsLoad() { }
 	}
 }

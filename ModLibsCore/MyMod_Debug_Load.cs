@@ -46,7 +46,8 @@ namespace ModLibsCore {
 		////////////////
 
 		private void LoadDebug() {
-			Main.OnTick += ModLibsCoreMod.OutputDebugLoadDataIf;
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+			modsys.TickUpdates.Add( ModLibsCoreMod.OutputDebugLoadDataIf );
 
 			LoadHooks.AddModUnloadHook( this.DebugModUnloadHook );
 			LoadHooks.AddPostContentLoadHook( this.DebugPostContentLoadHook );
@@ -66,7 +67,8 @@ namespace ModLibsCore {
 		}
 		
 		private void UnloadDebug() {
-			Main.OnTick -= ModLibsCoreMod.OutputDebugLoadDataIf;
+			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
+			modsys.TickUpdates.Remove( ModLibsCoreMod.OutputDebugLoadDataIf );
 		}
 
 

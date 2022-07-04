@@ -2,8 +2,8 @@
 using System.IO;
 using Newtonsoft.Json;
 using Terraria;
+using Terraria.ModLoader;
 using ModLibsCore.Classes.Errors;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET;
 using ModLibsCore.Libraries.Misc;

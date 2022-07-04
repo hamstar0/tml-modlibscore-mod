@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using ModLibsCore.Classes.Loadable;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 using ModLibsCore.Internals.Logic;
@@ -12,6 +12,8 @@ namespace ModLibsCore {
 	partial class ModLibsCoreModSystem : ModSystem {
 		public bool MouseInterface { get; private set; }
 
+		internal IList<Action> TickUpdates;
+		
 
 
 		////////////////
@@ -34,6 +36,10 @@ namespace ModLibsCore {
 			var logic = ModContent.GetInstance<WorldLogic>();
 			if( logic != null ) {
 				logic.Update();
+			}
+
+			foreach( Action action in this.TickUpdates ) {
+				action();
 			}
 		}
 	}
