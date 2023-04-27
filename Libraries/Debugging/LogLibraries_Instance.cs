@@ -20,7 +20,7 @@ namespace ModLibsCore.Libraries.Debug {
 
 		internal LogLibraries() { }
 
-		public override void Load() {
+		public override void OnModLoad() {
 			this.Reset();
 
 			LoadHooks.AddWorldUnloadEachHook( this.OnWorldExit );

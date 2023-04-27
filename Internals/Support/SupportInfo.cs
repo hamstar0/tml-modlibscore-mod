@@ -85,7 +85,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 			Main.OnPostDraw += SupportInfoDisplay._Draw;
 		}
 
-		public override void Load() {
+		public override void OnModLoad() {
 			// This is deferred to here because of LoadHooks load order (ironically)
 			LoadHooks.AddModUnloadHook( () => {
 				try {

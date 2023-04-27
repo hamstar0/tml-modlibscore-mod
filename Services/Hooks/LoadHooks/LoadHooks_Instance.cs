@@ -40,7 +40,9 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 		public override void Load() {
 			this.OnTickGet = Timers.Timers.MainOnTickGet();
+		}
 
+		public override void OnModLoad() {
 			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
 			modsys.TickUpdates.Add( LoadHooks._Update );
 
@@ -67,10 +69,9 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 		////////////////
 
-		internal void PreSaveAndExit() {
+		public override void PreSaveAndQuit() {
 			this.FulfillWorldUnloadHooks();
 		}
-
 
 		////////////////
 

@@ -49,7 +49,7 @@ namespace ModLibsCore.Services.Timers {
 
 		internal Timers() { }
 
-		public override void Load() {
+		public override void OnModLoad() {
 			ModContent.GetInstance<ModLibsCoreModSystem>()
 				.TickUpdates.Add( Timers._ConditionalLoad );
 		}

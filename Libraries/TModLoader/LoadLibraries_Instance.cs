@@ -17,7 +17,9 @@ namespace ModLibsCore.Libraries.TModLoader {
 
 		////////////////
 
-		internal LoadLibraries() {
+		internal LoadLibraries() { }
+
+		public override void OnWorldLoad() {
 			LoadHooks.AddWorldLoadEachHook( () => {
 				this.WorldStartupDelay = 0;
 			} );

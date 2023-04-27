@@ -15,7 +15,7 @@ namespace ModLibsCore.Libraries.Players {
 
 		////////////////
 		
-		public override void Load() {
+		public override void OnModLoad() {
 			LoadHooks.AddPostWorldUnloadEachHook( () => {
 				this.PlayerIds = new Dictionary<int, string>();
 			} );

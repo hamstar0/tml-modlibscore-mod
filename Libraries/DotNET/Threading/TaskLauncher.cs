@@ -47,7 +47,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 
 		////////////////
 
-		public override void Load() {
+		public override void OnModLoad() {
 			Timers.SetTimer( 1, false, () => {
 				foreach( Task task in this.Tasks.ToArray() ) {
 					if( task == null || task.IsCompleted || task.IsCanceled ) {

@@ -29,12 +29,14 @@ namespace ModLibsCore.Internals.Logic {
 
 		////////////////
 
-		public override void Load() {
+		public override void OnWorldLoad() {
 			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
 			On.Terraria.IO.WorldFile.LoadWorld += this.OnLoadWorld_Inject;
 
 			LogLibraries.Alert( "World load hook loaded." );
+		}
 
+		public override void PreSaveAndQuit() {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 

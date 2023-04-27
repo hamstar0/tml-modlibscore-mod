@@ -16,14 +16,6 @@ namespace ModLibsCore {
 		////
 
 		internal IList<Action> TickUpdates = new List<Action>();
-		
-
-
-		////////////////
-
-		public override void PreSaveAndQuit() {
-			ModContent.GetInstance<LoadHooks>().PreSaveAndExit();
-		}
 
 
 		////////////////
@@ -31,7 +23,6 @@ namespace ModLibsCore {
 		public override void PostUpdateEverything() {
 			this.MouseInterface = Main.LocalPlayer.mouseInterface;
 		}
-
 
 		////////////////
 
