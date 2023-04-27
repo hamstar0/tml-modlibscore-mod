@@ -79,7 +79,7 @@ namespace ModLibsCore {
 			int count = loadHooks.LastRanHookReportedHookCount - 1;
 
 			//this.DebugModUnloadHookFlag = true;
-			LogLibraries.Log( "DEBUG LOAD - ModUnloadHooks: "+count );
+			//LogLibraries.Log( "DEBUG LOAD - ModUnloadHooks: "+count );
 		}
 		
 		private void DebugPostContentLoadHook() {

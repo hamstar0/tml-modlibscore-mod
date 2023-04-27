@@ -62,8 +62,6 @@ namespace ModLibsCore {
 			} catch { }
 
 			this.UnloadFull();
-			
-			ModLibsCoreMod.Instance = null;
 		}
 
 
