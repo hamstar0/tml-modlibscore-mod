@@ -11,7 +11,7 @@ namespace ModLibsCore.Libraries.DotNET.Reflection {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to reflection
 	/// </summary>
-	public partial class ReflectionLibraries : ILoadable {
+	public partial class ReflectionLibraries : ModSystem {
 		internal static ReflectionLibraries Instance => ModContent.GetInstance<ReflectionLibraries>();
 
 
@@ -23,15 +23,6 @@ namespace ModLibsCore.Libraries.DotNET.Reflection {
 		private IDictionary<string, IDictionary<string, IList<Type>>> AssClassTypeMap = new ConcurrentDictionary<string, IDictionary<string, IList<Type>>>();
 		private IDictionary<string, IDictionary<string, MemberInfo>> FieldPropMap = new ConcurrentDictionary<string, IDictionary<string, MemberInfo>>();
 
-
-
-		////////////////
-		
-		internal ReflectionLibraries() { }
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

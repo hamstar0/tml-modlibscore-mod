@@ -7,7 +7,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 	/// <summary>
 	/// Implements a method to know the 'owner' `Entity` of a given projectile.
 	/// </summary>
-	public partial class ProjectileOwner : ILoadable {
+	public partial class ProjectileOwner : ModSystem {
 		internal static int ClaimingForPlayerWho = -1;
 		internal static int ClaimingForNpcWho = -1;
 		internal static int ClaimingForProjectilePlayerWho = -1;

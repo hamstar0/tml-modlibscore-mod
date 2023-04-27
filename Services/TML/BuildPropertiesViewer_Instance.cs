@@ -11,7 +11,7 @@ namespace ModLibsCore.Services.TML {
 	/// <summary>
 	/// Supplies a way to peek into other mods' build properties (build.txt) data.
 	/// </summary>
-	public partial class BuildPropertiesViewer : ILoadable {
+	public partial class BuildPropertiesViewer : ModSystem {
 		/// <summary></summary>
 		public string[] DllReferences => (string[])this.GetField( "dllReferences" );
 		//public string[] ModReferences => ((object[])this.GetField( "modReferences" )).Select( m=>m.ToString() ).ToArray();
@@ -121,11 +121,6 @@ namespace ModLibsCore.Services.TML {
 		internal BuildPropertiesViewer( object buildProps ) {
 			this.BuildProps = buildProps;
 		}
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 

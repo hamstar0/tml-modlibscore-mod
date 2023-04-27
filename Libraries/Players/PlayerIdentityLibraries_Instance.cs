@@ -8,19 +8,17 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 
 namespace ModLibsCore.Libraries.Players {
 	/// @private
-	public partial class PlayerIdentityLibraries : ILoadable {
+	public partial class PlayerIdentityLibraries : ModSystem {
 		internal IDictionary<int, string> PlayerIds = new Dictionary<int, string>();
 
 
 
 		////////////////
 		
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			LoadHooks.AddPostWorldUnloadEachHook( () => {
 				this.PlayerIds = new Dictionary<int, string>();
 			} );
 		}
-
-		void ILoadable.Unload() { }
 	}
 }

@@ -8,18 +8,8 @@ namespace ModLibsCore.Libraries.NPCs.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of NPCs.
 	/// </summary>
-	public partial class NPCNameAttributeLibraries : ILoadable {
+	public partial class NPCNameAttributeLibraries : ModSystem {
 		private ReadOnlyDictionaryOfSets<string, int> _DisplayNamesToIds = null;
-
-
-
-		////////////////
-
-		internal NPCNameAttributeLibraries() { }
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

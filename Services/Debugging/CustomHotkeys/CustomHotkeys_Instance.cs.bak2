@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace ModLibsCore.Services.Debug.CustomHotkeys {
 	/// @private
-	public partial class CustomHotkeys : ILoadable {
+	public partial class CustomHotkeys : ModSystem {
 		private readonly ModKeybind Key1;
 		private readonly ModKeybind Key2;
 

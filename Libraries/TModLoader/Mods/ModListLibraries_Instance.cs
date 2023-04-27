@@ -11,18 +11,10 @@ using ModLibsCore.Libraries.DotNET.Reflection;
 
 namespace ModLibsCore.Libraries.TModLoader.Mods {
 	/// @private
-	public partial class ModListLibraries : ILoadable {
+	public partial class ModListLibraries : ModSystem {
 		private IDictionary<Services.TML.BuildPropertiesViewer, Mod> ModsByBuildProps = new Dictionary<Services.TML.BuildPropertiesViewer, Mod>();
 		private IDictionary<string, ISet<Mod>> ModsByAuthor = new Dictionary<string, ISet<Mod>>();
 		private IDictionary<string, Services.TML.BuildPropertiesViewer> BuildPropsByModNames = new Dictionary<string, Services.TML.BuildPropertiesViewer>();
-
-
-
-		////////////////
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

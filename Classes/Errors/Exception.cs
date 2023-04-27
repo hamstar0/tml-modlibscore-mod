@@ -6,16 +6,8 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore.Classes.Errors {
 	/// @private
-	class ModLibsExceptionManager : ILoadable {
+	class ModLibsExceptionManager : ModSystem {
 		internal readonly IDictionary<string, int> MsgCount = new Dictionary<string, int>();
-
-
-
-		////////////////
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 	}
 
 

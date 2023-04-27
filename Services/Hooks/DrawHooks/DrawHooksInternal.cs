@@ -7,17 +7,9 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.Draw {
-	class DrawHooksInternal : ILoadable {
+	class DrawHooksInternal : ModSystem {
 		internal ISet<Func<bool>> PostDrawTilesHooks = new HashSet<Func<bool>>();
 
-
-
-		////////////////
-
-		/// @ private
-		void ILoadable.Load( Mod mod ) { }
-		/// @ private
-		void ILoadable.Unload() { }
 
 
 		////////////////

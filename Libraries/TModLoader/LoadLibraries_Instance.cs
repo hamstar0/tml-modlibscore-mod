@@ -7,7 +7,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 
 namespace ModLibsCore.Libraries.TModLoader {
 	/// @private
-	public partial class LoadLibraries : ILoadable {
+	public partial class LoadLibraries : ModSystem {
 		private uint WorldStartupDelay = 0;
 
 		internal bool IsLocalPlayerInGame_Hackish = false;
@@ -32,10 +32,6 @@ namespace ModLibsCore.Libraries.TModLoader {
 				this.HasGameBegunHavingPlayers_Hackish = false;
 			} );
 		}
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

@@ -39,7 +39,7 @@ namespace ModLibsCore.Classes.PlayerData {
 
 		void ILoadable.Load( Mod mod ) {
 			if( this.CalledOnModsLoad ) {
-				throw new ModLibsException( "Attempted multiple calls." );
+				return;
 			}
 
 			this.CalledOnModsLoad = true;
@@ -58,10 +58,8 @@ namespace ModLibsCore.Classes.PlayerData {
 
 		void ILoadable.Unload() {
 			if( this.CalledOnModsUnload ) {
-				throw new ModLibsException( "Attempted multiple calls." );
+				return;
 			}
-
-			//
 
 			this.CalledOnModsUnload = true;
 

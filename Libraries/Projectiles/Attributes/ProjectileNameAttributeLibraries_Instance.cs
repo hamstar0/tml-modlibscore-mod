@@ -8,7 +8,7 @@ namespace ModLibsCore.Libraries.Projectiles.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of NPCs.
 	/// </summary>
-	public partial class ProjectileNameAttributeLibraries : ILoadable {
+	public partial class ProjectileNameAttributeLibraries : ModSystem {
 		/// <summary>
 		/// Table of NPC ids by qualified names.
 		/// </summary>
@@ -20,15 +20,6 @@ namespace ModLibsCore.Libraries.Projectiles.Attributes {
 		////////////////
 
 		private ReadOnlyDictionaryOfSets<string, int> _DisplayNamesToIds = null;
-
-
-		////////////////
-
-		internal ProjectileNameAttributeLibraries() { }
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

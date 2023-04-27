@@ -7,7 +7,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
-	public partial class LoadHooks : ILoadable {
+	public partial class LoadHooks : ModSystem {
 		internal IList<Action> PostContentLoadHooks = new List<Action>();
 		internal IList<Action> PostModLoadHooks = new List<Action>();
 		internal IList<Action> ModUnloadHooks = new List<Action>();
@@ -38,7 +38,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 
 		////////////////
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			this.OnTickGet = Timers.Timers.MainOnTickGet();
 
 			var modsys = ModContent.GetInstance<ModLibsCoreModSystem>();
@@ -50,7 +50,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 			} );
 		}
 
-		void ILoadable.Unload() {
+		public override void Unload() {
 			this.FulfillModUnloadHooks();
 
 			try {

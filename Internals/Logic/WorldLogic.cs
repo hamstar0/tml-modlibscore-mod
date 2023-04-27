@@ -8,7 +8,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 
 namespace ModLibsCore.Internals.Logic {
 	/// @private
-	partial class WorldLogic : ILoadable {
+	partial class WorldLogic : ModSystem {
 		public static bool IsLoaded { get; private set; } = false;
 
 
@@ -29,7 +29,7 @@ namespace ModLibsCore.Internals.Logic {
 
 		////////////////
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			Player.Hooks.OnEnterWorld += WorldLogic.OnEnterWorldClientOnly;
 			On.Terraria.IO.WorldFile.LoadWorld += this.OnLoadWorld_Inject;
 
@@ -38,7 +38,7 @@ namespace ModLibsCore.Internals.Logic {
 			LoadHooks.AddWorldUnloadEachHook( () => WorldLogic.IsLoaded = false );
 		}
 
-		void ILoadable.Unload() {
+		public override void Unload() {
 			Player.Hooks.OnEnterWorld -= WorldLogic.OnEnterWorldClientOnly;
 		}
 

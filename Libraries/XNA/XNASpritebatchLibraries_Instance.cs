@@ -10,7 +10,7 @@ using ModLibsCore.Libraries.DotNET.Reflection;
 
 namespace ModLibsCore.Libraries.XNA {
 	/// @private
-	public partial class XNASpritebatchLibraries : ILoadable {
+	public partial class XNASpritebatchLibraries : ModSystem {
 		private FieldInfo SpriteBatchBegunField = null;
 
 
@@ -30,12 +30,5 @@ namespace ModLibsCore.Libraries.XNA {
 				this.SpriteBatchBegunField = sbType.GetField( "beginCalled", ReflectionLibraries.MostAccess );
 			}
 		}
-
-
-		////////////////
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 	}
 }

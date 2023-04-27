@@ -8,7 +8,7 @@ using ModLibsCore.Libraries.Debug;
 
 namespace ModLibsCore.Services.DataStore {
 	/// @private
-	public partial class DataStore : ILoadable {
+	public partial class DataStore : ModSystem {
 		private IDictionary<object, (bool, object)> Data = new Dictionary<object, (bool, object)>();
 
 
@@ -16,11 +16,6 @@ namespace ModLibsCore.Services.DataStore {
 		////////////////
 
 		internal DataStore() { }
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 

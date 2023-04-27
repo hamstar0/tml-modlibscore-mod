@@ -13,7 +13,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 	/// <summary>
 	/// Provides functions to neatly send data (via. ModPacket) to server, clients, or both. Abstracts away serialization.
 	/// </summary>
-	public partial class SimplePacket : ILoadable {
+	public partial class SimplePacket : ModSystem {
 		/// <summary></summary>
 		/// <param name="reader"></param>
 		/// <param name="playerWho"></param>

@@ -12,7 +12,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to threading.
 	/// </summary>
-	public class TaskLauncher : ILoadable {
+	public class TaskLauncher : ModSystem {
 		/// <summary>
 		/// Runs a given function (via. Task.Run), supplying it with the cancellation token used when mods are unloaded. Also
 		/// handles waiting for the thread to close on mod unload.
@@ -47,7 +47,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 
 		////////////////
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			Timers.SetTimer( 1, false, () => {
 				foreach( Task task in this.Tasks.ToArray() ) {
 					if( task == null || task.IsCompleted || task.IsCanceled ) {
@@ -59,7 +59,7 @@ namespace ModLibsCore.Libraries.DotNET.Threading {
 			} );
 		}
 
-		void ILoadable.Unload() {
+		public override void Unload() {
 			this.CancelTokenSrc.Cancel();
 
 			Task[] tasks = this.Tasks.Where(t=>t!=null).ToArray();

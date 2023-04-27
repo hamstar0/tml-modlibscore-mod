@@ -7,7 +7,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 	/// <summary>
 	/// Implements a method to know the 'owner' `Entity` of a given projectile.
 	/// </summary>
-	public partial class ProjectileOwner : ILoadable {
+	public partial class ProjectileOwner : ModSystem {
 		/// <summary></summary>
 		/// <param name="projectileWho"></param>
 		/// <param name="isManuallySet"></param>

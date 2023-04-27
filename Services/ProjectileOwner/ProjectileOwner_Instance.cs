@@ -11,7 +11,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 	/// <summary>
 	/// Implements a method to know the 'owner' `Entity` of a given projectile.
 	/// </summary>
-	public partial class ProjectileOwner : ILoadable {
+	public partial class ProjectileOwner : ModSystem {
 		private IList<OnProjectileOwnerSet> Hooks = new List<OnProjectileOwnerSet>();
 
 		private ISet<int> NewProjectileIdxs = new HashSet<int>();
@@ -20,7 +20,7 @@ namespace ModLibsCore.Services.ProjectileOwner {
 
 		////////////////
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float +=
 				this.Projectile_NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float;
 			On.Terraria.MessageBuffer.GetData += this.MessageBuffer_GetData;
@@ -28,9 +28,6 @@ namespace ModLibsCore.Services.ProjectileOwner {
 			On.Terraria.NPC.AI += this.NPC_AI;
 			On.Terraria.Projectile.AI += this.Projectile_AI;
 		}
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 		

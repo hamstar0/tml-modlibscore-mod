@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace ModLibsCore.Internals.Menus.Support {
 	/// @private
-	internal partial class SupportInfoDisplay : ILoadable {
+	internal partial class SupportInfoDisplay : ModSystem {
 		public static Color HeaderLabelColor = Color.Lerp( Color.White, Color.Gold, 0.25f );
 
 
@@ -85,7 +85,7 @@ namespace ModLibsCore.Internals.Menus.Support {
 			Main.OnPostDraw += SupportInfoDisplay._Draw;
 		}
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			// This is deferred to here because of LoadHooks load order (ironically)
 			LoadHooks.AddModUnloadHook( () => {
 				try {
@@ -93,9 +93,6 @@ namespace ModLibsCore.Internals.Menus.Support {
 				} catch { }
 			} );
 		}
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 

@@ -15,7 +15,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 	/// <summary>
 	/// Provides functions to neatly send data (via. ModPacket) to server, clients, or both. Abstracts away serialization.
 	/// </summary>
-	public partial class SimplePacket : ILoadable {
+	public partial class SimplePacket : ModSystem {
 		private IDictionary<int, Type> PayloadCodeToType = new Dictionary<int, Type>();
 		private IDictionary<Type, int> PayloadTypeToCode = new Dictionary<Type, int>();
 		private IDictionary<int, Serializer> PayloadCodeToSerializer = new Dictionary<int, Serializer>();
@@ -24,7 +24,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 
 		////////////////
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			IList<Type> payloadTypes = ReflectionLibraries
 				.GetAllAvailableSubTypesFromMods( typeof(SimplePacketPayload) )
 				.OrderBy( t => t.Namespace + "." + t.Name )
@@ -46,9 +46,6 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 				i++;
 			}
 		}
-
-		void ILoadable.Unload() { }
-
 
 		////
 

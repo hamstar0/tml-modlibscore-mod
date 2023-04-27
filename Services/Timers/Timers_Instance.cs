@@ -29,7 +29,7 @@ namespace ModLibsCore.Services.Timers {
 	/// Provides a way to delay the onset of a given action by a set amount of ticks. As a secondary function,
 	/// MainOnTickGet() provides a way to use Main.OnTick for running background tasks at 60FPS.
 	/// </summary>
-	public partial class Timers : ILoadable {
+	public partial class Timers : ModSystem {
 		private static object MyLock = new object();
 
 
@@ -49,7 +49,7 @@ namespace ModLibsCore.Services.Timers {
 
 		internal Timers() { }
 
-		void ILoadable.Load(Mod mod) {
+		public override void Load() {
 			ModContent.GetInstance<ModLibsCoreModSystem>()
 				.TickUpdates.Add( Timers._ConditionalLoad );
 		}
@@ -87,7 +87,7 @@ namespace ModLibsCore.Services.Timers {
 			} );
 		}
 
-		void ILoadable.Unload() {
+		public override void Unload() {
 			ModContent.GetInstance<ModLibsCoreModSystem>()
 				.TickUpdates.Remove( Timers._Update );
 		}

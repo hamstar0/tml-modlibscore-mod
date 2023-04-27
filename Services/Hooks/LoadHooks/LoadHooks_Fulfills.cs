@@ -6,7 +6,7 @@ using ModLibsCore.Libraries.Debug;
 
 
 namespace ModLibsCore.Services.Hooks.LoadHooks {
-	public partial class LoadHooks : ILoadable {
+	public partial class LoadHooks : ModSystem {
 		internal int LastRanHookReportedHookCount = -1;
 
 

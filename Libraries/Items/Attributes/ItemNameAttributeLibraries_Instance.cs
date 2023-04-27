@@ -8,7 +8,7 @@ namespace ModLibsCore.Libraries.Items.Attributes {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to gameplay attributes of items.
 	/// </summary>
-	public partial class ItemNameAttributeLibraries : ILoadable {
+	public partial class ItemNameAttributeLibraries : ModSystem {
 		private ReadOnlyDictionaryOfSets<string, int> _DisplayNamesToIds = null;
 
 
@@ -16,10 +16,6 @@ namespace ModLibsCore.Libraries.Items.Attributes {
 		////////////////
 
 		internal ItemNameAttributeLibraries() { }
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 
 		////////////////

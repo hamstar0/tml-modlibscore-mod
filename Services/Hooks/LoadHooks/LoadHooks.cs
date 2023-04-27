@@ -8,7 +8,7 @@ namespace ModLibsCore.Services.Hooks.LoadHooks {
 	/// <summary>
 	/// Allows defining load hooks. These are of a set of hooks corresponding to important game code "load" events.
 	/// </summary>
-	public partial class LoadHooks : ILoadable {
+	public partial class LoadHooks : ModSystem {
 		private readonly static object PostContentLoadHookLock = new object();
 		private readonly static object PostModLoadHookLock = new object();
 		private readonly static object ModUnloadHookLock = new object();

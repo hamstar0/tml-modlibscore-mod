@@ -5,7 +5,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 
 namespace ModLibsCore.Internals.Logic {
 	/// @private
-	partial class WorldLogic : ILoadable {
+	partial class WorldLogic : ModSystem {
 		public void Update() {
 			var loadLibs = ModContent.GetInstance<LoadLibraries>();
 			var loadHooks = ModContent.GetInstance<LoadHooks>();

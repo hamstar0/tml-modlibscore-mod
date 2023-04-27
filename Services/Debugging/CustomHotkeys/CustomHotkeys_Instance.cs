@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace ModLibsCore.Services.Debug.CustomHotkeys {
 	/// @private
-	public partial class CustomHotkeys : ILoadable {
+	public partial class CustomHotkeys : ModSystem {
 		private readonly ModKeybind Key1;
 		private readonly ModKeybind Key2;
 
@@ -21,10 +21,6 @@ namespace ModLibsCore.Services.Debug.CustomHotkeys {
 			this.Key1 = KeybindLoader.RegisterKeybind(ModLibsCoreMod.Instance, "Custom Hotkey 1", "K" );
 			this.Key2 = KeybindLoader.RegisterKeybind(ModLibsCoreMod.Instance, "Custom Hotkey 2", "L" );
 		}
-
-		void ILoadable.Load( Mod mod ) { }
-
-		void ILoadable.Unload() { }
 
 		////////////////
 

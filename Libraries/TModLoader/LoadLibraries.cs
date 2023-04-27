@@ -11,7 +11,7 @@ namespace ModLibsCore.Libraries.TModLoader {
 	/// <summary>
 	/// Assorted static "helper" functions pertaining to the state of the game.
 	/// </summary>
-	public partial class LoadLibraries : ILoadable {
+	public partial class LoadLibraries : ModSystem {
 		/// <summary>
 		/// Indicates if mods Mod Libs is fully loaded (recipes, content, etc.).
 		/// </summary>

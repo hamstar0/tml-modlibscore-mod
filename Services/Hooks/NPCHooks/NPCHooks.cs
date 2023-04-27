@@ -9,7 +9,7 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 	/// <summary>
 	/// Allows defining tModLoader-like, delegate-based hooks for a variety of NPC-related functions.
 	/// </summary>
-	public class NPCHooks : ILoadable {
+	public class NPCHooks : ModSystem {
 		/// <summary>
 		/// General-use NPC spawn hooking.
 		/// </summary>
@@ -45,13 +45,10 @@ namespace ModLibsCore.Services.Hooks.NPCHooks {
 
 		////////////////
 		
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			On.Terraria.NPC.SpawnNPC += this.NPC_SpawnNPC;
 			On.Terraria.NPC.NewNPC += this.NPC_NewNPC;
 		}
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 

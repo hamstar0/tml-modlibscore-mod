@@ -8,7 +8,7 @@ using ModLibsCore.Services.Hooks.LoadHooks;
 
 namespace ModLibsCore.Libraries.Debug {
 	/// @private
-	public partial class LogLibraries : ILoadable {
+	public partial class LogLibraries : ModSystem {
 		private DateTime StartTimeBase;
 		private double StartTime;
 
@@ -20,14 +20,11 @@ namespace ModLibsCore.Libraries.Debug {
 
 		internal LogLibraries() { }
 
-		void ILoadable.Load( Mod mod ) {
+		public override void Load() {
 			this.Reset();
 
 			LoadHooks.AddWorldUnloadEachHook( this.OnWorldExit );
 		}
-
-		void ILoadable.Unload() { }
-
 
 		////////////////
 
