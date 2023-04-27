@@ -47,12 +47,24 @@ namespace ModLibsCore.Internals.Menus.Support {
 					return;
 				}
 
-				bool _;
-				XNASpritebatchLibraries.DrawBatch( ( sb ) => {
+				static void DrawFunction( SpriteBatch sb ) {
 					var sid = ModContent.GetInstance<SupportInfoDisplay>();
 					sid?.Update();
 					sid?.Draw( Main.spriteBatch );
-				}, out _, true );
+				}
+
+				XNASpritebatchLibraries.DrawBatch(
+					DrawFunction,
+					SpriteSortMode.Deferred,
+					BlendState.AlphaBlend,
+					Main.DefaultSamplerState,
+					DepthStencilState.None,
+					Main.Rasterizer,
+					null,
+					Main.UIScaleMatrix,
+					out _,
+					forceDraw: true
+				);
 			} catch( Exception e ) {
 				LogLibraries.LogOnce( e.ToString() );
 			}
@@ -107,8 +119,8 @@ namespace ModLibsCore.Internals.Menus.Support {
 				elem.Draw( sb );
 			}
 			
-			Vector2 bonus = Main.DrawThickCursor( false );
-			Main.DrawCursor( bonus, false );
+			//Vector2 bonus = Main.DrawThickCursor( false );
+			//Main.DrawCursor( bonus, false );
 		}
 	}
 }
