@@ -12,24 +12,22 @@ namespace ModLibsCore.Services.ProjectileOwner {
 		/// <param name="projectile"></param>
 		/// <returns></returns>
 		public static Entity GetOwner( this Projectile projectile ) {
-			return projectile.GetGlobalProjectile<ModLibsProjectile>()
-				.Owner;
+			return projectile.TryGetGlobalProjectile(out ModLibsProjectile modProjectile)
+				&& modProjectile.Owner is Entity { active: true } result ? result : null;
 		}
 
 		/// <summary></summary>
 		/// <param name="projectile"></param>
 		/// <returns>`Player` instance, if applicable.</returns>
 		public static Player GetPlayerOwner( this Projectile projectile ) {
-			return projectile.GetGlobalProjectile<ModLibsProjectile>()
-				.Owner as Player;
+			return projectile.GetOwner() as Player;
 		}
 
 		/// <summary></summary>
 		/// <param name="projectile"></param>
 		/// <returns>`NPC` instance, if applicable.</returns>
 		public static NPC GetNPCOwner( this Projectile projectile ) {
-			return projectile.GetGlobalProjectile<ModLibsProjectile>()
-				.Owner as NPC;
+			return projectile.GetOwner() as NPC;
 		}
 	}
 }
