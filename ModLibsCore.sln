@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLibsCore", "ModLibsCore\ModLibsCore.csproj", "{B6329BAF-B86E-4ACD-A625-E02C261295BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLibsCore", "ModLibsCore.csproj", "{B6329BAF-B86E-4ACD-A625-E02C261295BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
