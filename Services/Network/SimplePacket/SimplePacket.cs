@@ -1,36 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Collections.Generic;
-using NetSerializer;
-using Terraria;
-using Terraria.ModLoader;
-using ModLibsCore.Classes.Errors;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Libraries.DotNET.Reflection;
-using ModLibsCore.Libraries.DotNET.Serialization;
+using NetSerializer;
+using Terraria.ModLoader;
 
 
 namespace ModLibsCore.Services.Network.SimplePacket {
 	/// <summary>
 	/// Provides functions to neatly send data (via. ModPacket) to server, clients, or both. Abstracts away serialization.
 	/// </summary>
-	public partial class SimplePacket : ModSystem {
+	public sealed partial class SimplePacket : ModSystem {
 		private IDictionary<int, Type> PayloadCodeToType = new Dictionary<int, Type>();
 		private IDictionary<Type, int> PayloadTypeToCode = new Dictionary<Type, int>();
 		private IDictionary<int, Serializer> PayloadCodeToSerializer = new Dictionary<int, Serializer>();
 
-
+		public static readonly HashSet<ITypeSerializer> CustomSerializers = new();
 
 		////////////////
 
-		public override void Load() {
+		public override void PostSetupContent() {
 			IList<Type> payloadTypes = ReflectionLibraries
 				.GetAllAvailableSubTypesFromMods( typeof(SimplePacketPayload) )
 				.OrderBy( t => t.Namespace + "." + t.Name )
 				.ToList();
+
 			var settings = new Settings {
-				CustomTypeSerializers = new ITypeSerializer[] { new HashSetSerializer() }
+				CustomTypeSerializers = CustomSerializers.ToArray(),
 			};
 
 			int i = 0;

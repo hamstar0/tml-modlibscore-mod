@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using ModLibsCore.Services.Network.SimplePacket;
 using NetSerializer;
-
+using Terraria.ModLoader;
 
 namespace ModLibsCore.Libraries.DotNET.Serialization {
-	sealed class HashSetSerializer : IStaticTypeSerializer {
+	sealed class HashSetSerializer : IStaticTypeSerializer, ILoadable {
+		void ILoadable.Load( Mod mod ) {
+			SimplePacket.CustomSerializers.Add( this );
+		}
+
+		void ILoadable.Unload() {
+			SimplePacket.CustomSerializers.Remove( this );
+		}
+
 		private static MethodInfo GetGenericWriter( Type serializerType, Type genericType ) {
 			var mis = serializerType
 				.GetMethods( BindingFlags.Static | BindingFlags.Public )
