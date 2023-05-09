@@ -1,0 +1,3 @@
+[submodule "NetSerializer"]
+	path = lib/NetSerializer
+	url = https://github.com/tomba/netserializer
