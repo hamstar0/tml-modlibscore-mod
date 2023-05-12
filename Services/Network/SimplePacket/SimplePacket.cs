@@ -31,17 +31,17 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 				CustomTypeSerializers = CustomSerializers.ToArray(),
 			};
 
-			int i = 0;
 			foreach( Type payloadType in payloadTypes.ToArray() ) {
 				if( !this.ValidateSerializeable(payloadType, payloadType, new HashSet<Type>(), out string result) ) {
 					LogLibraries.Warn( payloadType.Name+" not serializeable: "+result );
 					continue;
 				}
 
-				this.PayloadCodeToType[i] = payloadType;
-				this.PayloadTypeToCode[payloadType] = i;
-				this.PayloadCodeToSerializer[i] = new Serializer( new Type[] { payloadType }, settings );
-				i++;
+				int id = PacketIds.Increment();
+
+				this.PayloadCodeToType[id] = payloadType;
+				this.PayloadTypeToCode[payloadType] = id;
+				this.PayloadCodeToSerializer[id] = new Serializer( new Type[] { payloadType }, settings );
 			}
 		}
 

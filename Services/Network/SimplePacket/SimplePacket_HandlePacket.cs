@@ -48,7 +48,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 			var self = ModContent.GetInstance<SimplePacket>();
 
 			try {
-				int code = reader.ReadInt32();
+				int code = reader.Read7BitEncodedInt();
 				if( !self.PayloadCodeToType.TryGetValue(code, out Type type) ) {
 					data = null;
 					return false;
