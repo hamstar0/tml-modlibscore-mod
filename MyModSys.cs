@@ -6,7 +6,9 @@ using Terraria.ModLoader;
 using ModLibsCore.Libraries.Debug;
 using ModLibsCore.Services.Hooks.LoadHooks;
 using ModLibsCore.Internals.Logic;
-
+using ModLibsCore.Libraries.Items.Attributes;
+using ModLibsCore.Libraries.NPCs.Attributes;
+using ModLibsCore.Libraries.Projectiles.Attributes;
 
 namespace ModLibsCore {
 	/// @private
@@ -24,6 +26,18 @@ namespace ModLibsCore {
 			this.MouseInterface = Main.LocalPlayer.mouseInterface;
 		}
 
+		public override void AddRecipeGroups()/* tModPorter Note: Removed. Use ModSystem.AddRecipeGroups */ {
+			ModLibsCoreMod.Instance.HasAddedRecipeGroups = true;
+			ModLibsCoreMod.Instance.CheckAndProcessLoadFinish();
+		}
+
+		public override void PostAddRecipes()/* tModPorter Note: Removed. Use ModSystem.PostAddRecipes */ {
+			this.PostAddRecipesFull();
+
+			ModLibsCoreMod.Instance.HasAddedRecipes = true;
+			ModLibsCoreMod.Instance.CheckAndProcessLoadFinish();
+		}
+
 		////////////////
 
 		public override void PostUpdateTime() {
@@ -35,6 +49,14 @@ namespace ModLibsCore {
 			foreach( Action action in this.TickUpdates.ToArray() ) {
 				action();
 			}
+		}
+
+		////////////////
+
+		private void PostAddRecipesFull() {
+			ModContent.GetInstance<ItemNameAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<NPCNameAttributeLibraries>().PopulateNames();
+			ModContent.GetInstance<ProjectileNameAttributeLibraries>().PopulateNames();
 		}
 	}
 }

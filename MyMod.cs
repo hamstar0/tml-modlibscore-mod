@@ -75,25 +75,10 @@ namespace ModLibsCore {
 			ModContent.GetInstance<LoadHooks>().FulfillPostContentLoadHooks();
 		}
 
-		////////////////
-
-		public override void AddRecipeGroups() {
-			this.HasAddedRecipeGroups = true;
-
-			this.CheckAndProcessLoadFinish();
-		}
-		
-		public override void PostAddRecipes() {
-			this.PostAddRecipesFull();
-
-			this.HasAddedRecipes = true;
-			this.CheckAndProcessLoadFinish();
-		}
-
 
 		////////////////
 
-		private void CheckAndProcessLoadFinish() {
+		internal void CheckAndProcessLoadFinish() {
 			if( !this.HasSetupContent ) { return; }
 			if( !this.HasAddedRecipeGroups ) { return; }
 			if( !this.HasAddedRecipes ) { return; }

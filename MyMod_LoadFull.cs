@@ -10,9 +10,9 @@ using ModLibsCore.Libraries.Projectiles.Attributes;
 namespace ModLibsCore {
 	/// @private
 	partial class ModLibsCoreMod : Mod {
-		public bool HasSetupContent { get; private set; }
-		public bool HasAddedRecipeGroups { get; private set; }
-		public bool HasAddedRecipes { get; private set; }
+		public bool HasSetupContent { get; internal set; }
+		public bool HasAddedRecipeGroups { get; internal set; }
+		public bool HasAddedRecipes { get; internal set; }
 
 
 		////////////////
@@ -31,15 +31,6 @@ namespace ModLibsCore {
 
 			this.LoadHotkeys();
 			this.LoadDataSources();
-		}
-
-
-		////////////////
-
-		private void PostAddRecipesFull() {
-			ModContent.GetInstance<ItemNameAttributeLibraries>().PopulateNames();
-			ModContent.GetInstance<NPCNameAttributeLibraries>().PopulateNames();
-			ModContent.GetInstance<ProjectileNameAttributeLibraries>().PopulateNames();
 		}
 
 

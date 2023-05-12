@@ -53,7 +53,7 @@ namespace ModLibsCore.Services.Network.SimplePacket {
 					return false;
 				}
 
-				packet.Write( (int)code );
+				packet.Write7BitEncodedInt( code );
 
 				//
 
